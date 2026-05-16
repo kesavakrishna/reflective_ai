@@ -1,41 +1,38 @@
-from memory import store_memory, retrieve_memories
-import google.generativeai as genai
-from dotenv import load_dotenv
-import os
+"""Answer a question with lesson-aware retrieval and constrained output. See NOTES.md."""
 
-load_dotenv()
-genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
+from gemini_client import generate
+from memory import record_attempt, retrieve_lessons
 
-def build_prompt(user_input):
-    user_history = retrieve_memories(user_input, mem_type="user")
-    agent_history = retrieve_memories(user_input, mem_type="agent")
-    reflection_history = retrieve_memories(user_input, mem_type="reflection")
+TOP_K_LESSONS = 5
 
-    user_context = "\n".join(f"User said: {u}" for u in user_history)
-    agent_context = "\n".join(f"AI replied: {a}" for a in agent_history)
-    reflection_context = "\n".join(f"Reflection: {r}" for r in reflection_history)
 
-    prompt = f"""You are a reflective AI. You remember and grow over time.
+def build_prompt(question, lessons):
+    if lessons:
+        lesson_block = (
+            "Lessons from your past mistakes that may apply:\n"
+            + "\n".join(f"- {l['text']}" for l in lessons)
+            + "\n\n"
+        )
+    else:
+        lesson_block = ""
 
-Recent user thoughts:
-{user_context}
+    return (
+        "Answer the question below. Reply with ONLY the answer itself — "
+        "no preamble, no reasoning shown, no commentary on your process.\n\n"
+        f"{lesson_block}"
+        f"Question: {question}\n"
+        "Answer:"
+    )
 
-Your past responses:
-{agent_context}
 
-Your reflections:
-{reflection_context}
-
-New input: \"{user_input}\"
-
-Respond thoughtfully, integrating your past experience."""
-    return prompt
-
-def chat(user_input):
-    prompt = build_prompt(user_input)
-    model = genai.GenerativeModel('gemini-2.0-flash')
-    response = model.generate_content(prompt)
-    reply = response.text
-    store_memory(user_input, mem_type="user")
-    store_memory(reply, mem_type="agent")
-    return reply
+def answer(question):
+    lessons = retrieve_lessons(question, top_k=TOP_K_LESSONS)
+    prompt = build_prompt(question, lessons)
+    response = generate(prompt)
+    reply = response.text.strip()
+    attempt_id = record_attempt(
+        question=question,
+        answer=reply,
+        retrieved_lesson_ids=[l["id"] for l in lessons],
+    )
+    return reply, attempt_id

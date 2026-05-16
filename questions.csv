@@ -1,0 +1,41 @@
+question,expected_answer,category
+"Who wrote the novel ""Do Androids Dream of Electric Sheep?""",Philip K. Dick,authorship
+"Who wrote the novella ""Rita Hayworth and Shawshank Redemption""?",Stephen King,authorship
+"Who wrote the novel ""Frankenstein""?",Mary Shelley,authorship
+Who composed the score for the original 1977 Star Wars film?,John Williams,authorship
+"Who illustrated the original ""Where the Wild Things Are""?",Maurice Sendak,authorship
+"Which was founded first, Microsoft or Apple?",Microsoft,sequencing
+Was the telephone or the electric light bulb patented first?,telephone,sequencing
+Did the French Revolution or the American Revolution begin first?,American Revolution,sequencing
+Was the Eiffel Tower or the Statue of Liberty completed first?,Statue of Liberty,sequencing
+"Which was discovered first, Neptune or Pluto?",Neptune,sequencing
+"Who painted ""The Persistence of Memory"" — Dalí or Magritte?",Dalí,near_name
+"Who wrote ""Brave New World"" — Aldous Huxley or George Orwell?",Aldous Huxley,near_name
+"Who composed ""Boléro"" — Ravel or Debussy?",Ravel,near_name
+Who discovered penicillin — Fleming or Pasteur?,Fleming,near_name
+Who proposed special relativity — Einstein or Lorentz?,Einstein,near_name
+"What is the boiling point of water at sea level, in Celsius?",100,units
+"How long is a marathon, in kilometers (to one decimal)?",42.2,units
+What is the freezing point of water in Fahrenheit?,32,units
+"At what temperature does paper ignite, in Celsius (the Fahrenheit 451 value)?",233,units
+"How far is the Moon from Earth on average, in kilometers (to the nearest thousand)?",384000,units
+Who was the first person to walk on the Moon?,Neil Armstrong,first_to
+Who was the first woman to win a Nobel Prize?,Marie Curie,first_to
+Who was the first U.S. president to be impeached?,Andrew Johnson,first_to
+Who was the first human in space?,Yuri Gagarin,first_to
+Who was the first European to reach India by sea?,Vasco da Gama,first_to
+"Which of these is NOT a noble gas: argon, neon, nitrogen, krypton?",nitrogen,negation
+"Which of these is NOT a primary additive (RGB) color: red, green, yellow, blue?",yellow,negation
+"Which of these is NOT a planet in our solar system: Mercury, Venus, Pluto, Mars?",Pluto,negation
+"Which of these is NOT a Shakespeare play: Hamlet, Othello, Faust, Macbeth?",Faust,negation
+"Which of these is NOT a programming language: Python, Java, HTML, Ruby?",HTML,negation
+How many bones are in the adult human body?,206,counting
+"How many U.S. states begin with the letter ""M""?",8,counting
+How many sonnets did Shakespeare write?,154,counting
+How many elements were in the periodic table as of 2023?,118,counting
+How many countries are members of the United Nations as of 2023?,193,counting
+What is the capital of Australia?,Canberra,geography
+What is the capital of Brazil?,Brasília,geography
+What is the largest country in Africa by area?,Algeria,geography
+What is the longest river in Asia?,Yangtze,geography
+What is the smallest sovereign country in the world by area?,Vatican City,geography

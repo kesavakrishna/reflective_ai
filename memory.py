@@ -1,121 +1,121 @@
-# memory.py
+"""Attempts + lessons + persisted FAISS index. See NOTES.md for design rationale."""
 
 import os
+from datetime import datetime, timezone
+
 import faiss
 import numpy as np
 import pandas as pd
-from datetime import datetime
-import google.generativeai as genai
-from dotenv import load_dotenv
 
-load_dotenv()
+from gemini_client import embed as _embed_call
 
-# Parameters
-EMBED_DIM = 768  # Gemini embedding size
-TOP_K = 5
-MEMORY_CSV_PATH = os.getenv('MEMORY_CSV_PATH', 'memories.csv')
-GEMINI_API_KEY = os.getenv('GOOGLE_API_KEY')
+EMBED_DIM = 768
+ATTEMPTS_CSV = os.getenv("ATTEMPTS_CSV", "attempts.csv")
+LESSONS_CSV = os.getenv("LESSONS_CSV", "lessons.csv")
+LESSONS_FAISS = os.getenv("LESSONS_FAISS", "lessons.faiss")
 
-genai.configure(api_key=GEMINI_API_KEY)
+ATTEMPTS_COLS = [
+    "id", "timestamp", "question", "answer",
+    "correct", "expected_answer", "retrieved_lesson_ids", "notes",
+]
+LESSONS_COLS = ["id", "timestamp", "text", "source_attempt_id"]
 
-# Ensure storage file exists
-if os.path.exists(MEMORY_CSV_PATH):
-    df = pd.read_csv(MEMORY_CSV_PATH)
-else:
-    df = pd.DataFrame(columns=["id", "type", "text", "timestamp"])
-    df.to_csv(MEMORY_CSV_PATH, index=False)
 
-# FAISS index (FlatL2)
-index = faiss.IndexFlatL2(EMBED_DIM)
-# A list to hold text entries in the order they were added
-memory_texts = df["text"].tolist()
+def _load_csv(path, cols):
+    if os.path.exists(path):
+        return pd.read_csv(path)
+    df = pd.DataFrame(columns=cols)
+    df.to_csv(path, index=False)
+    return df
 
-# If there are existing rows, load their embeddings
-if not df.empty:
-    embeddings = []
-    for txt in memory_texts:
-        emb = genai.embed_content(
-            model="models/embedding-001",
-            content=txt,
-            task_type="retrieval_document"
-        )["embedding"]
-        embeddings.append(np.array(emb, dtype="float32"))
-    if embeddings:
-        index.add(np.stack(embeddings, axis=0))
 
-def embed_text(text: str) -> np.ndarray:
-    """Use Gemini to embed the text into a vector."""
-    resp = genai.embed_content(
-        model="models/embedding-001",
-        content=text,
-        task_type="retrieval_document"
-    )
-    vec = np.array(resp["embedding"], dtype="float32")
-    return vec
+def _load_index():
+    if os.path.exists(LESSONS_FAISS):
+        return faiss.read_index(LESSONS_FAISS)
+    return faiss.IndexFlatL2(EMBED_DIM)
 
-def store_memory(text: str, mem_type: str = "interaction"):
-    """Add a new memory."""
-    global df, memory_texts, index
 
-    # Create new ID
-    new_id = int(df["id"].max()) + 1 if not df.empty else 1
-    ts = datetime.utcnow().isoformat()
+_attempts = _load_csv(ATTEMPTS_CSV, ATTEMPTS_COLS)
+_lessons = _load_csv(LESSONS_CSV, LESSONS_COLS)
+_lessons_index = _load_index()
 
-    # Append to DataFrame
-    new_row = {"id": new_id, "type": mem_type, "text": text, "timestamp": ts}
-    df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
-    df.to_csv(MEMORY_CSV_PATH, index=False)
 
-    # Embed and add to FAISS
-    vec = embed_text(text)
-    index.add(np.expand_dims(vec, 0))
-    memory_texts.append(text)
+def _embed(text):
+    return np.array(_embed_call(text), dtype="float32")
 
-def retrieve_memories(query: str, top_k: int = TOP_K, mem_type: str | None = None) -> list[str]:
-    """Return the top_k most similar past memories to the query."""
-    if index.ntotal == 0:
+
+def _ensure_aligned():
+    """Rebuild the FAISS index if it doesn't match lessons.csv row count."""
+    global _lessons_index
+    if _lessons_index.ntotal == len(_lessons):
+        return
+    _lessons_index = faiss.IndexFlatL2(EMBED_DIM)
+    for txt in _lessons["text"]:
+        _lessons_index.add(np.expand_dims(_embed(txt), 0))
+    faiss.write_index(_lessons_index, LESSONS_FAISS)
+
+
+_ensure_aligned()
+
+
+def _now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _next_id(df):
+    return int(df["id"].max()) + 1 if not df.empty else 1
+
+
+def record_attempt(question, answer, retrieved_lesson_ids=None, notes=""):
+    global _attempts
+    row = {
+        "id": _next_id(_attempts),
+        "timestamp": _now(),
+        "question": question,
+        "answer": answer,
+        "correct": None,
+        "expected_answer": None,
+        "retrieved_lesson_ids": ";".join(str(i) for i in (retrieved_lesson_ids or [])),
+        "notes": notes,
+    }
+    _attempts = pd.concat([_attempts, pd.DataFrame([row])], ignore_index=True)
+    _attempts.to_csv(ATTEMPTS_CSV, index=False)
+    return row["id"]
+
+
+def record_attempt_outcome(attempt_id, correct, expected_answer, notes=None):
+    """Write grading result back to an existing attempt row. Stores correct as 1/0."""
+    global _attempts
+    mask = _attempts["id"] == attempt_id
+    if not mask.any():
+        raise ValueError(f"no attempt with id={attempt_id}")
+    _attempts.loc[mask, "correct"] = int(bool(correct))
+    _attempts.loc[mask, "expected_answer"] = expected_answer
+    if notes is not None:
+        _attempts.loc[mask, "notes"] = notes
+    _attempts.to_csv(ATTEMPTS_CSV, index=False)
+
+
+def record_lesson(text, source_attempt_id=None):
+    global _lessons
+    row = {
+        "id": _next_id(_lessons),
+        "timestamp": _now(),
+        "text": text,
+        "source_attempt_id": source_attempt_id,
+    }
+    _lessons = pd.concat([_lessons, pd.DataFrame([row])], ignore_index=True)
+    _lessons.to_csv(LESSONS_CSV, index=False)
+    _lessons_index.add(np.expand_dims(_embed(text), 0))
+    faiss.write_index(_lessons_index, LESSONS_FAISS)
+    return row["id"]
+
+
+def retrieve_lessons(query, top_k=5):
+    if _lessons_index.ntotal == 0:
         return []
-
-    # Handle empty query to retrieve latest memories instead of similarity search
-    if not query:
-        if mem_type:
-            mems = df[df['type'] == mem_type]
-        else:
-            mems = df
-        
-        # Sort by timestamp to get the most recent
-        recent_mems = mems.sort_values(by='timestamp', ascending=False).head(top_k)
-        return recent_mems['text'].tolist()
-
-    q_vec = embed_text(query)
-    
-    if mem_type:
-        # This is not the most efficient way, but it will work for now
-        # A better approach would be to use metadata filtering in FAISS if available
-        # or have separate indexes per memory type.
-        
-        # Search for more results to have a better chance of finding the desired type
-        k_search = max(top_k, index.ntotal) if top_k > 0 else index.ntotal
-        if k_search == 0:
-             return []
-        D, I = index.search(x=np.expand_dims(q_vec, 0), k=int(k_search))
-        
-        results = []
-        for idx in I[0]:
-            if 0 <= idx < len(memory_texts):
-                # Assumes `df` is aligned with `memory_texts` and `index`
-                if df.iloc[idx]['type'] == mem_type:
-                    results.append(memory_texts[idx])
-                if len(results) == top_k:
-                    break
-        return results
-    else:
-        k_search = min(top_k, index.ntotal)
-        if k_search == 0:
-             return []
-        D, I = index.search(x=np.expand_dims(q_vec, 0), k=int(k_search))
-        results = []
-        for idx in I[0]:
-            if 0 <= idx < len(memory_texts):
-                results.append(memory_texts[idx])
-        return results
+    q = _embed(query)
+    k = min(top_k, _lessons_index.ntotal)
+    _, idxs = _lessons_index.search(np.expand_dims(q, 0), k)
+    rows = _lessons.iloc[idxs[0]]
+    return [{"id": int(r["id"]), "text": r["text"]} for _, r in rows.iterrows()]
