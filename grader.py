@@ -1,9 +1,8 @@
-"""Two-tier grader: normalized string match where safe, LLM judge otherwise. See NOTES.md."""
+"""Deterministic grader. Numeric comparison for numeric answers, normalized string
+containment for entity answers. No LLM judge — see NOTES.md §Step 3 addendum 3 for why."""
 
 import re
 import unicodedata
-
-from gemini_client import generate
 
 
 def _normalize(s):
@@ -15,32 +14,19 @@ def _normalize(s):
     return s
 
 
-def _string_match(answer, expected):
-    return _normalize(expected) in _normalize(answer)
-
-
-def _expected_appears_in_question(question, expected):
-    return _normalize(expected) in _normalize(question)
-
-
-def _llm_judge(question, answer, expected):
-    prompt = (
-        "You are grading an answer. The expected answer is the ground truth — "
-        "do not override it based on outside knowledge.\n\n"
-        f"Question: {question}\n"
-        f"Expected answer: {expected}\n"
-        f"Model's answer: {answer}\n\n"
-        "Does the model's answer convey the same factual content as the expected answer? "
-        "Reply with exactly one word: yes or no."
-    )
-    verdict = generate(prompt).text.strip().lower()
-    return verdict.startswith("yes")
+def _parse_number(s):
+    m = re.search(r"-?\d[\d,]*\.?\d*", str(s))
+    return float(m.group().replace(",", "")) if m else None
 
 
 def grade(question, answer, expected):
-    """Return (correct: bool, note: str). note is 'string_match' or 'llm_judge'."""
-    if not _expected_appears_in_question(question, expected):
-        if _string_match(answer, expected):
-            return True, "string_match"
-    verdict = _llm_judge(question, answer, expected)
-    return verdict, "llm_judge"
+    """Return (correct: bool, note: str). Fully deterministic, no API calls."""
+    exp_num = _parse_number(expected)
+    if exp_num is not None:
+        ans_num = _parse_number(answer)
+        if ans_num is None:
+            return False, "numeric"
+        if "." in str(expected):  # decimal expected → allow rounding slack
+            return abs(ans_num - exp_num) <= 0.05, "numeric"
+        return round(ans_num) == round(exp_num), "numeric"  # integer → exact
+    return _normalize(expected) in _normalize(answer), "string_match"

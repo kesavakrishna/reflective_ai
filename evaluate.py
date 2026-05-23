@@ -11,7 +11,7 @@ from grader import grade
 from memory import record_attempt_outcome, ATTEMPTS_CSV, ATTEMPTS_COLS
 
 QUESTIONS_CSV = "questions.csv"
-THROTTLE_SECS = int(os.getenv("EVAL_THROTTLE_SECS", "20"))
+THROTTLE_SECS = int(os.getenv("EVAL_THROTTLE_SECS", "0"))
 
 
 def _reset_attempts():

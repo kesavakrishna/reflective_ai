@@ -7,9 +7,9 @@ import faiss
 import numpy as np
 import pandas as pd
 
-from gemini_client import embed as _embed_call
+from llm_client import embed as _embed_call
 
-EMBED_DIM = 768
+EMBED_DIM = 384  # all-MiniLM-L6-v2 (local). Must match the embedding model in llm_client.py.
 ATTEMPTS_CSV = os.getenv("ATTEMPTS_CSV", "attempts.csv")
 LESSONS_CSV = os.getenv("LESSONS_CSV", "lessons.csv")
 LESSONS_FAISS = os.getenv("LESSONS_FAISS", "lessons.faiss")
@@ -94,6 +94,16 @@ def record_attempt_outcome(attempt_id, correct, expected_answer, notes=None):
     if notes is not None:
         _attempts.loc[mask, "notes"] = notes
     _attempts.to_csv(ATTEMPTS_CSV, index=False)
+
+
+def reset_lessons():
+    """Wipe all lessons + the FAISS index. Lets us regenerate cleanly while tuning."""
+    global _lessons, _lessons_index
+    _lessons = pd.DataFrame(columns=LESSONS_COLS)
+    _lessons.to_csv(LESSONS_CSV, index=False)
+    _lessons_index = faiss.IndexFlatL2(EMBED_DIM)
+    if os.path.exists(LESSONS_FAISS):
+        os.remove(LESSONS_FAISS)
 
 
 def record_lesson(text, source_attempt_id=None):

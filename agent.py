@@ -1,9 +1,9 @@
 """Answer a question with lesson-aware retrieval and constrained output. See NOTES.md."""
 
-from gemini_client import generate
+from llm_client import generate
 from memory import record_attempt, retrieve_lessons
 
-TOP_K_LESSONS = 5
+TOP_K_LESSONS = 3  # selective retrieval — with ~6 lessons, top-5 would inject nearly all of them
 
 
 def build_prompt(question, lessons):
@@ -28,8 +28,7 @@ def build_prompt(question, lessons):
 def answer(question):
     lessons = retrieve_lessons(question, top_k=TOP_K_LESSONS)
     prompt = build_prompt(question, lessons)
-    response = generate(prompt)
-    reply = response.text.strip()
+    reply = generate(prompt).strip()
     attempt_id = record_attempt(
         question=question,
         answer=reply,
