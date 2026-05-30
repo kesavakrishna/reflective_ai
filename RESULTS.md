@@ -52,6 +52,52 @@ This is a **limit result** for Reflexion-style reflection on a strong frozen ins
 
 For the broader research framing: "can an LLM improve by applying lessons from past mistakes without fine-tuning" gets a qualified yes — *sometimes, when failures have a transferable shape and underlying knowledge is correct.* Most of the time, on a capable model, it doesn't move the needle, and occasionally it makes things worse.
 
+## Where this goes next
+
+This experiment is one slice of a longer arc. The next slice is sharply defined; the broader trajectory is intentionally loose.
+
+### The immediate next experiment — two-track memory (correction + principle)
+
+The clearest finding above is that **strategy-shaped lessons alone cannot fix a wrong belief.** Humans, when corrected, store *both* the corrected fact AND a meta-strategy. We tested only the second half and found it inadequate on its own — and in one case (Hoover/Empire State), it actively hurt by exercising wrong recall under structured reasoning.
+
+The minimum experiment to test this:
+
+1. **Principle lessons** (what we have): *"for which-came-first questions, compare actual years."*
+2. **Correction memos** (new): *"Microsoft was founded 1975; Apple 1976. Earlier wrong answer: Apple."*
+
+Retrieved together at attempt time, the principle supplies *how* to reason and the correction supplies the *facts* to reason over. That's a closer model of how humans actually update after being corrected. It should also eliminate the Hoover/Empire backfire — alongside "compare years," the agent would retrieve "Empire State 1931 < Hoover 1936."
+
+**Scope:** roughly 30 lines of code. Add `record_correction(question, expected_answer)` to `memory.py` alongside `record_lesson`. Have `reflect.py` record both on each failure. Add a second retrieval pass in `agent.answer`. Re-run the full pipeline (seen baseline → reflect → seen memory-on → held-out off → held-out on) and compare to the single-track numbers above.
+
+**Pre-registered prediction:** correction-augmented memory substantially outperforms principle-only — the seen improvement comes from corrected facts being directly retrievable; the held-out improvement comes from the Hoover/Empire-style backfires being eliminated by supplying correct facts alongside the strategy. If the prediction holds, the finding becomes concrete: **the missing ingredient in LLM "learning from mistakes" isn't reflection — it's targeted fact-correction paired with strategy.** If the prediction fails, that's also informative — it would mean something deeper than memory architecture is missing.
+
+### The broader arc
+
+*Can LLMs reason like humans?* isn't a project; it's a series of small experiments, each isolating one specific dimension of human-like cognition and asking whether the LLM, with appropriate scaffolding, behaves that way. Plausible next slices after the two-track experiment:
+
+- **Uncertainty calibration.** Humans hedge when they don't know; LLMs are often falsely confident. Can a reflection-style system learn to flag low-confidence answers based on past failures?
+- **Self-correction without external feedback.** Can the agent catch its own mistakes through internal checking before committing to an answer? Tests whether reasoning + retrieval can substitute for a grader.
+- **Cross-question pattern learning.** If the model fails N questions sharing a structural feature it wasn't told about, can reflection discover the shared feature? Tests inductive abstraction.
+- **Theory of mind via reflection.** When a lesson concerns another agent's likely behavior, does the retrieval mechanism surface it appropriately?
+
+Each of these is a small standalone experiment, comparable in scope to what's already been done. None requires committing to an open-ended research program. The work compounds — the methodology (deterministic grader, controlled task set, seen/held-out split) carries between slices.
+
+### Methodology that transfers
+
+Independent of which research question comes next, this experiment built up a portable toolkit worth holding onto:
+
+- **Deterministic grading first; LLM judge only when proven necessary.** We tried the LLM judge and it rubber-stamped wrong answers as correct. Don't go back unless deterministic grading genuinely can't handle a category of answer.
+- **Controlled task design with failure-mode grouping.** Even though our held-out result showed that frontier-model failures don't cluster by category, the *grouping discipline* is what surfaced that finding. Without it, the result would have looked like noise.
+- **Seen vs held-out separation, always.** Without held-out, memorization is indistinguishable from learning. Don't trust a memory-on result that doesn't have a held-out comparison; the paper-ignite "fix" on this experiment is exactly the contamination it prevents.
+- **Document the dead ends.** NOTES.md captures every model swap, grader iteration, prompt v1→v2 transition, and provider outage. These notes save hours when picking the project back up cold.
+
+### Conditions for picking back up
+
+- **For the two-track experiment:** start from `main`. The current pipeline runs `python evaluate.py --reset` → `python reflect.py` → `python evaluate.py --reset` for the cycle. Add the correction track to `memory.py` and `reflect.py`, expose a flag in `agent.py` to retrieve corrections alongside lessons, re-run.
+- **For revising the held-out:** the current set was designed by hypothesizing failure modes; the null result showed this was the wrong assumption for a strong model. Pre-screen ~100 candidate held-out questions against Llama 3.3 70B and keep only the ~20 it actually fails. Converts the null into a real transfer measurement.
+- **If the model degrades on NVIDIA again:** the client is OpenAI-compatible. Swap `LLM_BASE_URL` and `LLM_MODEL` in `.env` to point at any OpenAI-protocol endpoint (Ollama localhost, a different NVIDIA NIM, etc.). Embeddings are local and won't break.
+- **If picking up cold months later:** read this file, then NOTES.md's "Open follow-ups" section. They contain the load-bearing context to resume without re-deriving framing.
+
 ## Caveats
 
 - **n = 64 total questions, one model, one reflection prompt, single seed (temp 0).** Suggestive, not statistical.

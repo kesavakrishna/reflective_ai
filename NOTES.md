@@ -376,6 +376,9 @@ See `RESULTS.md` for the consolidated writeup.
 
 ## Open follow-ups (not done tonight)
 
+For the **strategic forward plan** (two-track memory experiment + the broader human-cognition arc), see RESULTS.md → "Where this goes next." The items below are the *tactical* leftover work from the current experiment.
+
+
 - Re-run seen-40 baseline + memory-on with Llama to repopulate `results_baseline.csv` / save a `results_memory.csv`. The held-out result files are saved; the seen-40 attempt files were overwritten by the held-out runs and only exist in logged stdout.
 - Step 4 prompt v3: explicitly steer the model toward identifying *factual gaps* vs *process errors* as distinct lesson types. Currently it conflates them.
 - Curated held-out v2: pre-screen candidate held-out questions against the target model and keep only the ones it fails. Current held-out was designed by hypothesizing failure modes; a model-targeted design would have actual signal.
