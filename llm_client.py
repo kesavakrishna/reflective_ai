@@ -20,7 +20,7 @@ load_dotenv()
 # Generation: any OpenAI-compatible endpoint. NVIDIA by default; for Ollama set
 # LLM_BASE_URL=http://localhost:11434/v1 and LLM_MODEL=<local model>, key is ignored.
 LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://integrate.api.nvidia.com/v1")
-LLM_MODEL = os.getenv("LLM_MODEL", "microsoft/phi-4-multimodal-instruct")
+LLM_MODEL = os.getenv("LLM_MODEL", "meta/llama-3.3-70b-instruct")
 LLM_API_KEY = os.getenv("LLM_API_KEY") or os.getenv("NVIDIA_API_KEY") or "ollama"
 
 # Embeddings: local, CPU-friendly. all-MiniLM-L6-v2 is 384-dim (must match EMBED_DIM in memory.py).

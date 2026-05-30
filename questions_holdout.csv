@@ -1,0 +1,25 @@
+question,expected_answer,category
+Who wrote the novel that the 1972 film The Godfather was based on?,Mario Puzo,authorship
+Who wrote the original novel Jurassic Park was based on?,Michael Crichton,authorship
+Who wrote the original novel The Wonderful Wizard of Oz?,L. Frank Baum,authorship
+"Which was founded first, Google or Amazon?",Amazon,sequencing
+Was the printing press or the telescope invented first?,printing press,sequencing
+"Which was completed first, the Hoover Dam or the Empire State Building?",Empire State Building,sequencing
+"Who wrote ""The Old Man and the Sea"" — Hemingway or Steinbeck?",Hemingway,near_name
+"Who composed ""The Four Seasons"" — Vivaldi or Handel?",Vivaldi,near_name
+"Who painted ""Guernica"" — Picasso or Braque?",Picasso,near_name
+What is normal human body temperature in Celsius?,37,units
+What is the boiling point of water at sea level in Fahrenheit?,212,units
+"How long is a half marathon in miles (to one decimal)?",13.1,units
+Who was the first U.S. president to resign?,Richard Nixon,first_to
+Who was the first person to fly solo nonstop across the Atlantic?,Charles Lindbergh,first_to
+Who was the first woman in space?,Valentina Tereshkova,first_to
+"Which of these is NOT a mammal: dolphin, shark, whale, bat?",shark,negation
+"Which of these is NOT a Greek god: Zeus, Apollo, Jupiter, Hermes?",Jupiter,negation
+"Which of these is NOT a U.S. president: Washington, Jefferson, Hamilton, Madison?",Hamilton,negation
+How many keys are on a standard piano?,88,counting
+How many justices sit on the U.S. Supreme Court?,9,counting
+How many Apollo missions landed on the Moon?,6,counting
+What is the capital of Canada?,Ottawa,geography
+What is the capital of Turkey?,Ankara,geography
+What is the highest mountain in Africa?,Kilimanjaro,geography

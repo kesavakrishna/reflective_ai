@@ -18,14 +18,14 @@ def _reset_attempts():
     pd.DataFrame(columns=ATTEMPTS_COLS).to_csv(ATTEMPTS_CSV, index=False)
 
 
-def evaluate(limit=None, reset=False):
+def evaluate(limit=None, reset=False, questions_path=QUESTIONS_CSV, use_memory=True):
     if reset:
         _reset_attempts()
         # Re-import to pick up the empty file (module-level _attempts was loaded at import).
         import memory
         memory._attempts = pd.read_csv(ATTEMPTS_CSV)
 
-    questions = pd.read_csv(QUESTIONS_CSV)
+    questions = pd.read_csv(questions_path)
     if limit:
         questions = questions.head(limit)
 
@@ -34,7 +34,7 @@ def evaluate(limit=None, reset=False):
         if i > 0 and THROTTLE_SECS:
             time.sleep(THROTTLE_SECS)
         q, expected, category = row["question"], row["expected_answer"], row["category"]
-        reply, attempt_id = answer(q)
+        reply, attempt_id = answer(q, use_memory=use_memory)
         correct, note = grade(q, reply, expected)
         record_attempt_outcome(attempt_id, correct, expected, notes=note)
         results.append({"category": category, "correct": int(correct)})
@@ -55,5 +55,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=None, help="run only the first N questions")
     parser.add_argument("--reset", action="store_true", help="wipe attempts.csv before running")
+    parser.add_argument("--questions", default=QUESTIONS_CSV, help="CSV of questions to evaluate")
+    parser.add_argument("--no-memory", action="store_true", help="disable lesson retrieval (memory-off run)")
     args = parser.parse_args()
-    evaluate(limit=args.limit, reset=args.reset)
+    evaluate(limit=args.limit, reset=args.reset, questions_path=args.questions, use_memory=not args.no_memory)

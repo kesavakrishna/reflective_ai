@@ -25,8 +25,8 @@ def build_prompt(question, lessons):
     )
 
 
-def answer(question):
-    lessons = retrieve_lessons(question, top_k=TOP_K_LESSONS)
+def answer(question, use_memory=True):
+    lessons = retrieve_lessons(question, top_k=TOP_K_LESSONS) if use_memory else []
     prompt = build_prompt(question, lessons)
     reply = generate(prompt).strip()
     attempt_id = record_attempt(
