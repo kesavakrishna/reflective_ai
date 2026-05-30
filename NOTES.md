@@ -13,9 +13,9 @@ The broader research question: **can an LLM, given its own past failures as cont
 1. **Pick a task with verifiable outcomes.** ← done (see Step 1 section below)
 2. **Stop polluting memory + restructure schema.** ← done
 3. **Add a grader.** ← done (see Step 3 section below)
-4. **Failure-triggered reflection.** On a wrong answer, ask the model for a lesson; store it. ← v1 done — naive prompt produces vacuous "be more careful" platitudes (see Step 4 section). Tuning the prompt next.
-5. **Lesson-aware retrieval at attempt time.** Inject relevant past lessons into the prompt (already wired — just empty until step 4 starts producing lessons).
-6. **Evaluate.** Accuracy with vs without memory, on seen vs unseen questions. Spot-read 20 lessons for quality.
+4. **Failure-triggered reflection.** On a wrong answer, ask the model for a lesson; store it. ← done. v1 prompt produced platitudes; v2 (diagnosis-first, ban-on-platitudes) produced usable lessons on Llama 70B.
+5. **Lesson-aware retrieval at attempt time.** ← done. Llama seen-40: 92.5% (memory off) → 97.5% (memory on). Decomposes into 1 real fix, 1 memorization, 1 stubborn wrong (the "lesson can't fix wrong knowledge" case — MS/Apple).
+6. **Evaluate on held-out.** ← done. Llama 24-Q held-out: 100% (memory off) → 95.8% (memory on). Memory broke one previously-correct answer (Hoover/Empire State). See RESULTS.md for the full writeup.
 
 ---
 
@@ -340,3 +340,42 @@ Step 5 (re-run same 40, memory on) measures mostly (a) plus some within-category
 ### Addendum 4 (2026-05-17): embeddings moved local
 
 `models/embedding-001` got 404'd — Google deprecated it (second Gemini model to die mid-project, after `gemini-2.0-flash`). Rather than chase another Gemini embedding ID that may also vanish, embeddings are now a **local sentence-transformers model** (`all-MiniLM-L6-v2`, 384-dim, CPU). No API, no rate limits, no deprecation, fully reproducible. `EMBED_DIM` changed 768 → 384 (free — lessons were empty). This removes Gemini from the project entirely; `GEMINI_API_KEY` in `.env` is now unused.
+
+## Step 5 — memory-aware retrieval on Llama (2026-05-24)
+
+Wiped phi-4 lessons, switched default model to `meta/llama-3.3-70b-instruct` (phi-4-multimodal got "DEGRADED" twice on NVIDIA in one session). Re-ran baseline and reflection on Llama, then memory-on eval on the same training set.
+
+**Llama 3.3 70B baseline (memory off):** 92.5% (37/40). Stronger than Phi-4 (85%) — fixed the M-states counting error, the DRC/Algeria geography error, and the Eiffel/Statue sequencing error. The 3 remaining failures:
+- sequencing: Microsoft/Apple → "Apple" (wrong)
+- sequencing: telephone/bulb → "electric light bulb" (wrong)
+- units: paper ignites → "233.9" (close to 233 but our integer grader rounds to 234)
+
+**Llama reflection lessons (v2 prompt):**
+1. MS/Apple → "When comparing the founding dates of two companies, always recall or deduce the founding year of each company and compare the years directly, rather than relying on general knowledge or assumptions about which company is older."
+2. telephone/bulb → "When comparing the timeline of inventions, create a mental or written timeline of major events and their corresponding years to ensure the correct order of occurrence."
+3. paper ignite → "When providing a numerical value in response to a question that references a specific, well-known value (such as the title of a book), round the answer to the nearest whole number..."
+
+Notably sharper than phi-4's lessons (which leaked "consult reliable sources" platitudes even with v2). Llama follows the diagnosis-first format.
+
+**Llama memory-on (training set):** 97.5% (39/40). Two fixes:
+- telephone/bulb FLIPPED to correct — *real lesson-driven fix*. Llama's year-recall is correct (1876/1879); lesson gave it the strategy.
+- paper ignite FLIPPED to "233" — *memorization fix*. Lesson came from this exact question; retrieved for this exact question. Headline +1 but lookup-table-shaped.
+- MS/Apple STILL wrong. Llama followed the lesson (recall years, compare), but its recall is wrong (believes Apple is older than Microsoft). **A sharp meta-strategy lesson cannot fix a knowledge error.** The most important data point of the experiment.
+
+## Step 6 — held-out (2026-05-24)
+
+Drafted `questions_holdout.csv` (24 Q, 3 per category) — each held-out question factually distinct from its training siblings but sharing the category's failure mode. Added `--questions` and `--no-memory` flags to `evaluate.py` plus `use_memory` plumbing in `agent.py` so we can run any question set in either condition without wiping lessons.
+
+**Held-out memory OFF: 100% (24/24).** Llama got every held-out question right. None of the questions designed to target the failure modes (sequencing, units, etc.) actually tripped Llama. **Implication: failures don't cluster by category-level reasoning weakness in a strong model — they're idiosyncratic factual blind spots.** The MS/Apple miss isn't a sequencing-failure-mode; it's a specific belief.
+
+**Held-out memory ON: 95.8% (23/24).** One previously-correct answer FLIPPED to wrong: Hoover Dam vs Empire State Building. Memory-off said Empire State (correct, 1931 < Hoover 1936); memory-on said Hoover Dam.
+
+The mechanism is the mirror of MS/Apple: the retrieved "compare actual years" lesson prompted Llama to recall years for both, but its recall was wrong on this pair, and structured reasoning over wrong recall produced a wrong answer where gut intuition produced a right one. **Lesson + wrong recall can hurt as well as fail to help.**
+
+See `RESULTS.md` for the consolidated writeup.
+
+## Open follow-ups (not done tonight)
+
+- Re-run seen-40 baseline + memory-on with Llama to repopulate `results_baseline.csv` / save a `results_memory.csv`. The held-out result files are saved; the seen-40 attempt files were overwritten by the held-out runs and only exist in logged stdout.
+- Step 4 prompt v3: explicitly steer the model toward identifying *factual gaps* vs *process errors* as distinct lesson types. Currently it conflates them.
+- Curated held-out v2: pre-screen candidate held-out questions against the target model and keep only the ones it fails. Current held-out was designed by hypothesizing failure modes; a model-targeted design would have actual signal.
