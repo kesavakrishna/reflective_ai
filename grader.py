@@ -32,7 +32,15 @@ def _parse_number(s):
 
 
 def grade(question, answer, expected):
-    """Return (correct: bool, note: str). Fully deterministic, no API calls."""
+    """Return (correct: bool, note: str). Fully deterministic, no API calls.
+    expected may list accepted aliases separated by "|" (TriviaQA); any match counts."""
+    if "|" in str(expected):
+        results = [_grade_one(answer, alias) for alias in str(expected).split("|")]
+        return any(ok for ok, _ in results), "alias"
+    return _grade_one(answer, expected)
+
+
+def _grade_one(answer, expected):
     exp_num = _parse_number(expected)
     if exp_num is not None:
         ans_num = _parse_number(answer)
@@ -41,4 +49,6 @@ def grade(question, answer, expected):
         if "." in str(expected):  # decimal expected → allow rounding slack
             return abs(ans_num - exp_num) <= 0.05, "numeric"
         return round(ans_num) == round(exp_num), "numeric"  # integer → exact
-    return _normalize(expected) in _normalize(answer), "string_match"
+    # Whole-word containment: plain substring let short aliases match inside other words ("oman" in "roman").
+    pattern = r"(?<!\w)" + re.escape(_normalize(expected)) + r"(?!\w)"
+    return re.search(pattern, _normalize(answer)) is not None, "string_match"

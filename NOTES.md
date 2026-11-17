@@ -401,6 +401,24 @@ Plan: (1) re-run the pipeline on a weaker local model and count **harms** (corre
 - **Lesson quality is weak.** 3/6 lessons are near-platitudes ("mentally verify the order of magnitude", "group into smaller chunks"); lesson 4 is self-contradictory ("convert to kilometers … even if already in kilometers").
 - **N is too small for probes.** 1 fix + 1 harm across 64 questions. The interpretability step needs dozens of each → the question set has to grow substantially (hundreds) before training a harm probe.
 
+## Phase 2, run 2 — Gemma 3 4B on 500 TriviaQA questions (2026-11-16)
+
+64 questions gave 1 fix + 1 harm — too few. `build_triviaqa.py` samples 250 train + 250 held-out (seed 0) from TriviaQA rc.nocontext validation; `expected_answer` = aliases joined by "|". Grader now accepts any alias and matches whole words (re-graded all earlier files: no changes). Run: `runs/gemma3-4b-trivia/` (logs `.log` + `.resume.log` — first attempt was killed for low system RAM after step 2; resumed with `run_cycle.py --from-step 3`).
+
+| Set | Memory OFF | Memory ON | Fixed | Broke | Harm rate |
+|---|---|---|---|---|---|
+| Training (250) | 48.4% (121) | 44.8% (112) | 9 | 18 | 14.9% |
+| Held-out (250) | 52.8% (132) | 48.8% (122) | 11 | 21 | 15.9% |
+
+129 lessons written (one per training failure).
+
+- **Memory is net harmful at scale.** It breaks ~2× as many answers as it fixes, on both splits. Per split the sign test is p≈0.11–0.12; pooled (39 broke vs 20 fixed) p=0.018.
+- **Even training doesn't benefit,** though every failed training question has its own lesson in the store. Only 9/129 fixed. Lessons are rules, not facts, so a lesson from a question can't supply that question's missing answer — the Llama finding again, now at N=250.
+- **Harm isn't copying.** 0/39 broken answers appear verbatim in the retrieved lessons. The broken answers swap to a *different plausible entity* (Maastricht → Lisbon, Wellington → Buenos Aires, Chess → Go, Tin → Indium, George III → George IV).
+- **Mechanism (hypothesis): topic-matched heuristics override correct recall.** Maastricht→Lisbon and Wellington→Buenos Aires both retrieved lessons 64;43;7 — geography heuristics like "prioritize the most immediately obvious and widely known neighboring country". Retrieval matches on topic, not on whether the question has the failure the lesson was written for, and the heuristic then steers the model off an answer it had right. Same family as the 64-question Apollo case.
+- **Grader noise exists but doesn't flip the sign.** Spot check of the 59 changed pairs: a few are alias artifacts (e.g. "DLS (Duckworth-Lewis-Stern)" → "The DLS method" counted as broke; "Sir Walter Scott" → "Scott"; Gregorovitch "fixed" via a loose Harry Potter alias). Roughly 4–6 per side; the broke > fixed gap survives.
+- **Interpretability now has data:** 39 broke / 20 fixed / 214 stayed-right / 227 stayed-wrong pairs in `*_pairs.csv`. Enough for logit lens + patching on the broke cases and a cross-validated broke-vs-stayed_right probe; thin for anything fancier.
+
 ## Open follow-ups (not done tonight)
 
 For the **strategic forward plan** (two-track memory experiment + the broader human-cognition arc), see RESULTS.md → "Where this goes next." The items below are the *tactical* leftover work from the current experiment.

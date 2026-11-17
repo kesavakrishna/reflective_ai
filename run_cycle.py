@@ -30,6 +30,10 @@ def main():
     p.add_argument("--name", required=True, help="run directory name under runs/")
     p.add_argument("--backend", default=os.getenv("LLM_BACKEND", "api"), choices=["api", "local"])
     p.add_argument("--limit", type=int, default=None, help="only the first N questions (smoke test)")
+    p.add_argument("--train", default="questions.csv", help="training question CSV")
+    p.add_argument("--holdout", default="questions_holdout.csv", help="held-out question CSV")
+    p.add_argument("--from-step", type=int, default=1, choices=range(1, 6),
+                   help="resume at this step, reusing earlier steps' files in the run dir")
     args = p.parse_args()
 
     d = os.path.join("runs", args.name)
@@ -46,12 +50,17 @@ def main():
     lim = ["--limit", str(args.limit)] if args.limit else []
     out = lambda f: ["--out", os.path.join(d, f)]
 
-    run("1/5 training, memory OFF", ["evaluate.py", "--reset", "--no-memory", *lim, *out("train_off.csv")], env)
-    run("2/5 reflect on failures", ["reflect.py", "--reset"], env)
-    run("3/5 training, memory ON", ["evaluate.py", "--reset", *lim, *out("train_on.csv")], env)
-    holdout = ["--questions", "questions_holdout.csv"]
-    run("4/5 held-out, memory OFF", ["evaluate.py", "--reset", "--no-memory", *holdout, *lim, *out("holdout_off.csv")], env)
-    run("5/5 held-out, memory ON", ["evaluate.py", "--reset", *holdout, *lim, *out("holdout_on.csv")], env)
+    train = ["--questions", args.train]
+    holdout = ["--questions", args.holdout]
+    steps = [
+        ("1/5 training, memory OFF", ["evaluate.py", "--reset", "--no-memory", *train, *lim, *out("train_off.csv")]),
+        ("2/5 reflect on failures", ["reflect.py", "--reset"]),  # reads attempts.csv, so step 1 must be the last eval
+        ("3/5 training, memory ON", ["evaluate.py", "--reset", *train, *lim, *out("train_on.csv")]),
+        ("4/5 held-out, memory OFF", ["evaluate.py", "--reset", "--no-memory", *holdout, *lim, *out("holdout_off.csv")]),
+        ("5/5 held-out, memory ON", ["evaluate.py", "--reset", *holdout, *lim, *out("holdout_on.csv")]),
+    ]
+    for step, cmd in steps[args.from_step - 1:]:
+        run(step, cmd, env)
 
     print("\n##### comparison #####")
     for split in ("train", "holdout"):
