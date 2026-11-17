@@ -14,9 +14,21 @@ def _normalize(s):
     return s
 
 
+_NUMBER_WORDS = {
+    w: i for i, w in enumerate(
+        "zero one two three four five six seven eight nine ten eleven twelve thirteen "
+        "fourteen fifteen sixteen seventeen eighteen nineteen twenty".split()
+    )
+}
+
+
 def _parse_number(s):
     m = re.search(r"-?\d[\d,]*\.?\d*", str(s))
-    return float(m.group().replace(",", "")) if m else None
+    if m:
+        return float(m.group().replace(",", ""))
+    # Gemma answers small counts in words ("Nine") — digits-only parsing marked those wrong.
+    w = re.search(r"\b(" + "|".join(_NUMBER_WORDS) + r")\b", str(s).lower())
+    return float(_NUMBER_WORDS[w.group(1)]) if w else None
 
 
 def grade(question, answer, expected):

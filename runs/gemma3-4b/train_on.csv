@@ -1,0 +1,41 @@
+id,timestamp,question,answer,correct,expected_answer,retrieved_lesson_ids,notes,category
+1,2026-11-17T00:56:05.684357+00:00,"Who wrote the novel ""Do Androids Dream of Electric Sheep?""",Philip K. Dick,1,Philip K. Dick,1;4;3,string_match,authorship
+2,2026-11-17T00:56:07.890612+00:00,"Who wrote the novella ""Rita Hayworth and Shawshank Redemption""?",Stephen King,1,Stephen King,2;1;3,string_match,authorship
+3,2026-11-17T00:56:10.136016+00:00,"Who wrote the novel ""Frankenstein""?",Mary Shelley,1,Mary Shelley,2;1;3,string_match,authorship
+4,2026-11-17T00:56:12.398548+00:00,Who composed the score for the original 1977 Star Wars film?,John Williams,1,John Williams,4;3;2,string_match,authorship
+5,2026-11-17T00:56:15.320555+00:00,"Who illustrated the original ""Where the Wild Things Are""?",Maurice Sendak,1,Maurice Sendak,1;2;6,string_match,authorship
+6,2026-11-17T00:56:16.863837+00:00,"Which was founded first, Microsoft or Apple?",Microsoft,1,Microsoft,1;2;5,string_match,sequencing
+7,2026-11-17T00:56:20.467047+00:00,Was the telephone or the electric light bulb patented first?,The electric light bulb,0,telephone,1;2;5,string_match,sequencing
+8,2026-11-17T00:56:22.865513+00:00,Did the French Revolution or the American Revolution begin first?,American Revolution,1,American Revolution,1;2;5,string_match,sequencing
+9,2026-11-17T00:56:26.257340+00:00,Was the Eiffel Tower or the Statue of Liberty completed first?,The Eiffel Tower,0,Statue of Liberty,2;1;4,string_match,sequencing
+10,2026-11-17T00:56:29.237131+00:00,"Which was discovered first, Neptune or Pluto?",Neptune,1,Neptune,1;4;2,string_match,sequencing
+11,2026-11-17T00:56:31.412103+00:00,"Who painted ""The Persistence of Memory"" — Dalí or Magritte?",Dalí,1,Dalí,2;1;6,string_match,near_name
+12,2026-11-17T00:56:34.338249+00:00,"Who wrote ""Brave New World"" — Aldous Huxley or George Orwell?",Aldous Huxley,1,Aldous Huxley,1;2;5,string_match,near_name
+13,2026-11-17T00:56:36.433967+00:00,"Who composed ""Boléro"" — Ravel or Debussy?",Ravel,1,Ravel,2;3;6,string_match,near_name
+14,2026-11-17T00:56:38.702971+00:00,Who discovered penicillin — Fleming or Pasteur?,Fleming,1,Fleming,1;2;3,string_match,near_name
+15,2026-11-17T00:56:40.214230+00:00,Who proposed special relativity — Einstein or Lorentz?,Einstein,1,Einstein,1;2;4,string_match,near_name
+16,2026-11-17T00:56:43.904972+00:00,"What is the boiling point of water at sea level, in Celsius?",100,1,100,3;4;5,numeric,units
+17,2026-11-17T00:56:48.762717+00:00,"How long is a marathon, in kilometers (to one decimal)?",42.17,1,42.2,4;3;2,numeric,units
+18,2026-11-17T00:56:53.126842+00:00,What is the freezing point of water in Fahrenheit?,32 °F,1,32,3;4;5,numeric,units
+19,2026-11-17T00:56:56.037143+00:00,"At what temperature does paper ignite, in Celsius (the Fahrenheit 451 value)?",232,0,233,3;1;4,numeric,units
+20,2026-11-17T00:57:02.095057+00:00,"How far is the Moon from Earth on average, in kilometers (to the nearest thousand)?","384,400",0,384000,4;3;1,numeric,units
+21,2026-11-17T00:57:04.676203+00:00,Who was the first person to walk on the Moon?,Neil Armstrong,1,Neil Armstrong,4;1;2,string_match,first_to
+22,2026-11-17T00:57:06.898406+00:00,Who was the first woman to win a Nobel Prize?,Marie Curie,1,Marie Curie,1;2;4,string_match,first_to
+23,2026-11-17T00:57:09.119222+00:00,Who was the first U.S. president to be impeached?,Andrew Johnson,1,Andrew Johnson,1;2;3,string_match,first_to
+24,2026-11-17T00:57:12.740560+00:00,Who was the first human in space?,Yuri Gagarin,1,Yuri Gagarin,4;1;2,string_match,first_to
+25,2026-11-17T00:57:16.334509+00:00,Who was the first European to reach India by sea?,Vasco da Gama,1,Vasco da Gama,1;4;2,string_match,first_to
+26,2026-11-17T00:57:18.542631+00:00,"Which of these is NOT a noble gas: argon, neon, nitrogen, krypton?",Nitrogen,1,nitrogen,3;1;5,string_match,negation
+27,2026-11-17T00:57:20.169928+00:00,"Which of these is NOT a primary additive (RGB) color: red, green, yellow, blue?",Yellow,1,yellow,5;2;1,string_match,negation
+28,2026-11-17T00:57:22.529009+00:00,"Which of these is NOT a planet in our solar system: Mercury, Venus, Pluto, Mars?",Pluto,1,Pluto,4;5;2,string_match,negation
+29,2026-11-17T00:57:25.261367+00:00,"Which of these is NOT a Shakespeare play: Hamlet, Othello, Faust, Macbeth?",Faust,1,Faust,2;6;5,string_match,negation
+30,2026-11-17T00:57:26.888513+00:00,"Which of these is NOT a programming language: Python, Java, HTML, Ruby?",HTML,1,HTML,6;1;2,string_match,negation
+31,2026-11-17T00:57:30.577335+00:00,How many bones are in the adult human body?,206,1,206,6;4;1,numeric,counting
+32,2026-11-17T00:57:32.181836+00:00,"How many U.S. states begin with the letter ""M""?",6,0,8,2;6;5,numeric,counting
+33,2026-11-17T00:57:35.123491+00:00,How many sonnets did Shakespeare write?,154,1,154,2;3;4,numeric,counting
+34,2026-11-17T00:57:38.121355+00:00,How many elements were in the periodic table as of 2023?,118,1,118,1;3;2,numeric,counting
+35,2026-11-17T00:57:41.286665+00:00,How many countries are members of the United Nations as of 2023?,193,1,193,6;5;1,numeric,counting
+36,2026-11-17T00:57:43.562702+00:00,What is the capital of Australia?,Canberra,1,Canberra,4;2;5,string_match,geography
+37,2026-11-17T00:57:46.058701+00:00,What is the capital of Brazil?,Brasília,1,Brasília,4;2;5,string_match,geography
+38,2026-11-17T00:57:48.420481+00:00,What is the largest country in Africa by area?,Algeria,1,Algeria,4;6;1,string_match,geography
+39,2026-11-17T00:57:51.391054+00:00,What is the longest river in Asia?,Yangtze River,1,Yangtze,4;2;1,string_match,geography
+40,2026-11-17T00:57:55.119679+00:00,What is the smallest sovereign country in the world by area?,Vatican City,1,Vatican City,4;6;1,string_match,geography

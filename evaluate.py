@@ -18,7 +18,7 @@ def _reset_attempts():
     pd.DataFrame(columns=ATTEMPTS_COLS).to_csv(ATTEMPTS_CSV, index=False)
 
 
-def evaluate(limit=None, reset=False, questions_path=QUESTIONS_CSV, use_memory=True):
+def evaluate(limit=None, reset=False, questions_path=QUESTIONS_CSV, use_memory=True, out=None):
     if reset:
         _reset_attempts()
         # Re-import to pick up the empty file (module-level _attempts was loaded at import).
@@ -50,6 +50,13 @@ def evaluate(limit=None, reset=False, questions_path=QUESTIONS_CSV, use_memory=T
     by_cat["accuracy"] = (by_cat["accuracy"] * 100).round(1).astype(str) + "%"
     print(by_cat.to_string())
 
+    if out:
+        # Snapshot this run so the next --reset can't overwrite it (lost the Llama seen-40 files that way).
+        attempts = pd.read_csv(ATTEMPTS_CSV)
+        attempts = attempts.merge(questions[["question", "category"]], on="question", how="left")
+        attempts.to_csv(out, index=False)
+        print(f"\nSaved run to {out}")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -57,5 +64,7 @@ if __name__ == "__main__":
     parser.add_argument("--reset", action="store_true", help="wipe attempts.csv before running")
     parser.add_argument("--questions", default=QUESTIONS_CSV, help="CSV of questions to evaluate")
     parser.add_argument("--no-memory", action="store_true", help="disable lesson retrieval (memory-off run)")
+    parser.add_argument("--out", default=None, help="also save this run's graded attempts to this CSV")
     args = parser.parse_args()
-    evaluate(limit=args.limit, reset=args.reset, questions_path=args.questions, use_memory=not args.no_memory)
+    evaluate(limit=args.limit, reset=args.reset, questions_path=args.questions,
+             use_memory=not args.no_memory, out=args.out)

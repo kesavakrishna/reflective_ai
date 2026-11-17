@@ -1,0 +1,25 @@
+id,timestamp,question,answer,correct,expected_answer,retrieved_lesson_ids,notes,category
+1,2026-11-17T00:58:47.204710+00:00,Who wrote the novel that the 1972 film The Godfather was based on?,Mario Puzo,1,Mario Puzo,,string_match,authorship
+2,2026-11-17T00:58:50.622194+00:00,Who wrote the original novel Jurassic Park was based on?,Michael Crichton,1,Michael Crichton,,string_match,authorship
+3,2026-11-17T00:58:54.109150+00:00,Who wrote the original novel The Wonderful Wizard of Oz?,L. Frank Baum,1,L. Frank Baum,,string_match,authorship
+4,2026-11-17T00:58:56.277470+00:00,"Which was founded first, Google or Amazon?",Google,0,Amazon,,string_match,sequencing
+5,2026-11-17T00:58:59.555421+00:00,Was the printing press or the telescope invented first?,The printing press,1,printing press,,string_match,sequencing
+6,2026-11-17T00:59:02.294691+00:00,"Which was completed first, the Hoover Dam or the Empire State Building?",Hoover Dam,0,Empire State Building,,string_match,sequencing
+7,2026-11-17T00:59:05.118026+00:00,"Who wrote ""The Old Man and the Sea"" — Hemingway or Steinbeck?",Hemingway,1,Hemingway,,string_match,near_name
+8,2026-11-17T00:59:07.814532+00:00,"Who composed ""The Four Seasons"" — Vivaldi or Handel?",Vivaldi,1,Vivaldi,,string_match,near_name
+9,2026-11-17T00:59:10.027053+00:00,"Who painted ""Guernica"" — Picasso or Braque?",Picasso,1,Picasso,,string_match,near_name
+10,2026-11-17T00:59:14.169016+00:00,What is normal human body temperature in Celsius?,37°C,1,37,,numeric,units
+11,2026-11-17T00:59:18.988175+00:00,What is the boiling point of water at sea level in Fahrenheit?,212 °F,1,212,,numeric,units
+12,2026-11-17T00:59:23.282242+00:00,How long is a half marathon in miles (to one decimal)?,13.1,1,13.1,,numeric,units
+13,2026-11-17T00:59:25.622961+00:00,Who was the first U.S. president to resign?,Richard Nixon,1,Richard Nixon,,string_match,first_to
+14,2026-11-17T00:59:28.439487+00:00,Who was the first person to fly solo nonstop across the Atlantic?,Charles Lindbergh,1,Charles Lindbergh,,string_match,first_to
+15,2026-11-17T00:59:33.400079+00:00,Who was the first woman in space?,Valentina Tereshkova,1,Valentina Tereshkova,,string_match,first_to
+16,2026-11-17T00:59:35.205060+00:00,"Which of these is NOT a mammal: dolphin, shark, whale, bat?",Shark,1,shark,,string_match,negation
+17,2026-11-17T00:59:37.681843+00:00,"Which of these is NOT a Greek god: Zeus, Apollo, Jupiter, Hermes?",Jupiter,1,Jupiter,,string_match,negation
+18,2026-11-17T00:59:39.144104+00:00,"Which of these is NOT a U.S. president: Washington, Jefferson, Hamilton, Madison?",Washington,0,Hamilton,,string_match,negation
+19,2026-11-17T00:59:41.197930+00:00,How many keys are on a standard piano?,88,1,88,,numeric,counting
+20,2026-11-17T00:59:43.247311+00:00,How many justices sit on the U.S. Supreme Court?,Nine,1,9,,numeric,counting
+21,2026-11-17T00:59:44.709314+00:00,How many Apollo missions landed on the Moon?,Six,1,6,,numeric,counting
+22,2026-11-17T00:59:46.398167+00:00,What is the capital of Canada?,Ottawa,1,Ottawa,,string_match,geography
+23,2026-11-17T00:59:48.700249+00:00,What is the capital of Turkey?,Ankara,1,Ankara,,string_match,geography
+24,2026-11-17T00:59:52.215600+00:00,What is the highest mountain in Africa?,Mount Kilimanjaro,1,Kilimanjaro,,string_match,geography

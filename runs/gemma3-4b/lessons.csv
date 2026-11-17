@@ -1,0 +1,7 @@
+id,timestamp,text,source_attempt_id
+1,2026-11-17T00:53:17.777179+00:00,"Factual recall error -> When presented with a question about the chronology of inventions, prioritize establishing the *earliest* date of a key element before considering broader technological advancements.",7
+2,2026-11-17T00:53:42.321458+00:00,"Factual recall error -> When comparing historical dates or constructions, prioritize establishing the *earliest* completion date, rather than simply stating the most impressive or iconic structure.",9
+3,2026-11-17T00:54:03.595607+00:00,"Calculation error -> When recalling specific numerical values related to physical phenomena (like ignition temperatures), mentally verify the order of magnitude before committing to a final answer.",19
+4,2026-11-17T00:54:32.109318+00:00,"Calculation error -> When dealing with distances involving celestial bodies, always mentally convert to a more familiar scale (like kilometers) *before* performing any calculations, even if the initial value is already in kilometers.",20
+5,2026-11-17T00:54:51.689205+00:00,"Conceptual error -> When considering color models, prioritize the foundational hues – red, green, and blue – as they represent the base components.",27
+6,2026-11-17T00:55:10.995578+00:00,"Miscount -> When listing items in a category, mentally group them into smaller, manageable chunks to reduce the chance of overlooking individual items.",32

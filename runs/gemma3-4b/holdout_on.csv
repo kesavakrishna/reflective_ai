@@ -1,0 +1,25 @@
+id,timestamp,question,answer,correct,expected_answer,retrieved_lesson_ids,notes,category
+1,2026-11-17T01:00:40.980721+00:00,Who wrote the novel that the 1972 film The Godfather was based on?,Mario Puzo,1,Mario Puzo,1;2;5,string_match,authorship
+2,2026-11-17T01:00:44.623435+00:00,Who wrote the original novel Jurassic Park was based on?,Michael Crichton,1,Michael Crichton,2;1;5,string_match,authorship
+3,2026-11-17T01:00:48.103823+00:00,Who wrote the original novel The Wonderful Wizard of Oz?,L. Frank Baum,1,L. Frank Baum,2;3;1,string_match,authorship
+4,2026-11-17T01:00:50.226603+00:00,"Which was founded first, Google or Amazon?",Google,0,Amazon,1;2;4,string_match,sequencing
+5,2026-11-17T01:00:53.122979+00:00,Was the printing press or the telescope invented first?,The printing press,1,printing press,1;2;4,string_match,sequencing
+6,2026-11-17T01:00:56.098001+00:00,"Which was completed first, the Hoover Dam or the Empire State Building?",Hoover Dam,0,Empire State Building,2;1;5,string_match,sequencing
+7,2026-11-17T01:00:58.878345+00:00,"Who wrote ""The Old Man and the Sea"" — Hemingway or Steinbeck?",Hemingway,1,Hemingway,1;2;3,string_match,near_name
+8,2026-11-17T01:01:01.680542+00:00,"Who composed ""The Four Seasons"" — Vivaldi or Handel?",Vivaldi,1,Vivaldi,3;2;4,string_match,near_name
+9,2026-11-17T01:01:03.856972+00:00,"Who painted ""Guernica"" — Picasso or Braque?",Picasso,1,Picasso,5;2;1,string_match,near_name
+10,2026-11-17T01:01:06.796593+00:00,What is normal human body temperature in Celsius?,37,1,37,3;4;5,numeric,units
+11,2026-11-17T01:01:11.533224+00:00,What is the boiling point of water at sea level in Fahrenheit?,212 °F,1,212,3;4;5,numeric,units
+12,2026-11-17T01:01:14.956017+00:00,How long is a half marathon in miles (to one decimal)?,13.1,1,13.1,4;3;2,numeric,units
+13,2026-11-17T01:01:17.158758+00:00,Who was the first U.S. president to resign?,Richard Nixon,1,Richard Nixon,1;3;2,string_match,first_to
+14,2026-11-17T01:01:20.049177+00:00,Who was the first person to fly solo nonstop across the Atlantic?,Charles Lindbergh,1,Charles Lindbergh,4;1;2,string_match,first_to
+15,2026-11-17T01:01:24.832219+00:00,Who was the first woman in space?,Valentina Tereshkova,1,Valentina Tereshkova,1;2;4,string_match,first_to
+16,2026-11-17T01:01:26.326767+00:00,"Which of these is NOT a mammal: dolphin, shark, whale, bat?",Shark,1,shark,1;6;2,string_match,negation
+17,2026-11-17T01:01:27.858583+00:00,"Which of these is NOT a Greek god: Zeus, Apollo, Jupiter, Hermes?",Jupiter,1,Jupiter,4;5;2,string_match,negation
+18,2026-11-17T01:01:31.482106+00:00,"Which of these is NOT a U.S. president: Washington, Jefferson, Hamilton, Madison?",None of them.,0,Hamilton,5;2;1,string_match,negation
+19,2026-11-17T01:01:34.316739+00:00,How many keys are on a standard piano?,88,1,88,3;4;5,numeric,counting
+20,2026-11-17T01:01:35.858742+00:00,How many justices sit on the U.S. Supreme Court?,Nine,1,9,5;6;1,numeric,counting
+21,2026-11-17T01:01:37.950597+00:00,How many Apollo missions landed on the Moon?,11,0,6,4;2;1,numeric,counting
+22,2026-11-17T01:01:39.449438+00:00,What is the capital of Canada?,Ottawa,1,Ottawa,2;4;5,string_match,geography
+23,2026-11-17T01:01:41.707090+00:00,What is the capital of Turkey?,Ankara,1,Ankara,4;2;6,string_match,geography
+24,2026-11-17T01:01:45.172981+00:00,What is the highest mountain in Africa?,Kilimanjaro,1,Kilimanjaro,2;4;3,string_match,geography

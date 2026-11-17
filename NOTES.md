@@ -374,6 +374,33 @@ The mechanism is the mirror of MS/Apple: the retrieved "compare actual years" le
 
 See `RESULTS.md` for the consolidated writeup.
 
+## Phase 2 setup — local Gemma 3 4B for harm measurement + interpretability (2026-11-15)
+
+Plan: (1) re-run the pipeline on a weaker local model and count **harms** (correct → wrong under memory) alongside fixes; (2) inspect activations on the fix/harm pairs (logit lens, patching, then a probe that predicts harm before the lesson is applied). Weight-space edits (MEMIT etc.) parked until after.
+
+- **Why local:** the NVIDIA API returns text only — no activations. Interpretability needs the model in-process.
+- **Model: `google/gemma-3-4b-it`**, already in the HF cache. Chosen over Ollama's `gemma4:e2b` because Ollama can't expose activations, and the harm cases must come from the same model we inspect. Gemma Scope SAEs should exist for Gemma 3 (verify before relying on them).
+- **8-bit (bitsandbytes):** bf16 weights are ~8.6GB; the RTX 4060 has 8GB. 8-bit uses 5.1GB. Activations shift slightly vs full precision — fine for logit lens/probes, a small mismatch for off-the-shelf SAEs.
+- **`llm_client.py`:** `LLM_BACKEND=local` switches `generate()` to the in-process model (greedy decoding, equivalent to temp 0). `load_local()` is public so interpretability code reuses the same instance. API path unchanged and still the default.
+- **venv:** torch swapped to the CUDA build (`2.12.0+cu130`), plus `bitsandbytes`, `accelerate`.
+- **Smoke test:** loads in ~26s, ~3–4s per answer. Already got telephone vs bulb wrong ("The electric light bulb") — good sign this model will fail enough to measure.
+
+## Phase 2, run 1 — Gemma 3 4B fixed/broke measurement (2026-11-16)
+
+`python run_cycle.py --name gemma3-4b --backend local` → everything in `runs/gemma3-4b/` (log in `runs/gemma3-4b.log`). New tools: `evaluate.py --out` (snapshot each run), `compare.py` (paired off→on outcomes + harm rate), `run_cycle.py` (full cycle into its own dir, lessons kept out of the repo root).
+
+**Grader bug found and fixed:** `_parse_number` only read digits, so Gemma's "Nine" (justices) and "Six" (Apollo landings) were graded wrong. Added number words zero–twenty. Re-graded all saved files: Phi/Llama results unchanged (those models answered in digits); Gemma held-out off 19 → 21, on 19 → 20. **The bug was hiding the one harm case** — before the fix the held-out looked like a flat 79.2% → 79.2%.
+
+| Set | Memory OFF | Memory ON | Fixed | Broke | Harm rate |
+|---|---|---|---|---|---|
+| Training (40) | 85.0% (34) | 87.5% (35) | 1 | 0 | 0% |
+| Held-out (24) | 87.5% (21) | 83.3% (20) | 0 | 1 | 4.8% |
+
+- **The only training fix is memorization.** RGB "NOT a primary color": lesson 5 was written from this exact question and retrieved for it.
+- **The held-out harm is a different mechanism from Llama's.** Apollo landings: off "Six" (correct) → on "11". Retrieved lessons 4;2;1 — lesson 4 is the *Moon-distance* lesson ("convert to a more familiar scale before calculating"), pulled in by surface similarity ("Moon"), not relevance. Llama's harm (Hoover Dam) was a relevant lesson exercising wrong recall; this one is an **irrelevant lesson retrieved on a keyword** that derailed a correct answer. "11" is plausibly "Apollo 11" leaking in as the salient number — a concrete target for the interpretability step.
+- **Lesson quality is weak.** 3/6 lessons are near-platitudes ("mentally verify the order of magnitude", "group into smaller chunks"); lesson 4 is self-contradictory ("convert to kilometers … even if already in kilometers").
+- **N is too small for probes.** 1 fix + 1 harm across 64 questions. The interpretability step needs dozens of each → the question set has to grow substantially (hundreds) before training a harm probe.
+
 ## Open follow-ups (not done tonight)
 
 For the **strategic forward plan** (two-track memory experiment + the broader human-cognition arc), see RESULTS.md → "Where this goes next." The items below are the *tactical* leftover work from the current experiment.

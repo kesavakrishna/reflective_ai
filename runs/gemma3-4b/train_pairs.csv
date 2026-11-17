@@ -1,0 +1,41 @@
+question,category,expected_answer,answer_off,answer_on,correct_off,correct_on,outcome,retrieved_lesson_ids
+"Who wrote the novel ""Do Androids Dream of Electric Sheep?""",authorship,Philip K. Dick,Philip K. Dick,Philip K. Dick,1,1,stayed_right,1;4;3
+"Who wrote the novella ""Rita Hayworth and Shawshank Redemption""?",authorship,Stephen King,Stephen King,Stephen King,1,1,stayed_right,2;1;3
+"Who wrote the novel ""Frankenstein""?",authorship,Mary Shelley,Mary Shelley,Mary Shelley,1,1,stayed_right,2;1;3
+Who composed the score for the original 1977 Star Wars film?,authorship,John Williams,John Williams,John Williams,1,1,stayed_right,4;3;2
+"Who illustrated the original ""Where the Wild Things Are""?",authorship,Maurice Sendak,Maurice Sendak,Maurice Sendak,1,1,stayed_right,1;2;6
+"Which was founded first, Microsoft or Apple?",sequencing,Microsoft,Microsoft,Microsoft,1,1,stayed_right,1;2;5
+Was the telephone or the electric light bulb patented first?,sequencing,telephone,The electric light bulb,The electric light bulb,0,0,stayed_wrong,1;2;5
+Did the French Revolution or the American Revolution begin first?,sequencing,American Revolution,American Revolution,American Revolution,1,1,stayed_right,1;2;5
+Was the Eiffel Tower or the Statue of Liberty completed first?,sequencing,Statue of Liberty,The Eiffel Tower,The Eiffel Tower,0,0,stayed_wrong,2;1;4
+"Which was discovered first, Neptune or Pluto?",sequencing,Neptune,Neptune,Neptune,1,1,stayed_right,1;4;2
+"Who painted ""The Persistence of Memory"" — Dalí or Magritte?",near_name,Dalí,Dalí,Dalí,1,1,stayed_right,2;1;6
+"Who wrote ""Brave New World"" — Aldous Huxley or George Orwell?",near_name,Aldous Huxley,Aldous Huxley,Aldous Huxley,1,1,stayed_right,1;2;5
+"Who composed ""Boléro"" — Ravel or Debussy?",near_name,Ravel,Ravel,Ravel,1,1,stayed_right,2;3;6
+Who discovered penicillin — Fleming or Pasteur?,near_name,Fleming,Fleming,Fleming,1,1,stayed_right,1;2;3
+Who proposed special relativity — Einstein or Lorentz?,near_name,Einstein,Einstein,Einstein,1,1,stayed_right,1;2;4
+"What is the boiling point of water at sea level, in Celsius?",units,100,100,100,1,1,stayed_right,3;4;5
+"How long is a marathon, in kilometers (to one decimal)?",units,42.2,42.19,42.17,1,1,stayed_right,4;3;2
+What is the freezing point of water in Fahrenheit?,units,32,32°F,32 °F,1,1,stayed_right,3;4;5
+"At what temperature does paper ignite, in Celsius (the Fahrenheit 451 value)?",units,233,230,232,0,0,stayed_wrong,3;1;4
+"How far is the Moon from Earth on average, in kilometers (to the nearest thousand)?",units,384000,"384,400","384,400",0,0,stayed_wrong,4;3;1
+Who was the first person to walk on the Moon?,first_to,Neil Armstrong,Neil Armstrong,Neil Armstrong,1,1,stayed_right,4;1;2
+Who was the first woman to win a Nobel Prize?,first_to,Marie Curie,Marie Curie,Marie Curie,1,1,stayed_right,1;2;4
+Who was the first U.S. president to be impeached?,first_to,Andrew Johnson,Andrew Johnson,Andrew Johnson,1,1,stayed_right,1;2;3
+Who was the first human in space?,first_to,Yuri Gagarin,Yuri Gagarin,Yuri Gagarin,1,1,stayed_right,4;1;2
+Who was the first European to reach India by sea?,first_to,Vasco da Gama,Vasco da Gama,Vasco da Gama,1,1,stayed_right,1;4;2
+"Which of these is NOT a noble gas: argon, neon, nitrogen, krypton?",negation,nitrogen,Nitrogen,Nitrogen,1,1,stayed_right,3;1;5
+"Which of these is NOT a primary additive (RGB) color: red, green, yellow, blue?",negation,yellow,Blue,Yellow,0,1,fixed,5;2;1
+"Which of these is NOT a planet in our solar system: Mercury, Venus, Pluto, Mars?",negation,Pluto,Pluto,Pluto,1,1,stayed_right,4;5;2
+"Which of these is NOT a Shakespeare play: Hamlet, Othello, Faust, Macbeth?",negation,Faust,Faust,Faust,1,1,stayed_right,2;6;5
+"Which of these is NOT a programming language: Python, Java, HTML, Ruby?",negation,HTML,HTML,HTML,1,1,stayed_right,6;1;2
+How many bones are in the adult human body?,counting,206,206,206,1,1,stayed_right,6;4;1
+"How many U.S. states begin with the letter ""M""?",counting,8,3,6,0,0,stayed_wrong,2;6;5
+How many sonnets did Shakespeare write?,counting,154,154,154,1,1,stayed_right,2;3;4
+How many elements were in the periodic table as of 2023?,counting,118,118,118,1,1,stayed_right,1;3;2
+How many countries are members of the United Nations as of 2023?,counting,193,193,193,1,1,stayed_right,6;5;1
+What is the capital of Australia?,geography,Canberra,Canberra,Canberra,1,1,stayed_right,4;2;5
+What is the capital of Brazil?,geography,Brasília,Brasília,Brasília,1,1,stayed_right,4;2;5
+What is the largest country in Africa by area?,geography,Algeria,Algeria,Algeria,1,1,stayed_right,4;6;1
+What is the longest river in Asia?,geography,Yangtze,Yangtze River,Yangtze River,1,1,stayed_right,4;2;1
+What is the smallest sovereign country in the world by area?,geography,Vatican City,Vatican City,Vatican City,1,1,stayed_right,4;6;1
