@@ -205,3 +205,6 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Activation dumps (100MB+, over GitHub's file limit) — regenerate with interp_capture.py
+*.npz

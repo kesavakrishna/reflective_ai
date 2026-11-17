@@ -419,6 +419,36 @@ Plan: (1) re-run the pipeline on a weaker local model and count **harms** (corre
 - **Grader noise exists but doesn't flip the sign.** Spot check of the 59 changed pairs: a few are alias artifacts (e.g. "DLS (Duckworth-Lewis-Stern)" → "The DLS method" counted as broke; "Sir Walter Scott" → "Scott"; Gregorovitch "fixed" via a loose Harry Potter alias). Roughly 4–6 per side; the broke > fixed gap survives.
 - **Interpretability now has data:** 39 broke / 20 fixed / 214 stayed-right / 227 stayed-wrong pairs in `*_pairs.csv`. Enough for logit lens + patching on the broke cases and a cross-validated broke-vs-stayed_right probe; thin for anything fancier.
 
+## Phase 2, interpretability — harm probe + logit lens (2026-11-16)
+
+`interp_capture.py` → `runs/gemma3-4b-trivia/activations.npz` (500 pairs × 34 layers, residual stream at the answer position, memory-off and memory-on prompts) + per-layer logit lens. `interp_analyze.py` → `analysis.txt`, `probe_auc_by_layer.csv`.
+
+- **Capture gotchas.** (a) First capture stored float16 → 90 infs: Gemma has a massive-activation channel (dim 443, layers 28–32, values > 65504). Re-captured in float32. (b) The pooled out-of-fold AUC understated cross-validated scores (different fold models scale differently); switched to per-fold AUC. (c) Logit lens checked: top-layer lens reproduces the real logits exactly (error 0.000).
+
+**Harm probe** (253 questions right with memory off, 39 broken by memory; features = memory-OFF residual stream, i.e. before any lesson is seen):
+
+| Predictor | AUC |
+|---|---|
+| Model's own confidence (prob of its answer's first token), no fitting | **0.811** |
+| Lesson similarity (max cosine question↔retrieved lessons) | 0.556 |
+| Linear probe, best layer (22), 5-fold × 3 CV | 0.785 |
+| Permutation null for best-layer AUC (20 shuffles) | mean 0.624, max 0.688 |
+| Probe L22 + confidence + similarity | 0.787 |
+
+- **The activations do encode "memory will break this"** — the probe clears the permutation null comfortably, and the signal builds with depth (≈0.55–0.65 through layer 16, ≈0.72–0.79 from layer 18 on).
+- **But it's the confidence signal.** The probe doesn't beat the model's own output probability, and adding it on top of confidence gives nothing. At this N, harm prediction doesn't need interpretability.
+- **Topic-match strength doesn't predict harm** (similarity AUC 0.556 ≈ chance). The "topic-matched heuristic" story survives qualitatively (broken answers swap to related entities) but *how* similar the lesson is doesn't matter.
+- **Broken answers are the model's shaky knowledge:** median confidence broke 0.92 vs stayed-right 1.00.
+
+**Logit lens** (mean logit(OFF answer) − logit(ON answer) at the answer position):
+- **Broke (n=34):** with and without the lesson the curves are identical through layer ~18; the gap opens at 21 (+0.26), grows through 27 (+1.46), 30 (+2.79), and is +9.5 at the output. Without the lesson the correct answer only takes the lead between layers 27 and 30 — **the right answer forms late, and the lesson acts in those same late layers** where the answer is being assembled, not in early reading of the question.
+- **Fixed (n=13):** same late-layer timing, opposite sign. Lessons act at the same depth whether they help or hurt.
+- Caveats: first answer token only; 8-bit model; small n for fixed.
+
+**Confidence gate, simulated** from the existing off/on answers (use lessons only if memory-off confidence < τ; τ picked on train, applied to held-out): **the best τ on train is "never use lessons"** — 48.4% train / 52.8% held-out, identical to memory off. No threshold recovers the fixes without the harms, because fixed cases are about as confident as broken ones (median 0.876 vs 0.92). Confidence separates *broke vs stayed-right* well, but not *fixed vs broke*.
+
+**Bottom line for this phase:** on factual QA, Reflexion-style lessons are net harmful (~2:1 broke:fixed); harm lands on answers the model holds with less than full confidence; it's applied in the late layers where the answer forms; and no confidence gate makes memory net-positive. The lessons themselves have no recoverable value here — the fix has to change *what* is stored (facts / two-track), not *when* it's retrieved.
+
 ## Open follow-ups (not done tonight)
 
 For the **strategic forward plan** (two-track memory experiment + the broader human-cognition arc), see RESULTS.md → "Where this goes next." The items below are the *tactical* leftover work from the current experiment.
