@@ -114,6 +114,7 @@ Phase 1 said reflection helps only under narrow conditions. Phase 2 says that **
 
 - **One model, 8-bit.** Activations are from the 8-bit model; fine for probes and logit lens, slightly off-distribution for off-the-shelf SAEs (not used).
 - **Single seed, greedy decoding,** one reflection prompt. Gemma's lessons are weak (several near-platitudes); a better reflection prompt might change the fixed count, though finding 7 suggests the ceiling is low for rule-shaped lessons on trivia.
+- **The reflection prompt saw the full alias list as "the correct answer"** (e.g. "Gorbacev|Gorbachav|…") rather than one canonical answer — a bug found in phase 3 setup. It may have degraded lesson quality. Fixed going forward; phase 3 reuses these lessons as-is so the lessons arm stays comparable.
 - **Grader noise.** TriviaQA aliases are sometimes loose; spot-checking the 59 changed pairs found ~4–6 alias artifacts per side (e.g. "The DLS method" counted as broke). Not enough to close the broke/fixed gap.
 - **Logit lens uses the first answer token only,** and averages over 34 broke / 13 fixed cases.
 
@@ -179,6 +180,7 @@ Independent of which research question comes next, this experiment built up a po
 
 - **For a full cycle:** `python run_cycle.py --name <run> --backend local --train <csv> --holdout <csv>` writes every step to `runs/<run>/` (resume with `--from-step N`), then `compare.py` reports fixed/broke per split.
 - **For revising the held-out:** the current set was designed by hypothesizing failure modes; the null result showed this was the wrong assumption for a strong model. Pre-screen ~100 candidate held-out questions against Llama 3.3 70B and keep only the ~20 it actually fails. Converts the null into a real transfer measurement.
+- **Phase 1 is no longer reproducible on NVIDIA:** `meta/llama-3.3-70b-instruct` reached end of life there on 2026-08-26 (410 Gone). The saved result files and NOTES are the record. Phase 2/3 run locally and don't depend on any API except paraphrase generation.
 - **If the model degrades on NVIDIA again:** the client is OpenAI-compatible. Swap `LLM_BASE_URL` and `LLM_MODEL` in `.env` to point at any OpenAI-protocol endpoint (Ollama localhost, a different NVIDIA NIM, etc.). Embeddings are local and won't break.
 - **If picking up cold months later:** read this file, then NOTES.md's "Open follow-ups" section. They contain the load-bearing context to resume without re-deriving framing.
 

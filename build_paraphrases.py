@@ -3,9 +3,10 @@
 A correction retrieved for the exact question it came from is a lookup table. A correction that
 fixes a *reworded* question is closer to having learned the fact. This builds that test set.
 
-Paraphrases come from a different model family over the API (LLM_BACKEND=api; default Mistral
-Large 4 — Llama 3.3 70B was retired from NVIDIA on 2026-08-26), not from Gemma — the model under
-test shouldn't write its own test. A paraphrase is rejected if it contains any accepted
+Paraphrases come from a different model family over the API (LLM_BACKEND=api; default Nemotron
+3.5 Super), not from Gemma — the model under test shouldn't write its own test. Llama 3.3 70B was
+retired from NVIDIA on 2026-08-26; Mistral Large 4 returned empty content / timed out; Nemotron
+Ultra added answer hints ("Arma virumque cano") — see NOTES.md. A paraphrase is rejected if it contains any accepted
 answer alias (the grader would mark the question itself as "answered") or equals the original.
 
   python build_paraphrases.py
@@ -29,12 +30,13 @@ PARAPHRASE_PROMPT = (
     "Reply with ONLY the rewritten question."
 )
 MAX_TRIES = 3
-PARAPHRASE_MODEL = "mistralai/mistral-large-4-1t-a52b"
+PARAPHRASE_MODEL = "nvidia/nemotron-3.5-super-vl-120b-a12b"
 
 
 def paraphrase(question, expected, model):
     for _ in range(MAX_TRIES):
-        text = generate(PARAPHRASE_PROMPT.format(question=question), model=model).strip().strip('"').strip()
+        text = generate(PARAPHRASE_PROMPT.format(question=question), model=model)
+        text = text.replace("*", "").strip().strip('"').strip()  # drop markdown emphasis
         leaked, _ = grade(question, text, expected)
         if text and text.lower() != question.lower() and not leaked:
             return text

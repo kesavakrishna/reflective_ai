@@ -1,0 +1,133 @@
+id,timestamp,question,wrong_answer,correct_answer,source_attempt_id
+1,2026-11-18T01:27:16.353126+00:00,What writer was convicted of sodomy and sentenced to hard labor?,Walt Whitman,Oscar Wilde,5
+2,2026-11-18T01:27:16.997153+00:00,"Bill Wyman has had the highest chart entry of any of the Rolling Stones as a solo artist in the UK charts, with which song?",Heart of My Life,Je Suis un Rock Star,6
+3,2026-11-18T01:27:17.020852+00:00,"In 1967, who was the first DJ on Radio 1?",Kenny Everett,Tony Blackburn,7
+4,2026-11-18T01:27:17.041096+00:00,Who was the Defence Lawyer in the Leopold and Loeb murder trial of 1924?,William Fletcher Buckley,CLARENCE DARROW,10
+5,2026-11-18T01:27:17.060038+00:00,If I Were A Rich Man Was a big hit from which stage show?,My Fair Lady,Fiddler on the Roof,11
+6,2026-11-18T01:27:17.084392+00:00,What was the name of Roland Rat's gerbil friend?,Pip,Kevin,12
+7,2026-11-18T01:27:17.104173+00:00,"For a point each, name the 9 countries surrounding Germany.","Denmark, Poland, Czech Republic, Austria, Switzerland, France, Luxembourg, Belgium, Netherlands","Denmark, Poland, Czech Republic, Austria, Switzerland, France, Luxembourg, Belgium, and the Netherlands",13
+8,2026-11-18T01:27:17.122578+00:00,The World Bog Snorkelling Championships are held annually in which European country?,Ireland,Wales,17
+9,2026-11-18T01:27:17.140072+00:00,"""The Duke of Wellington's suggestion of """"Sparrowhawks"""" to Queen Victoria was made in connection with the control of birds at which London building?""",The Tower of London,Crystal Palace,21
+10,2026-11-18T01:27:17.158398+00:00,"Which dynasty, lasting from 907 to 1125 CE, ruled present-day Mongolia and portions of the Russian Far East, northern Korea, and northern China including all of Manchuria?",Song Dynasty,Liao,23
+11,2026-11-18T01:27:17.185210+00:00,"After 23 years on the air, America's Most Wanted will be winding down. Who has been the host of the series since its inception?",Jim McKay,John Walsh,25
+12,2026-11-18T01:27:17.205906+00:00,In which TV 'quiz' show was the consolation prize a dustbin?,Blankety Blank,3-2-1,26
+13,2026-11-18T01:27:17.224110+00:00,"As at November 2007, who is the Shadow Home Secretary?",Tessa Jowell,David Davis,28
+14,2026-11-18T01:27:17.242947+00:00,Which Christmas song includes the line It seems so long since I could say 'sister Susie sitting on a thistle'?,Have Yourself a Merry Little Christmas,All I Want for Christmas Is My Two Front Teeth,31
+15,2026-11-18T01:27:17.261675+00:00,"Which Shakespeare comedy is set in Messina, Italy?",The Comedy of Errors,MUCH ADO ABOUT NOTHING,35
+16,2026-11-18T01:27:17.281129+00:00,"In the cartoon series, what kind of dog is Scooby Doo?",Collie mix,Great Dane,39
+17,2026-11-18T01:27:17.299541+00:00,In the Christian calendar what is the first day of Holy Week,Maundy Thursday,Palm Sunday,40
+18,2026-11-18T01:27:17.326536+00:00,Which horse won the 2013 English Grand National at Aintree?,Rule of Terror,Auroras Encore,41
+19,2026-11-18T01:27:17.347011+00:00,Who did Betty Boothroyd replace as Speaker of the House of Commons on April 27th 1992?,James Foulkes,BERNARD WEATHERILL,42
+20,2026-11-18T01:27:17.365723+00:00,In which book did Edgar Linton marry Catherine Eamshaw?,Pride and Prejudice,WUTHERING HEIGHTS,46
+21,2026-11-18T01:27:17.383706+00:00,'Quinsy' is a term for an abscess on which part of the body?,Throat,Tonsils,49
+22,2026-11-18T01:27:17.402232+00:00,"In the tv sitcom ‘Allo Allo!’, what was Rene’s surname?",Dubois,ARTOIS,50
+23,2026-11-18T01:27:17.428861+00:00,Which island group in the South Atlantic was once known as the Sebald Islands?,Ferrier Islands,The Falkland Islands,51
+24,2026-11-18T01:27:17.454795+00:00,Who was the husband of Rebekah Brooks from 2002 to 2009?,Andy Coulson,Ross Kemp,52
+25,2026-11-18T01:27:17.472687+00:00,Who was the first presenter of 'Top of the Pops'?,Rodney Ackroyd,Jimmy Saville,54
+26,2026-11-18T01:27:17.493832+00:00,Buenos Aires is located on the estuary of which river?,Rio de la Plata,RIVER PLATE,55
+27,2026-11-18T01:27:17.517891+00:00,Which 2001 film starring Joseph Fiennes and Ed Harris is about two opposing snipers facing each other during the Battle of Stalingrad?,The Hurt Locker,'ENEMY AT THE GATES',56
+28,2026-11-18T01:27:17.542308+00:00,Oil from oil wells was first used for what?,Lighting lamps,Evaporate brine to produce salt,57
+29,2026-11-18T01:27:17.564900+00:00,To which species does the Gnu or Wildebeest belong?,Bovidae,ANTELOPE,58
+30,2026-11-18T01:27:17.592782+00:00,Which European country has the Cupon as its currency?,Spain,Moldova,59
+31,2026-11-18T01:27:17.616779+00:00,"In the film ‘High Noon’, who has sworn to kill Will Kane (Gary Cooper)?",Bart Benson,FRANK MILLER,61
+32,2026-11-18T01:27:17.639177+00:00,The painting by Millais entitled 'Bubbles' was used for many years in an advertisement for which product?,Coca-Cola,PEARS SOAP,63
+33,2026-11-18T01:27:17.663669+00:00,"October 27, 1858 saw the birth of what totally bad assed US president, the 26th, who spent time as a North Dakota rancher before becoming assistant Secretary of the Navy in 1899?",William Howard Taft,Theodore Roosevelt,64
+34,2026-11-18T01:27:17.685077+00:00,Willis-Ekbom disease is more commonly known as?,Rheumatoid arthritis,Restless leg syndrome,66
+35,2026-11-18T01:27:17.704961+00:00,Ilich Ramirez Sanchez was a notorious figure in the 1970's. How was he better known?,The Weather Underground,'CARLOS THE JACKAL',67
+36,2026-11-18T01:27:17.726175+00:00,Which line on the London Undergound rail system is the only line which interconnects with every other line?,Circle line,Jubilee Line,70
+37,2026-11-18T01:27:17.747259+00:00,"What are Jimmy Reed, Skip James, Elmore James & Big Bill Broonzy best known as?",Delta blues guitarists,Blues musicians,72
+38,2026-11-18T01:27:17.772721+00:00,What film was the first sequel to win a Best Picture Oscar?,The Dark Knight,The Godfather Part II,78
+39,2026-11-18T01:27:17.794993+00:00,Who had an 80s No 1 hit with Hold On To The Nights?,Blondie,Richard Marx,79
+40,2026-11-18T01:27:17.815638+00:00,"Toothpaste, turtle, oxblood, oilie/oily, ade, and swirly are types of what?",Colors,Marbles,80
+41,2026-11-18T01:27:17.836723+00:00,What is the name of the fictional club in the James Bond novel ‘Moonraker’?,Spectre,Blades Club,81
+42,2026-11-18T01:27:17.858281+00:00,"Who is the lexicographer, adjudicator, and longest-serving member of the on-screen team on Countdown?",Nick Williams,SUSIE DENT,83
+43,2026-11-18T01:27:17.878025+00:00,"Which county shares borders with Northumberland, County Durham, North Yorkshire and Lancashire?",Greater Manchester,CUMBRIA,84
+44,2026-11-18T01:27:17.900170+00:00,"Which BBC TV sitcom about a retired security guard was set at 37 Wyngate Drive in the first series then at 19, Riverbank for the final 5 series?",Dad's Army,One Foot In The Grave,86
+45,2026-11-18T01:27:17.925133+00:00,"In the children’s television series ‘Fireball XL5’, what is the name of the robot co-pilot of XL5?",Sparky,Robert the Robot,89
+46,2026-11-18T01:27:17.943122+00:00,Whose fifth symphony is known as “The Reformation”?,Antonín Dvořák,Felix Mendelssohn,90
+47,2026-11-18T01:27:17.961435+00:00,Mosses are classified as belonging to which part of the plant kingdom?,Bryophytes,Bryophyta,91
+48,2026-11-18T01:27:17.980805+00:00,Which UK band had 2 top ten singles in the same week in 2001?,Blur,Manic Street Preachers,93
+49,2026-11-18T01:27:18.005998+00:00,Which character created by Keith Waterhouse was played on film by Tom Courtneyand on TV by Jeff Rawle?,Detective Sergeant George Gently,'BILLY LIAR',100
+50,2026-11-18T01:27:18.027093+00:00,"What was the first name of the fictional character Gulliver, which was created by Jonathan Swift?",Gulliver,Lemuel,102
+51,2026-11-18T01:27:18.045609+00:00,"In which novel does Flora Poste move to live with her relatives, the Starkadders, in Sussex?",Howards End,Cold Comfort Farm,103
+52,2026-11-18T01:27:18.066005+00:00,Who plays Nellie Forbush in the 2001 remake of the film ‘South Pacific’?,Francesca Reyes,Glenn Close,104
+53,2026-11-18T01:27:18.087902+00:00,"St Thomas's Abbey, Brno in the Czech Republic was the scene of whose path-breaking work from 1856 to 1863?",Antonín Dvořák,Gregor Mendel,106
+54,2026-11-18T01:27:18.112788+00:00,Which British swimmer won Olympic Gold Medals in 2008 in the 400 and 800 m freestyle?,Ian Thorpe,Rebecca Adlington,107
+55,2026-11-18T01:27:18.137781+00:00,What colour is the star on the national flag of Liberia?,Red,WHITE,108
+56,2026-11-18T01:27:18.157371+00:00,"Which Archbishop of Canterbury led the prayers for Diana, Princess of Wales at her 1997 funeral service?",Rowan Williams,George Carey,109
+57,2026-11-18T01:27:18.175543+00:00,"What is the name of the drag queen persona of Thomas Neuwirth, who won in 2014?",Bianca Del Rio,CONCHITA WURST,112
+58,2026-11-18T01:27:18.195234+00:00,Who scored the winning goal in this year's FA Cup final?,Crystal Palace,BEN WATSON,113
+59,2026-11-18T01:27:18.215428+00:00,Which British band named themselves after a South African football team?,Blur,Kaiser Chiefs,114
+60,2026-11-18T01:27:18.235791+00:00,Which kind of food can be either ‘blanket’ or ‘honeycomb’?,Cheese,Tripe,115
+61,2026-11-18T01:27:18.259790+00:00,Who was the first of these to become US President?,John Adams,James Madison,118
+62,2026-11-18T01:27:18.278869+00:00,Which popular newsreader resigned from ITN in 1979?,Frank Biffle,REGINALD BOSANQUET,120
+63,2026-11-18T01:27:18.299156+00:00,Who in verse sailed to the land where the bong tree grows,Columbus,The owl and the pussycat,121
+64,2026-11-18T01:27:18.319458+00:00,"If you are standing at Tanjung Piai, the southernmost point of mainland Asia, you can see the skyline of what country across a strait?",Malaysia,Singapore,122
+65,2026-11-18T01:27:18.340756+00:00,Who is currently fifth in line to the Throne?,"Prince William, Prince of Wales",PRINCESS BEATRICE,123
+66,2026-11-18T01:27:18.364815+00:00,Which ex-World Heavyweight Champion boxer signed up for Celebrity Big Brother 2014?,Mike Tyson,Evander Holyfield,125
+67,2026-11-18T01:27:18.387272+00:00,"Belonging to Indonesia, Irian Jaya is the western portion of which large island?",Papua,New Guinea,126
+68,2026-11-18T01:27:18.406771+00:00,"Written by Earl Derr Biggers in 1925, 'The House Without A Key' was the first novel to feature which Chinese- American detective?",Charlie Smith,CHARLIE CHAN,130
+69,2026-11-18T01:27:18.427322+00:00,"Which 2008 Western film starred Ed Harris and Viggo Mortensen as lawmen, Jeremy Irons as a rancher and Renee Zellweger as a piano-playing widow?",The Assassination of Jesse James by the Coward Robert Ford,Appaloosa,131
+70,2026-11-18T01:27:18.448481+00:00,Which French actor features on the cover on The Smiths album The Queen is Dead,Johnny Depp,Alain Delon,132
+71,2026-11-18T01:27:18.466833+00:00,For which team did Babe Ruth blast his last Major League home run?,Boston Red Sox,Boston Braves,133
+72,2026-11-18T01:27:18.489681+00:00,‘Boat Race’ is Cockney rhyming slang for which part of the body?,Feet,Face,135
+73,2026-11-18T01:27:18.514924+00:00,The novels of which contemporary author feature the character Dirk Pitt?,Cormac McCarthy,Clive Cussler,136
+74,2026-11-18T01:27:18.537882+00:00,Which British university was the first to throw open all degrees to women (in 1878)?,"Girton College, Cambridge",LONDON,138
+75,2026-11-18T01:27:18.558839+00:00,In which decade was the David Lean film 'Lawrence Of Arabia' released?,1962,1960's,139
+76,2026-11-18T01:27:18.580243+00:00,"""Which king of the UK had the nickname The Uncle of Europe""""?""",Winston Churchill,Edward VII,141
+77,2026-11-18T01:27:18.603664+00:00,On which far eastern island did Mick Jagger marry Jerry Hall?,Singapore,BALI,142
+78,2026-11-18T01:27:18.625792+00:00,Which creatures are used as croquet balls in the novel ‘Alice’s Adventures in Wonderland’?,Hares,Hedgehogs,143
+79,2026-11-18T01:27:18.646163+00:00,Who was the last British Prime Minister to represent a Welsh constituency?,David Cameron,JAMES CALLAGHAN,145
+80,2026-11-18T01:27:18.664621+00:00,"Tina Turner Highway, Tennessee, links Brownsville and which town?",Nashville,Nutbush,147
+81,2026-11-18T01:27:18.682631+00:00,"According to the Scaffold song 'Lily the Pink', who had 'terrible freckles'?",Lily,Jennifer Eccles,150
+82,2026-11-18T01:27:18.701249+00:00,"What may be described as a 'red earthworm with rings of a brighter colour, often found in manure and used as fishing bait?",Earthworm,BRANDLING,152
+83,2026-11-18T01:27:18.720049+00:00,Which is the lowest rank of the Peerage?,Baronet,BARON,157
+84,2026-11-18T01:27:18.741140+00:00,Who is the the voice of cartoon character Jack Kahuna Laguna in a special episode of Spongebob Squarepants?,Nate Landman,Johnny Depp,160
+85,2026-11-18T01:27:18.760326+00:00,"What was the first name of the poet Mr. Pope, 1688-1744?",John,ALEXANDER,163
+86,2026-11-18T01:27:18.781879+00:00,The Khyber Pass is approximately how many miles long?,90,33 Miles,165
+87,2026-11-18T01:27:18.801709+00:00,Whose portrait (apart from the Queen) appeared on the now defunct one pound note?,Winston Churchill,ISAAC NEWTON,166
+88,2026-11-18T01:27:18.821288+00:00,What was the name of the character played by Bonnie Langford in Just William,Prudence Pearson,Violet Elizabeth Bott,167
+89,2026-11-18T01:27:18.845060+00:00,In which year did it become compulsory to wear seat belts in front seats of cars in the UK?,1991,1983,169
+90,2026-11-18T01:27:18.865150+00:00,"Which word can be a golf term, a Space vehicle or a one time boy's comic?",Rocket,Eagle,170
+91,2026-11-18T01:27:18.888797+00:00,The Bull is the village pub in an everyday tale of country folk. In which village is The Bull?,Diddlesby,Ambridge,171
+92,2026-11-18T01:27:18.912499+00:00,Which singer had a 2008 number one hit with the song 'Take A Bow'?,Sinead O'Connor,RIHANNA,175
+93,2026-11-18T01:27:18.931143+00:00,"According to a traditional English proverb, what is better than none?",A bird in the hand.,HALF A LOAF,179
+94,2026-11-18T01:27:18.951185+00:00,"Two types of seal are indigenous to the UK, the common seal is one, which is the other?",Harbour seal,Grey Seal,180
+95,2026-11-18T01:27:18.973542+00:00,"""Which city was the target of the first """"Thousand Bomber Raid"""" on May 30th/31st 1942?""",Guernica,Cologne,181
+96,2026-11-18T01:27:18.993964+00:00,What was the name if the submarine lost in Liverpool Bay in June 1939?,HMS Urge,(HMS) Thetis,182
+97,2026-11-18T01:27:19.012234+00:00,"""Heinz' 1963 song """"Just Like Eddie"""" was a tribute to whom?""","His friend, Eddie Floyd",Eddie Cochrane,185
+98,2026-11-18T01:27:19.031913+00:00,Which Gilbert and Sullivan operetta is sub titled 'Bunthornes's Bride'?,Ruddigore,PATIENCE,186
+99,2026-11-18T01:27:19.075722+00:00,Where in England was actor Nigel Hawthorne born?,Ilkley,Coventry,189
+100,2026-11-18T01:27:19.106449+00:00,The Battle of Ghuznee in 1839 took place between the armies of Great Britain and which other country?,Russia,Afghanistan,190
+101,2026-11-18T01:27:19.129486+00:00,In England he’s a barrister – what is he in Scotland?,Solicitor,Advocate,192
+102,2026-11-18T01:27:19.151009+00:00,Which British fashion designer was commissioned by Stanley Kubrick to design the costumes for the film ‘2001: A Space Odyssey’?,Mary Quant,Hardy Amies,196
+103,2026-11-18T01:27:19.172912+00:00,Which rider won the ladies European Three Day event Championship at Burghley in 1971?,Lucinda Green,PRINCESS ANNE,199
+104,2026-11-18T01:27:19.197983+00:00,Which TV personality is the current Chief Scout?,James Nottingham,Bear Grylls,200
+105,2026-11-18T01:27:19.218086+00:00,What actor has played James Bond in the most movies?,Sean Connery,Roger Moore,203
+106,2026-11-18T01:27:19.237419+00:00,Which actress singer who charted with Santa Baby and starred as Catwoman died on Christmas day 2008?,Michelle Pfeiffer,Eartha Kitt,204
+107,2026-11-18T01:27:19.256792+00:00,Which Eastenders actor has played the policeman Nick Rowan on TV?,Sid Owen,Nick Berry,205
+108,2026-11-18T01:27:19.280918+00:00,What is the name of the London Underground station in EastEnders?,Liverpool Street,Walford East,207
+109,2026-11-18T01:27:19.302137+00:00,Which was the first city to host the Summer Olympics twice?,Athens,PARIS,210
+110,2026-11-18T01:27:19.324740+00:00,Which town’s Crab Fair features a world-famous face-pulling or “gurning” contest?,Whitby,Egremont,214
+111,2026-11-18T01:27:19.344892+00:00,"Which Dr. Who villain has been played by Roger Delgado, Anthony Ainley, Eric Roberts, etc?",The Daleks,The Master,216
+112,2026-11-18T01:27:19.365406+00:00,The Flying Pickets were a British vocal group who had Christmas no1 hit in 1983. What was the title of the song.,Christmas Island,Only You,217
+113,2026-11-18T01:27:19.386984+00:00,"In 1725 Catherine the First succeeded which Russian emperor, also her husband?",Peter the Great,Peter the First,218
+114,2026-11-18T01:27:19.409440+00:00,The Bells of Shandon are housed in the Church of St Anne in which Irish city?,Dublin,CORK,220
+115,2026-11-18T01:27:19.433125+00:00,What is the screen name of the actor Bernard Schwarz?,bernardschwarz,Tony Curtis,222
+116,2026-11-18T01:27:19.457376+00:00,The religious order of Poor Ladies of San Damiano has what more common name?,Dominicans,POOR CLARES,223
+117,2026-11-18T01:27:19.476336+00:00,Which late English singer was born Ronald William Wycherley in April 1940?,Elvis Presley,Billy Fury,226
+118,2026-11-18T01:27:19.497211+00:00,What was the name of the character played by Chuck Connors in The Rifleman,Ben Cartwright,Lucas McCain,229
+119,2026-11-18T01:27:19.516937+00:00,"Which Bradford car manufacturer, up until 1954, built the Javelin and Jupiter models?",Bradford Cars,JOWETT,231
+120,2026-11-18T01:27:19.536726+00:00,"In which battle did Harold II, the last Saxon king, lose his life?",Hastings,Battle of Hastings,234
+121,2026-11-18T01:27:19.558694+00:00,Which Englsih football club play home matches at the Sports Direct Arena?,Blackburn Rovers,NEWCASTLE UNITED,235
+122,2026-11-18T01:27:19.578394+00:00,"What is the Japanese martial art, similar to judo, which uses grappling, throws, and non-resistance, to debilitate opponents?",Sumo,Aikido,238
+123,2026-11-18T01:27:19.600769+00:00,"""Correct this quotation from FD Roosevelt.""""The only thing we have to fear is the enemy""""?""",“The only thing we have to fear are the enemy.”,"""""""The only thing we have to fear is FEAR ITSELF""""""",239
+124,2026-11-18T01:27:19.620856+00:00,'Signal Failures' written by Dr. B. Ching is the title of a column that has appeared in which magazine?,The Saturday Evening Post,PRIVATE EYE,241
+125,2026-11-18T01:27:19.640294+00:00,"At the time of her construction in 2003, what was the longest, widest, tallest, largest passenger ship ever built?","Longest: 369.5 meters
+Widest: 73.5 meters
+Tallest: 74 meters
+Largest passenger ship: 45,000 gross tonnage",Queen Mary II,244
+126,2026-11-18T01:27:19.660448+00:00,The adjective leporine relates to which animal?,Rabbit,Hare,245
+127,2026-11-18T01:27:19.681943+00:00,What is the minimum legal age for a female to marry in Kuwait?,18,15 years,247
+128,2026-11-18T01:27:19.702724+00:00,"What is the name of the group of 1,196 islands in the North Indian Ocean, none bigger than five square miles?",Andaman Islands,Maldives,248
+129,2026-11-18T01:27:19.722500+00:00,Who is the present Prime Minister of the Irish Republic?,Leo Varadkar,ENDA KENNY,249

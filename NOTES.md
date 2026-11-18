@@ -449,6 +449,22 @@ Plan: (1) re-run the pipeline on a weaker local model and count **harms** (corre
 
 **Bottom line for this phase:** on factual QA, Reflexion-style lessons are net harmful (~2:1 broke:fixed); harm lands on answers the model holds with less than full confidence; it's applied in the late layers where the answer forms; and no confidence gate makes memory net-positive. The lessons themselves have no recoverable value here — the fix has to change *what* is stored (facts / two-track), not *when* it's retrieved.
 
+## Phase 3 setup — two-track memory (2026-11-17)
+
+Design + predictions pre-registered in RESULTS.md ("Phase 3 design") before any run.
+
+- **Code.** `memory.py` gains a correction track (`record_correction` / `retrieve_corrections`, own CSV + FAISS, indexed by the *question*). `agent.py` takes `memory_mode` = lessons | corrections | both; with no corrections the prompt is byte-identical to phase 2 (checked against `git show HEAD:agent.py`). `reflect.py` records a correction per failure (no model call); `--corrections-only` keeps existing lessons. `evaluate.py --memory-mode`. Runner: `run_twotrack.py` (skips any eval whose output exists → resumable).
+- **Phase 2 lessons saw the whole alias list.** `reflect.py` passed `expected_answer` straight into the reflection prompt, which for TriviaQA is "Gorbacev|Gorbachav|…". Now uses the canonical answer. Phase 3 reuses the phase 2 lessons unchanged so the lessons arm stays identical; noted as a phase 2 caveat.
+- **Canonical answer first.** `build_triviaqa.py` now puts TriviaQA's `value` first, then sorted aliases. Rebuilt files: same questions, same alias sets (verified), only order changed.
+- **Determinism check.** Re-ran 40 memory-off training questions in a fresh process: 40/40 answers identical to phase 2. So 8-bit greedy is reproducible here and phase 2's off/lessons runs are reused, not re-run.
+- **Paraphrase set** (`build_paraphrases.py` → `questions_trivia_paraphrase.csv`, 236 of 250). Model availability on NVIDIA, 2026-11-17:
+  - `meta/llama-3.3-70b-instruct`: **410 Gone — end of life 2026-08-26.** Phase 1 can't be re-run on this endpoint any more.
+  - `mistralai/mistral-large-4-1t-a52b`: empty content, then timeouts.
+  - `nvidia/nemotron-3-ultra-550b-a55b`: works but added answer hints (quoted "Arma virumque cano" into the Virgil question).
+  - **`nvidia/nemotron-3.5-super-vl-120b-a12b`: used.** Fast, clean, different family from Gemma.
+  - 14 rejected after 3 tries because the paraphrase contained an accepted alias — mostly questions that name the answer themselves ("Olea europaea" → olive). Median string similarity to source 0.60; 3 near-copies (> 0.9).
+- **Git:** `activations.npz` (165MB) blocked the push (GitHub's 100MB limit). Removed from the two unpushed commits with plumbing (backup branch `backup/before-npz-removal`), `*.npz` added to `.gitignore`. Regenerate with `interp_capture.py`.
+
 ## Open follow-ups (not done tonight)
 
 For the **strategic forward plan** (two-track memory experiment + the broader human-cognition arc), see RESULTS.md → "Where this goes next." The items below are the *tactical* leftover work from the current experiment.
