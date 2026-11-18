@@ -1,1 +1,120 @@
 id,timestamp,question,wrong_answer,correct_answer,source_attempt_id
+1,2026-11-18T05:54:32.394568+00:00,"Which 19th century American poet wrote over 1,000 poems which were published between 1890 and 1945, after her death?",Edna St. Vincent Millay,Emily Dickinson,2
+2,2026-11-18T05:54:32.869811+00:00,"Who created the fictional detective Jack Frost, played on TV by David Jason?",Reginald Hill,R D WINGFIELD,4
+3,2026-11-18T05:54:32.887810+00:00,"Which country is bordered by Latvia to the north, Ukraine to the south, and Poland to the west?",Lithuania,BELARUS,5
+4,2026-11-18T05:54:32.905912+00:00,Name the tv series about FBI agent Don Eppes and his mathematical genius brother Charlie,Criminal Minds,Numb3rs,7
+5,2026-11-18T05:54:32.927055+00:00,What was developed at the Bell Telephone Company under the direction of Dr William Shockley?,The Shockley Semiconductor Laboratory,Transistor,8
+6,2026-11-18T05:54:32.944948+00:00,Who played Aunty Entity' in the film 'Mad Max Beyond the Thunderdome'?,Sigourney Weaver,Tina Turner,9
+7,2026-11-18T05:54:32.963337+00:00,The Aran Islands are located at the mouth of which bay?,Ballybunion Bay,Galway Bay,12
+8,2026-11-18T05:54:33.099715+00:00,"What, if any, relationship was shared between Dear Abby and Ann Landers?","They were correspondents in the *New York Times* and *Universal Press Syndicate*, respectively, and exchanged letters regularly.",Twin Sisters,18
+9,2026-11-18T05:54:33.120036+00:00,Which US president did Anthony Hopkins play in a film whose title was simply his name?,Theodore Roosevelt,Nixon,20
+10,2026-11-18T05:54:33.141289+00:00,Which French prime minister was executed for treason in 1945?,Georges Bidault,Pierre Laval,22
+11,2026-11-18T05:54:33.162431+00:00,In which town in Greater Manchester is the TV series set?,Salford,ROCHDALE,24
+12,2026-11-18T05:54:33.180502+00:00,"In 1987, the Fdracion International del Volleyball arranged the first World Beach Volleyball Championships, which was played where?","Costa Brava, Spain","Rio de Janeiro, Brazil",27
+13,2026-11-18T05:54:33.205633+00:00,The world was first aware of the Chernobyl disaster after detectors were triggered at a nuclear plant in which country?,Ukraine,Sweden,29
+14,2026-11-18T05:54:33.224277+00:00,What is the name of the sport in which your opponent tries to knock you off a floating spinning log,Timberrolling,Birling,34
+15,2026-11-18T05:54:33.243425+00:00,"""In the board game Monopoly, what is the colour of the property """"Coventry Street""""?""",Purple,YELLOW,35
+16,2026-11-18T05:54:33.263103+00:00,Who played the title role in the TV western series Bronco,James Coburn,Ty Hardin,36
+17,2026-11-18T05:54:33.289186+00:00,Between 1959 and 1967 which city was the capital of Pakistan (Islamabad was being built)?,Karachi,RAWALPINDI,37
+18,2026-11-18T05:54:33.311214+00:00,In which town or city were most of the Bowie knives made,Morristown,Sheffield,40
+19,2026-11-18T05:54:33.336184+00:00,Who was the first presenter of Room 101 when it opened in 1994?,Mr. Jones,Nick Hancock,48
+20,2026-11-18T05:54:33.359184+00:00,In the 1968 film Chitty Chitty Bang Bang who buys the car from garage owner Mr Coggins and rebuilds it?,Rodney Menlove,Caractacus Potts,49
+21,2026-11-18T05:54:33.382618+00:00,The word husband is derived from the ancient Old Norse meanings of 'house' and what activity?,bond,Farming,50
+22,2026-11-18T05:54:33.409712+00:00,Russia's TU-144 plane was the broad equivalent of which western airliner?,Boeing 707,CONCORDE,51
+23,2026-11-18T05:54:33.433457+00:00,Who was declared Model of the Millennium by Vogue editor Anna Wintour?,Twiggy,Gisele Bundchen,52
+24,2026-11-18T05:54:33.455685+00:00,What is the title of the 2009 biopic film directed by Sam Taylor-Wood about the early life of John Lennon,A Hard Day's Night,Nowhere Boy,53
+25,2026-11-18T05:54:33.476468+00:00,Which French fashion designer regularly co-hosted UK TV’s ‘Eurotrash’?,John Galliano,Jean-Paul GAULTIER,57
+26,2026-11-18T05:54:33.501623+00:00,"In the acronym DEFRA, for what does the A stand?",Environment,Affairs,58
+27,2026-11-18T05:54:33.525648+00:00,Amal Clooney is an internationally renowned?,Lawyer,Human rights lawyer,59
+28,2026-11-18T05:54:33.547982+00:00,What is the small club used for killing landed fish called,Grapplers,A priest,63
+29,2026-11-18T05:54:33.571265+00:00,To whom was Bob Dylan supposed to be singing It Ain’t Me Babe,Allen Ginsberg,Joan Baez,64
+30,2026-11-18T05:54:33.592555+00:00,Which 1969 film concerns the dance marathon competitions during the Depression Era in America?,The Hustler,THEY SHOOT HORSES DON'T THEY,66
+31,2026-11-18T05:54:33.613873+00:00,Patusnaya and mallasol are types of what?,Salts,Caviar,67
+32,2026-11-18T05:54:33.648439+00:00,What consumer electronics product shares its name with the common name of the fruit Rubus Fructicosis?,Raspberry,BLACKBERRY,68
+33,2026-11-18T05:54:33.675772+00:00,"Who painted 'Gypsy Girl' found in the Louvre, Paris?",Jean-Leon Gérôme,FRANZ HALS,72
+34,2026-11-18T05:54:33.694999+00:00,Men Against the Sea and Pitcairn's Island were two sequels to what famous novel?,Moby-Dick,Mutiny On The Bounty,73
+35,2026-11-18T05:54:33.718409+00:00,"Which country shares a 530 km border with Saudi Arabia on the west, south, and southeast, a 450 km border with Oman on the southeast and northeast, and a smaller border with Qatar in the northwest?",Yemen,United Arab Emirates,81
+36,2026-11-18T05:54:33.741494+00:00,Which Scottish author who died in 1930 had Ignatius as one of his christian names?,Robert Louis Stevenson,ARTHUR CONAN DOYLE,82
+37,2026-11-18T05:54:33.762761+00:00,O UGLY NINE is an anagram of which singer songwriter?,Prince,Neil Young,83
+38,2026-11-18T05:54:33.786504+00:00,What is a dish of pickled herring fillets wrapped around an onion or gerkhin called,Pickles,Rollmops,85
+39,2026-11-18T05:54:33.806948+00:00,"According to the Old Testament, who was the first person to have a hangover?",Cain,NOAH,86
+40,2026-11-18T05:54:33.824823+00:00,"What name is given to the nine square mile area of West Yorkshire, between Wakefield, Morley and Rothwell, famous for growing a certain vegetable?",Horsley Lane,THE RHUBARB TRIANGLE,87
+41,2026-11-18T05:54:33.842829+00:00,The UEFA (Union of European Football Associations) was founded in which European country in 1954?,Belgium,Switzerland,90
+42,2026-11-18T05:54:33.863574+00:00,Which part of the earth's structure lies between the outer core and the crust?,Mantle,The Mantle,92
+43,2026-11-18T05:54:33.883178+00:00,In 'Alice In Wonderland' what was used as the ball in the game of croquet?,Flamingos,The HEDGEHOG,94
+44,2026-11-18T05:54:33.908032+00:00,What was the first name of the jazz trombonist Kid Ory?,Augustin,Edward,95
+45,2026-11-18T05:54:33.925676+00:00,A Brecon Buff is a variety of which type of creature,Dog,Goose,96
+46,2026-11-18T05:54:33.947939+00:00,What Ford automobile came in any color you want - as long as it was black?,Ford Black Crow,Model T,100
+47,2026-11-18T05:54:33.972127+00:00,"Which British paralympian swimmer won 2 gold, a silver and a bronze in the 2012 Para Olympics?",Jonathon Griffin,ELLIE SIMMONDS,103
+48,2026-11-18T05:54:33.990485+00:00,Julie Pankhurst made a fortune creating which website?,Ancestry.com,FRIENDS REUNITED,105
+49,2026-11-18T05:54:34.009651+00:00,What is the US term for for an area of land of 160 acres(half a mile square)?,Boomtown,'QUARTER SECTION',106
+50,2026-11-18T05:54:34.030943+00:00,Which late comedienne wrote the 2014 best-selling book ‘Diary of a Mad Diva’?,Margaret Cho,Joan Rivers,108
+51,2026-11-18T05:54:34.053109+00:00,Of the ten most populated cities of the USA which is furthest north?,Anchorage,Detroit,109
+52,2026-11-18T05:54:34.071361+00:00,Who designed the Queen's wedding dress?,Sarah Burton,Norman Hartnell,116
+53,2026-11-18T05:54:34.094866+00:00,"Which ‘P’ was the last king of Troy, according to Greek mythology?",Paris,PRIAM,119
+54,2026-11-18T05:54:34.117877+00:00,Who was the legless World War II fighter pilot who was detained in German prisoner of war camps for 4 years?,Richard Bong,Douglas Bader,121
+55,2026-11-18T05:54:34.150607+00:00,"In ‘Follow That Camel’, the fourteenth Carry On film, Sid James was replaced by which US actor?",Kenneth Williams,Phil Silvers,122
+56,2026-11-18T05:54:34.173724+00:00,"""Who is the composer of """"The L'Arlesienne Suite""""?""",Erik Satie,BIZET,123
+57,2026-11-18T05:54:34.193541+00:00,In which decade of the 17th Century was the new model army created?,1642-1649,40's,124
+58,2026-11-18T05:54:34.213956+00:00,What house in New Orleans has been the ruin of many a poor boy?,The House of Hospitality,The House of the Rising Sun,125
+59,2026-11-18T05:54:34.232052+00:00,Which English town's Anglo Saxon name was Gipeswic pronounced Gipperswick,Grimsby,Ipswich,129
+60,2026-11-18T05:54:34.251599+00:00,Which National Trust property in Wiltshire was once owned by William Henry Fox-Talbot the pioneer of photography?,Abney Park,Lacock Abbey,130
+61,2026-11-18T05:54:34.271335+00:00,Who on television is the 'Idiot Abroad'?,Larry David,KARL PILKINGTON,132
+62,2026-11-18T05:54:34.289709+00:00,What is the name of the dog in the Punch and Judy shows?,Punch,TOBY,134
+63,2026-11-18T05:54:34.307122+00:00,"What science does Sir Arthur Conan Doyle's creation, Sherlock Holmes, practise?",Forensic science,Detection,136
+64,2026-11-18T05:54:34.332001+00:00,What title was given to the eldest son of a Russian Czar?,Heir to the Throne,Czarevitch,137
+65,2026-11-18T05:54:34.352391+00:00,"Sharing his surname with a biblical character, which footballer scored the deciding goal in the 1967 FA Cup Final?",Geoff Hurst,FRANK SAUL,140
+66,2026-11-18T05:54:34.370167+00:00,Which car manufacturer produces the Jimmy model?,Dodge,SUZUKI,143
+67,2026-11-18T05:54:34.390385+00:00,Which national airline announced it had gone bankrupt on November 7,Icelandair,Sabena,144
+68,2026-11-18T05:54:34.409364+00:00,On what river is the city of Norwich,River Yare,Wensum,146
+69,2026-11-18T05:54:34.430949+00:00,Bill Clinton is fairly fluent in which language other than English?,Spanish,German,147
+70,2026-11-18T05:54:34.455648+00:00,Which US comedian/actor is credited with saying ‘A man is only as old as the woman he feels’?,George Burns,Groucho Marx,151
+71,2026-11-18T05:54:34.477768+00:00,"What was the name of Matilda’s teacher, who adopted her at the end of the book?",Mr. and Mrs. Banks,MISS HONEY,153
+72,2026-11-18T05:54:34.496718+00:00,Which serialised TV drama had a title that is a Lesbian slang term for oral sex?,Gossip Girl,Tipping The Velvet,155
+73,2026-11-18T05:54:34.522194+00:00,What was the name of the computer in the sitcom Red Dwarf?,Kryten,Holly,156
+74,2026-11-18T05:54:34.540655+00:00,"Which author has been nominated for the Booker Prize for the novels 'Briefing For A Descent Into Hell', 'The Sirian Experiments' and 'The Good Terrorist' but is yet to win the award?",Sebastian Faulks,DORIS LESSING,157
+75,2026-11-18T05:54:34.560621+00:00,In which mountains does the Loire river rise?,Massif du Sancy,Cevennes,158
+76,2026-11-18T05:54:34.580384+00:00,"What ancient civilization was centred in the north of ancient Canaan, with its heartland along the coastal regions of modern day Lebanon, Syria and Israel?",Phoenician,Phoenicia,161
+77,2026-11-18T05:54:34.605018+00:00,'Professor Cuthbert Calculus' is an associate of which character?,Sherlock Holmes,'TINTIN',162
+78,2026-11-18T05:54:34.623724+00:00,"""The No. 617 Squadron of the Royal Air Force which operated with the motto """"After me, the flood"""" is known for its attacks on what type of installations during WWII?""",Submarine pens,Dams,164
+79,2026-11-18T05:54:34.651110+00:00,"In the television series ‘Thunderbirds’, what is Lady Penelope’s surname?",Croft,Creighton-Ward,166
+80,2026-11-18T05:54:34.670666+00:00,Singer and musician Bono called which venue ‘Rock and roll’s great cathedral’?,Red Rocks Amphitheatre,Madison Square Garden,167
+81,2026-11-18T05:54:34.690536+00:00,Brass is an alloy of what 2 metals?,Zinc and Copper,Copper and Zinc,170
+82,2026-11-18T05:54:34.708805+00:00,"In 1403, Venice imposed a waiting period for those wishing to enter the city, to see if they would develop the plague. How long was this period of isolation?",30 days,40 days,171
+83,2026-11-18T05:54:34.728178+00:00,What do the Americans call what we call a 'sofa'?,Couch,DAVENPORT,173
+84,2026-11-18T05:54:34.748810+00:00,What is the star sign of the date of the Battle of Waterloo?,Aquarius,Gemini,174
+85,2026-11-18T05:54:34.769272+00:00,Which is the only Semitic language that is an official language of the EU?,Hebrew,Maltese,175
+86,2026-11-18T05:54:34.787510+00:00,By what name was the shipping area Fitzroy known until 2002?,Fitzroy North,Finisterre,178
+87,2026-11-18T05:54:34.806865+00:00,What cereal is kid-tested and mother-approved?,Kellogg's Frosted Flakes,Kix,179
+88,2026-11-18T05:54:34.825019+00:00,"What profession was Jean-Paul Marat, noted for his involvement in the French Revolution at the end of the 18th century?",Physician,Journalist,180
+89,2026-11-18T05:54:34.843327+00:00,Whose 1995 best seller argues that our universe is part of a super universe?,Brad Pit,STEPHEN HAWKING,181
+90,2026-11-18T05:54:34.863927+00:00,"Which cocktail consists of rum, curacao and lime juice?",Blue Hawaiian,Mai Tai,184
+91,2026-11-18T05:54:34.885240+00:00,Codlin and Short are Punch and Judy men in which novel by Charles Dickens?,The Pickwick Papers,The Old Curiosity Shop,185
+92,2026-11-18T05:54:34.905131+00:00,"'Sanstorm', 'Walkaway' and 'Flying' were top ten hits for which group in the mid '90's?",Third Eye Blind,'CAST',186
+93,2026-11-18T05:54:34.925048+00:00,What language did the playwright Henrik Ibsen write his plays in?,Norwegian,Danish,187
+94,2026-11-18T05:54:34.944023+00:00,Who is featured on Puff Daddy's Can't Hold Me Down?,Justin Bieber and Keyshia Cole,Mase,190
+95,2026-11-18T05:54:34.965165+00:00,What was late singer Michael Jackson’s first solo UK number one hit single?,Billie Jean,One Day In Your Life,191
+96,2026-11-18T05:54:34.986113+00:00,"What Latin phrase, which translates as Out of many, one, is taken to mean One from Many?",Unus per multos,E Pluribus Unum,192
+97,2026-11-18T05:54:35.005410+00:00,Which of the seven wonders of the ancient world was thought to have straddled the harbour of a Greek island?,The Temple of Artemis at Ephesus,COLOSSUS OF RHODES,194
+98,2026-11-18T05:54:35.028720+00:00,"In 2006, who became the second basketball player to score over 80 points in an NBA game?",Michael Jordan,Kobe Bryant,196
+99,2026-11-18T05:54:35.047831+00:00,What hourglass-shaped women's garment was made using whalebone?,Corselet,Corset,199
+100,2026-11-18T05:54:35.067385+00:00,Which Joan's career revived in Whatever Happened to Baby Jane?,Bette Davis,Crawford,200
+101,2026-11-18T05:54:35.087532+00:00,"What is a common feature of komodo dragons, aphids, and whiptail lizards?",Venom,The ability to reproduce asexually,203
+102,2026-11-18T05:54:35.116079+00:00,"What is the traditional technical term for a road/paving granite block, alternatively called a Belgian block, and incorrectly a cobble or cobblestone?",Bluestone,Sett,205
+103,2026-11-18T05:54:35.142814+00:00,When free school milk was given out what size were the bottles?,Half-pint,Third of a pint,206
+104,2026-11-18T05:54:35.168788+00:00,Give a year in the life of author H P Lovecraft?,1911-1937,1890-1937,211
+105,2026-11-18T05:54:35.187225+00:00,What is the name of the giraffe that Toys-r-us uses as its' mascot?,George,Geoffrey,212
+106,2026-11-18T05:54:35.206494+00:00,Which equipment-free sport did Ashok Das introduce to the British Army in 2005?,Poi,KABBADI,214
+107,2026-11-18T05:54:35.230206+00:00,"In Rowing, who received gold medals for the Women's coxless pair?",Kathrin Ormanns and Christina Huber (Germany),Helen Glover and Heather Stanning,220
+108,2026-11-18T05:54:35.249765+00:00,"Which hymn, based on Psalm 90, by Isaac Watts to a tune by William Croft, is particularly associated with Rememberance Sunday?",For Thine All-Healing Balm We Praise,'OH GOD OUR HELP IN AGES PAST',222
+109,2026-11-18T05:54:35.268047+00:00,What physics term refers to the largely prohibited selling method by which customers are said to have agreed to buy something unless they refuse unsolicited goods or services?,Trayware,Inertia,223
+110,2026-11-18T05:54:35.286081+00:00,"""Which company uses the advertising slogan """"Spend A Little, Live A Lot""""?""",Old Navy,ALDI,229
+111,2026-11-18T05:54:35.304752+00:00,What is the name of the vast hall where the Norse gods live?,Asgard,Valhalla,232
+112,2026-11-18T05:54:35.322216+00:00,Which is the second largest bay in Britain?,Belfast Lough,Morecambe,235
+113,2026-11-18T05:54:35.340736+00:00,Who taught Eliza Dolittle to be a lady ?,Henry Wotton,Professor Henry Higgins,238
+114,2026-11-18T05:54:35.358509+00:00,What was the name of the old Waddington’s game based on newspapers?,Newspaper Game,Scoop,239
+115,2026-11-18T05:54:35.381919+00:00,Which BBC2 comedy is set around the church of St Saviours in the Marshes in Hackney?,Black Books,REV,241
+116,2026-11-18T05:54:35.403491+00:00,Which early aviator flew in a plane christened Jason?,Sir Frank Whittle,Amy Johnson,242
+117,2026-11-18T05:54:35.424063+00:00,Who composed the first ever concerto for tuba and orchestra?,Karl Anton Schytte,Vaughan Williams,243
+118,2026-11-18T05:54:35.445516+00:00,The Lansdowne Cup is competed for in rugby union by which two countries?,England and Wales,Australia and Ireland,246
+119,2026-11-18T05:54:35.466994+00:00,The plot of which Arthur Miller play takes place entirely within the mind of a new York Jewish intellectual called 'Quentin'?,The Crucible,'AFTER THE FALL',247

@@ -485,7 +485,19 @@ Design + predictions pre-registered in RESULTS.md ("Phase 4 design") before any 
 - **Placebos** (`memory_mode`): `placebo_lorem` puts "Notes:" + lorem ipsum in the corrections slot, cut at a word to the length of that question's real corrections block (within 12 chars). `placebo_random` puts in 3 corrections drawn at random, seeded by crc32 of the question.
 - **Prompt checks** on 40 questions against `git show HEAD:agent.py`: off, ungated corrections and both are byte-identical to phase 3. Gated equals off below 0.7 and ungated at or above it. Lorem length matches. Random is reproducible.
 - **Fresh split:** `build_triviaqa.py --seed 1 --exclude <phase 2/3 files>` writes `questions_trivia_v2.csv` and `questions_trivia_v2_holdout.csv` (250 + 250, 0 overlap with the old 500 or with each other; 8551 eligible).
-- **Runner:** `run_phase4.py`. Paraphrases go over the API in the background while the GPU runs the placebos. Resumable; log in `runs/gemma3-4b-phase4.log`. Outputs: `runs/gemma3-4b-placebo/`, `runs/gemma3-4b-phase4/`.
+- **Runner:** `run_phase4.py`. Paraphrases go over the API in the background while the GPU runs the placebos. Resumable; logs in `runs/gemma3-4b-phase4.log` (first launch) and `runs/gemma3-4b-phase4.resume.log`.
+- **First launch skipped building corrections.** Importing `memory.py` creates an empty `corrections.csv`, so the train/off eval left one behind and the "build if missing" check saw it as built. Caught during train/corrections, which would have run with an empty store and so been a copy of memory-off. Stopped before that output was saved. The runner now checks for rows and refuses to run the arms unless #corrections = #training failures. On the relaunch: 119 corrections for 119 failures (fresh train off = 52.4%, reused from the first launch). Outputs: `runs/gemma3-4b-placebo/`, `runs/gemma3-4b-phase4/`.
+
+## Phase 4 run — results (2026-11-18)
+
+Took 4 launches: the first skipped the corrections build (see setup), then the job was stopped by Claude Code's low-memory reaper twice. Each relaunch resumed from the finished files. Logs: `runs/gemma3-4b-phase4{,.resume,.resume2,.resume3}.log`.
+
+- **All 6 predictions hold** (tables in RESULTS.md). Fresh gated: train 100% (119 fixed / 0 broke), paraphrase 89.4% (98 / 0), held-out = off (0 / 0). Ungated broke 17 / 16 / 10.
+- **Gated == simulation, answer for answer:** 0 mismatches in 735 (gated-in train 119, paraphrase 115, held-out 0). So the phase 3 simulation method was exact.
+- **Margins:** fresh held-out top-1 max 0.572. Paraphrase own-correction min 0.730 (thinner than phase 3's 0.763). Train right-off (no own correction) max 0.565.
+- **Copies:** train 118 / 119 fixes, paraphrase 96 / 102. 0 / 43 broken answers copy a correction. The 4 paraphrase fixes lost under the gate are paraphrases with no own correction (chance flips).
+- **Placebo:** lorem 11 fixed / 14 broke, random 13 / 18, against corrections 14 / 15. Pairwise broke overlap across lessons / corrections / random / lorem is 7–11 vs ~2 expected (hypergeom p < 2e-4). 98 / 132 right answers never break under any arm. Broken answers have lower memory-off confidence in every arm (lorem median 0.82, p = 7.6e-8).
+- **RAM investigation (why the reaper kept firing):** an eval process holds ~2 GB resident on top of 4.7 GB VRAM. Its ~7.5 GB "private" commit isn't resident and can't be freed: a pre-quantized 8-bit copy, `torch._C._host_emptyCache()` and `_heapmin` all left it unchanged. It's most likely the mmap'd safetensors commit charge. The reaper fires on system-wide pressure (VS Code ~3.6 GB, R ~2 GB, browser). Long runs belong in a user terminal or under `CLAUDE_CODE_DISABLE_BG_SHELL_PRESSURE_REAP=1`.
 
 ## Open follow-ups (not done tonight)
 

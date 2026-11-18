@@ -86,9 +86,16 @@ def main():
     # A. gate on the fresh split. Corrections are built from the fresh training failures first.
     env_a = make_env(GATE_DIR, GATE_DIR)
     train_off = evaluate(GATE_DIR, "train", FRESH["train"], "off", CONDITIONS["off"], env_a)
-    if not os.path.exists(os.path.join(GATE_DIR, "corrections.csv")):
+    # Check for rows, not the file: importing memory.py creates an empty corrections.csv, so the first
+    # eval in this dir leaves one behind (that skipped this step on the first launch).
+    corr_csv = os.path.join(GATE_DIR, "corrections.csv")
+    if not os.path.exists(corr_csv) or pd.read_csv(corr_csv).empty:
         pd.read_csv(train_off).drop(columns=["category"], errors="ignore").to_csv(env_a["ATTEMPTS_CSV"], index=False)
         run("build corrections from fresh training failures", ["reflect.py", "--reset", "--corrections-only"], env_a)
+    n_wrong = int((pd.read_csv(train_off)["correct"] == 0).sum())
+    n_corr = len(pd.read_csv(corr_csv))
+    if n_corr != n_wrong:
+        raise SystemExit(f"{n_corr} corrections but {n_wrong} training failures; refusing to run the arms")
     for split in ("train", "holdout"):
         for cond, flags in CONDITIONS.items():
             evaluate(GATE_DIR, split, FRESH[split], cond, flags, env_a)

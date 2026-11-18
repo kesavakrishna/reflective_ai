@@ -5,6 +5,7 @@ A controlled experiment testing whether a frozen LLM can improve on novel questi
 - **Phase 1** (Llama 3.3 70B, 64 hand-written questions): small-N limit result — lessons help only when the model's underlying knowledge is right, and can hurt when it isn't.
 - **Phase 2** (Gemma 3 4B, 500 TriviaQA questions, plus activations): at scale, lessons are **net harmful** — they break ~2× as many correct answers as they fix; the harm lands on less-confident knowledge, acts in the late layers where the answer forms, and no confidence gate rescues it. See [Phase 2](#phase-2--harm-at-scale-gemma-3-4b-triviaqa-interpretability).
 - **Phase 3** (same model and questions, plus 236 paraphrases): storing the **corrected fact** instead of a lesson fixes 126 / 129 training failures and 106 / 119 paraphrased ones, but as a lookup: the retriever matches the rewording and the model copies the stored answer. On unrelated questions, corrections are noise (14 fixed, 15 broke), and a similarity gate removes all of that harm. Lessons on top only hurt. See [Phase 3](#phase-3--two-track-memory-corrections-vs-lessons).
+- **Phase 4** (500 fresh questions plus paraphrases, and a placebo test): the similarity gate, fixed in advance at 0.7, replicates. It gives 100% training, 89.4% paraphrase, and held-out identical to memory-off, with **0 broken answers out of 735**. Lorem-ipsum filler of the same length breaks as many correct answers as real off-topic memory, and the same ones, so most of the "harm" in phases 2–3 comes from a longer prompt, not from what memory says. See [Phase 4](#phase-4--results).
 
 ## Question
 
@@ -199,9 +200,69 @@ Phase 3 left two claims resting on post-hoc analysis: the 0.7 similarity gate (f
 5. **Lorem:** at least half as many changed answers (fixed + broke) as real corrections (≥ 15 vs 29), at least 8 broken, and broken answers with lower memory-off confidence than unbroken ones. If lorem changes fewer than 10 answers, finding 14 is wrong: the content of off-topic facts matters, not just the extra text.
 6. **Random:** fixed and broke each within ±6 of the corrections arm (14 / 15), since nearest held-out corrections are already unrelated (median similarity 0.34).
 
+## Phase 4 — results
+
+All six pre-registered predictions hold.
+
+### A. The gate on fresh questions
+
+119 corrections, one per fresh training failure. The gate threshold was 0.7 throughout, never tuned.
+
+| Fresh set | Off | Corrections, ungated | Corrections, gated at 0.7 |
+|---|---|---|---|
+| Training (250) | 52.4% | 93.2% — fixed 119, **broke 17** | **100.0%** — fixed 119, broke 0 |
+| Paraphrase (235) | 47.7% | 84.3% — fixed 102, **broke 16** | **89.4%** — fixed 98, broke 0 |
+| Held-out (250) | 44.0% | 45.6% — fixed 14, **broke 10** | **44.0%** — fixed 0, broke 0 |
+
+| # | Prediction | Result | Verdict |
+|---|---|---|---|
+| 1 | Held-out gated: ≤ 1 broke, accuracy within 1 of off | 0 broke, identical to off | **Holds** |
+| 2 | Training gated: ≥ 95% of ungated fixes, ≤ 2 broke | 119 / 119, 0 broke | **Holds** |
+| 3 | Paraphrase gated: ≥ 90% of ungated fixes, ≤ 2 broke | 98 / 102 = 96%, 0 broke | **Holds** |
+| 4 | Held-out ungated: ≥ 5 broke | 10 broke | **Holds** |
+
+**16. The similarity gate replicates: on 735 fresh answers it removes every broken answer and keeps 96–100% of the fixes.** No fresh held-out question gets within reach of a stored one (top-1 similarity ≤ 0.57). Every paraphrase whose source has a correction clears the gate (lowest 0.73, median 0.93). That margin is thinner than phase 3's 0.76, so 0.7 is close to the edge for paraphrases. The 4 paraphrase fixes lost to the gate are paraphrases whose own source question has no correction: answers that changed by chance, not lookups. The rest replicates phase 3 exactly. 118 / 119 training fixes and 96 / 102 paraphrase fixes are the stored answer copied over, and none of the 43 broken answers on any set copies a correction. The gated runs match the simulation answer for answer on all 735 questions, which confirms that phase 3's simulation method was exact.
+
+### B. Placebo on the phase 3 held-out set
+
+| Phase 3 held-out (132 right without memory) | Fixed | Broke | Harm rate |
+|---|---|---|---|
+| Lessons (phase 2) | 11 | 21 | 15.9% |
+| Nearest corrections (phase 3) | 14 | 15 | 11.4% |
+| **Random corrections** | 13 | 18 | 13.6% |
+| **Lorem ipsum, same length** | 11 | 14 | 10.6% |
+
+| # | Prediction | Result | Verdict |
+|---|---|---|---|
+| 5 | Lorem: ≥ 15 changed, ≥ 8 broke, broken = less confident | 25 changed, 14 broke, median confidence 0.82 vs 1.00 (p < 1e-7) | **Holds** |
+| 6 | Random within ±6 of 14 fixed / 15 broke | 13 / 18 | **Holds** |
+
+**17. Meaningless filler does about as much damage as off-topic memory, and to the same answers.** Lorem ipsum with no facts in it breaks 14 correct answers, compared with 15 for real corrections and 21 for lessons. The broken sets overlap far beyond chance. For every pair of the four arms, 7–11 questions break under both, where chance predicts about 2 (hypergeometric p < 2e-4 for every pair). The specific swaps repeat: Liddell → Carroll, Ritchie Valens → J. P. Richardson, Wrist → another body part, Polystyrene → Polypropylene. 98 of the 132 correct answers never break under any arm, and the damage falls on about 34 fragile ones. In every arm these have lower memory-off confidence. **Most of the "harm from memory" in phases 2 and 3 is harm from a longer prompt.** Lessons may add a little on top (21 broke vs 14–18 for the others), but that gap is within noise at this N.
+
+### What phase 4 means
+
+Four phases come to a simple account of retrieval memory on factual QA with a small model:
+
+- **When the stored item is the answer to this question** (the same question or a rewording), the model copies it. That's worth +40–50 points, and it's lookup, not learning.
+- **When it isn't**, the stored text acts as noise, whatever it says. It flips about 10–15% of the answers the model holds loosely, slightly more often toward wrong than right.
+- **A similarity gate separates the two cases cleanly** on random trivia. Gated correction memory is strictly better than no memory on every set measured: +0 on unrelated questions, +40–48 points on seen and reworded ones, 0 broken out of 735.
+
+None of this makes the model know anything new. Gated corrections are a good cache. To change what the model knows, rather than what it is shown, the next step is weight editing.
+
+### Phase 4 caveats
+
+- **Same model, decoding and answer key as phases 2–3.** The fragile-answer effect (finding 17) might be smaller in a larger model that holds its answers more firmly.
+- **The gate is tested on random TriviaQA,** where unrelated questions are far apart. Its weak point is near-duplicates with different answers ("consolation prize a chequebook and pen" vs "… a dustbin"), which random sampling rarely produces. The paraphrase margin (0.73 vs 0.70) is narrow.
+- **Confidence for the placebo analysis comes from phase 2's activation capture** (first answer token, memory off), and covers the phase 3 held-out set only.
+- **Lorem is one kind of filler.** Other content-free text (blank notes, repeated tokens) might behave differently. What this shows is that the content of off-topic corrections is not what's needed for the harm.
+
 ## Where this goes next
 
-This experiment is one slice of a longer arc. The two-track experiment below is now done (see [Phase 3](#phase-3--two-track-memory-corrections-vs-lessons)). The candidates after it are: confirm the similarity gate on a fresh split; add a placebo arm (irrelevant text of matched length) to test finding 14 directly; build a fact-*use* test (two-hop or inverse questions) for real transfer; and try weight editing (ROME/MEMIT), which changes what the model knows instead of what it's shown.
+This experiment is one slice of a longer arc. The two-track experiment below is done (see [Phase 3](#phase-3--two-track-memory-corrections-vs-lessons)), and so are the gate replication and placebo test ([Phase 4](#phase-4--results)). Candidates now:
+
+- **Weight editing (ROME/MEMIT)** on the same failures: write the 119 corrections into the weights and measure the same fixed/broke counts, plus paraphrase transfer and collateral damage on held-out. It's the direct comparison with gated retrieval, and it's the only option here that changes what the model knows.
+- **A fact-use test** (two-hop or inverse questions) for whether either method gives transfer beyond lookup.
+- **A gate stress test** on near-duplicate questions with different answers.
 
 ### The immediate next experiment — two-track memory (correction + principle)
 
@@ -293,3 +354,10 @@ Phase 3:
 - `build_paraphrases.py` → `questions_trivia_paraphrase.csv` (236 reworded training questions, with `source_question`)
 - `run_twotrack.py` (builds corrections, runs 3 sets × 4 arms, resumable, then compares)
 - `runs/gemma3-4b-twotrack/`: `corrections.csv` (129), `{train,paraphrase,holdout}_{off,lessons,corrections,both}.csv`, and `*_pairs.csv` with retrieved lesson and correction ids
+
+Phase 4:
+
+- `run_phase4.py` (placebo + fresh-split gate, resumable); gate and placebo modes live in `agent.py`
+- `questions_trivia_v2.csv`, `questions_trivia_v2_holdout.csv`, `questions_trivia_v2_paraphrase.csv`: fresh 250 / 250 / 235 (seed 1)
+- `runs/gemma3-4b-phase4/`: fresh `corrections.csv` (119), `{train,paraphrase,holdout}_{off,corrections,gated}.csv`, `*_pairs.csv`
+- `runs/gemma3-4b-placebo/`: `holdout_placebo_{lorem,random}.csv` and pairs, against the phase 3 correction store
