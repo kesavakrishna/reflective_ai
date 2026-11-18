@@ -5,6 +5,9 @@ TriviaQA lists every accepted alias per answer, which keeps grading deterministi
 holds the aliases joined with "|" and grader.py accepts any of them. See NOTES.md.
 
   python build_triviaqa.py <path/to/validation.parquet>
+  # phase 4 fresh split, disjoint from the phase 2/3 questions:
+  python build_triviaqa.py <parquet> --seed 1 --exclude questions_trivia.csv questions_trivia_holdout.csv \\
+      --train-out questions_trivia_v2.csv --holdout-out questions_trivia_v2_holdout.csv
 """
 
 import argparse
@@ -15,7 +18,7 @@ SEED = 0
 MIN_ALIAS_LEN = 3  # 1–2 char aliases ("US", "4") match inside unrelated answers too easily
 
 
-def build(parquet_path, n_train, n_holdout, train_out, holdout_out):
+def build(parquet_path, n_train, n_holdout, train_out, holdout_out, seed=SEED, exclude=()):
     df = pd.read_parquet(parquet_path, columns=["question", "answer"])
     # Canonical answer first (correction memos show it), then the remaining aliases sorted.
     df["aliases"] = df["answer"].map(
@@ -25,8 +28,11 @@ def build(parquet_path, n_train, n_holdout, train_out, holdout_out):
         lambda al: bool(al) and all("|" not in x for x in al) and min(map(len, al)) >= MIN_ALIAS_LEN
     )]
     df = df[df["question"].str.len() <= 200].drop_duplicates("question")
+    if exclude:
+        used = set().union(*(set(pd.read_csv(f)["question"].str.strip()) for f in exclude))
+        df = df[~df["question"].str.strip().isin(used)]
 
-    sample = df.sample(n=n_train + n_holdout, random_state=SEED)
+    sample = df.sample(n=n_train + n_holdout, random_state=seed)
     out = pd.DataFrame({
         "question": sample["question"].str.strip(),
         "expected_answer": sample["aliases"].map("|".join),
@@ -44,5 +50,8 @@ if __name__ == "__main__":
     p.add_argument("--n-holdout", type=int, default=250)
     p.add_argument("--train-out", default="questions_trivia.csv")
     p.add_argument("--holdout-out", default="questions_trivia_holdout.csv")
+    p.add_argument("--seed", type=int, default=SEED)
+    p.add_argument("--exclude", nargs="*", default=[], help="question CSVs whose questions to leave out")
     args = p.parse_args()
-    build(args.parquet, args.n_train, args.n_holdout, args.train_out, args.holdout_out)
+    build(args.parquet, args.n_train, args.n_holdout, args.train_out, args.holdout_out,
+          seed=args.seed, exclude=args.exclude)

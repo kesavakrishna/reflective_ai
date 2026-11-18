@@ -174,10 +174,27 @@ def retrieve_corrections(query, top_k=3):
         return []
     q = _embed(query)
     k = min(top_k, _corrections_index.ntotal)
-    _, idxs = _corrections_index.search(np.expand_dims(q, 0), k)
+    dists, idxs = _corrections_index.search(np.expand_dims(q, 0), k)
     rows = _corrections.iloc[idxs[0]]
+    # MiniLM embeddings are unit-length, so IndexFlatL2's squared distance d gives cosine = 1 - d/2.
+    # "sim" is what the phase 4 gate thresholds on.
+    return [
+        {"id": int(r["id"]), "question": r["question"], "wrong_answer": r["wrong_answer"],
+         "correct_answer": r["correct_answer"], "sim": float(1 - d / 2)}
+        for d, (_, r) in zip(dists[0], rows.iterrows())
+    ]
+
+
+def random_corrections(query, k=3):
+    """k corrections drawn at random, seeded by the query so a re-run gets the same draw (phase 4
+    placebo: facts in the prompt, but not the nearest ones)."""
+    if _corrections.empty:
+        return []
+    import zlib
+    rng = np.random.default_rng(zlib.crc32(query.encode("utf-8")))
+    picks = rng.choice(len(_corrections), size=min(k, len(_corrections)), replace=False)
     return [
         {"id": int(r["id"]), "question": r["question"], "wrong_answer": r["wrong_answer"],
          "correct_answer": r["correct_answer"]}
-        for _, r in rows.iterrows()
+        for _, r in _corrections.iloc[picks].iterrows()
     ]

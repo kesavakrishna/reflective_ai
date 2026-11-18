@@ -180,6 +180,25 @@ The two-track hypothesis splits into two answers. The correction track works, bu
 - **Paraphrases come from one model** (Nemotron 3.5 Super). 14 were rejected for leaking the answer, and 3 are near-copies of the original.
 - **Same single seed and 8-bit model as phase 2.** The harm counts on held-out are small (15–21), and differences between arms there are within noise.
 
+## Phase 4 design — does the gate hold, and is the harm just noise? (pre-registered 2026-11-17, before any run)
+
+Phase 3 left two claims resting on post-hoc analysis: the 0.7 similarity gate (finding 15), and "off-topic memory acts as noise on fragile answers, whatever it says" (finding 14). Phase 4 tests both. Same model, prompt, top-3 retrieval and grader.
+
+**A. Gate replication on fresh questions.** 250 new training and 250 new held-out questions from TriviaQA (seed 1, disjoint from the phase 2/3 500), plus Nemotron paraphrases of the new training questions. Corrections are built from the new training failures. The gate is fixed in advance: **include the top-3 corrections only if the top-1 cosine similarity is ≥ 0.70**, otherwise use the memory-off prompt. This is the rule simulated in phase 3. Each set runs memory-off, ungated corrections and gated corrections.
+
+1. **Held-out, gated:** at most 1 broken answer, and accuracy within 1 question of memory-off.
+2. **Training, gated:** keeps ≥ 95% of ungated fixes, with at most 2 broken.
+3. **Paraphrase, gated:** keeps ≥ 90% of ungated fixes, with at most 2 broken. The threshold is looser than training because a paraphrase is further from its stored question.
+4. **Held-out, ungated:** harm reappears (broke ≥ 5 of the questions right without memory), so the gate has something to remove.
+
+**B. Placebo on the phase 3 held-out set.** The same 250 held-out questions, with the corrections block replaced by:
+
+- **lorem:** lorem-ipsum filler of the same character length as that question's real corrections block, under a "Notes:" header. Extra text with no facts.
+- **random:** 3 corrections drawn at random from the store (seeded per question) instead of the 3 nearest. Facts, but less related than the nearest.
+
+5. **Lorem:** at least half as many changed answers (fixed + broke) as real corrections (≥ 15 vs 29), at least 8 broken, and broken answers with lower memory-off confidence than unbroken ones. If lorem changes fewer than 10 answers, finding 14 is wrong: the content of off-topic facts matters, not just the extra text.
+6. **Random:** fixed and broke each within ±6 of the corrections arm (14 / 15), since nearest held-out corrections are already unrelated (median similarity 0.34).
+
 ## Where this goes next
 
 This experiment is one slice of a longer arc. The two-track experiment below is now done (see [Phase 3](#phase-3--two-track-memory-corrections-vs-lessons)). The candidates after it are: confirm the similarity gate on a fresh split; add a placebo arm (irrelevant text of matched length) to test finding 14 directly; build a fact-*use* test (two-hop or inverse questions) for real transfer; and try weight editing (ROME/MEMIT), which changes what the model knows instead of what it's shown.

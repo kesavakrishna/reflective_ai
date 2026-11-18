@@ -477,6 +477,16 @@ Design + predictions pre-registered in RESULTS.md ("Phase 3 design") before any 
 - **Unfixed:** train 3 (2 grader artifacts: "Thetis" vs "(HMS) Thetis", the 9-country list). Paraphrase 13, including grader artifacts ("GM", "tonycurtis") and paraphrases that changed the question ("currently serves as Taoiseach" lost its date, so "Simon Harris" is arguably right).
 - Analysis script was ad hoc (scratchpad, not committed); its numbers are reproducible from the pairs CSVs + `corrections.csv` + `activations.npz`.
 
+## Phase 4 setup — gate replication + placebo (2026-11-17)
+
+Design + predictions pre-registered in RESULTS.md ("Phase 4 design") before any run.
+
+- **Gate** (`agent.py`, `--gate` / `CORRECTION_GATE`): if the top-1 correction's cosine similarity is < 0.7, drop all corrections, so the prompt is byte-identical to memory-off. Otherwise use the usual top-3. That's the exact rule simulated in phase 3, not a per-correction filter. `retrieve_corrections` now returns `sim` = 1 − d/2 (MiniLM vectors are unit-length; checked, and the held-out max of 0.641 matches the phase 3 analysis).
+- **Placebos** (`memory_mode`): `placebo_lorem` puts "Notes:" + lorem ipsum in the corrections slot, cut at a word to the length of that question's real corrections block (within 12 chars). `placebo_random` puts in 3 corrections drawn at random, seeded by crc32 of the question.
+- **Prompt checks** on 40 questions against `git show HEAD:agent.py`: off, ungated corrections and both are byte-identical to phase 3. Gated equals off below 0.7 and ungated at or above it. Lorem length matches. Random is reproducible.
+- **Fresh split:** `build_triviaqa.py --seed 1 --exclude <phase 2/3 files>` writes `questions_trivia_v2.csv` and `questions_trivia_v2_holdout.csv` (250 + 250, 0 overlap with the old 500 or with each other; 8551 eligible).
+- **Runner:** `run_phase4.py`. Paraphrases go over the API in the background while the GPU runs the placebos. Resumable; log in `runs/gemma3-4b-phase4.log`. Outputs: `runs/gemma3-4b-placebo/`, `runs/gemma3-4b-phase4/`.
+
 ## Open follow-ups (not done tonight)
 
 For the **strategic forward plan** (two-track memory experiment + the broader human-cognition arc), see RESULTS.md → "Where this goes next." The items below are the *tactical* leftover work from the current experiment.
