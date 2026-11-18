@@ -465,6 +465,18 @@ Design + predictions pre-registered in RESULTS.md ("Phase 3 design") before any 
   - 14 rejected after 3 tries because the paraphrase contained an accepted alias — mostly questions that name the answer themselves ("Olea europaea" → olive). Median string similarity to source 0.60; 3 near-copies (> 0.9).
 - **Git:** `activations.npz` (165MB) blocked the push (GitHub's 100MB limit). Removed from the two unpushed commits with plumbing (backup branch `backup/before-npz-removal`), `*.npz` added to `.gitignore`. Regenerate with `interp_capture.py`.
 
+## Phase 3 run — two-track results (2026-11-17)
+
+`run_twotrack.py --source runs/gemma3-4b-trivia --name gemma3-4b-twotrack`. The first launch was killed for low memory during train/corrections, after the 129 corrections were built. A re-run of the same command resumed and finished the remaining 8 evals (about 1h40 total). Log: `runs/gemma3-4b-twotrack.resume.log`.
+
+- **Headline:** corrections fix 126/129 training and 106/119 paraphrase failures. Held-out: corrections 14 fixed / 15 broke, lessons 11 / 21, both 17 / 21. All 4 pre-registered predictions hold in direction (table in RESULTS.md).
+- **compare.py bug, fixed:** phase 2 off runs have no `retrieved_correction_ids` column, so the merge didn't suffix it and the pairs CSVs silently dropped correction ids. Now `retrieved_*` columns are always taken from the on run. Pairs CSVs regenerated; counts unchanged.
+- **Everything that fixed something was a copy.** Train: 126/126 fixes equal the stored correct answer. Paraphrase: 102/106. Own correction retrieved at rank 1 for 100% of train and paraphrase (min cosine 0.763, median 0.945). So the paraphrase set tested MiniLM's robustness to rewording, not the model. My pre-registered framing overclaimed what this set could show.
+- **Held-out changes are noise on fragile answers.** 0 of 29 changed answers (fixed or broke) copy a retrieved correction. 17 of 33 broken held-out answers break in at least 2 arms. Broken answers have lower memory-off confidence (from `activations.npz` `conf_off`; median 0.92–0.97 vs 1.00, MWU p < 1e-4) in every arm. Same pattern on train (10 broke under corrections, all questions with no correction of their own).
+- **Similarity gate, simulated (post hoc):** top-1 cosine to a stored question is ≥ 0.763 when the own correction exists and ≤ 0.641 on held-out. Gate at 0.7 gives train 98.8%, paraphrase 93.2%, held-out 52.8% (= off), with 0 broke anywhere. Exact rather than estimated, because a gated-out prompt is byte-identical to memory-off and greedy decoding is deterministic. One train question gated in via a neighbour (0.76) and didn't break. Needs a fresh split to confirm.
+- **Unfixed:** train 3 (2 grader artifacts: "Thetis" vs "(HMS) Thetis", the 9-country list). Paraphrase 13, including grader artifacts ("GM", "tonycurtis") and paraphrases that changed the question ("currently serves as Taoiseach" lost its date, so "Simon Harris" is arguably right).
+- Analysis script was ad hoc (scratchpad, not committed); its numbers are reproducible from the pairs CSVs + `corrections.csv` + `activations.npz`.
+
 ## Open follow-ups (not done tonight)
 
 For the **strategic forward plan** (two-track memory experiment + the broader human-cognition arc), see RESULTS.md → "Where this goes next." The items below are the *tactical* leftover work from the current experiment.

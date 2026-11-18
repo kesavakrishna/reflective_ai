@@ -4,6 +4,7 @@ A controlled experiment testing whether a frozen LLM can improve on novel questi
 
 - **Phase 1** (Llama 3.3 70B, 64 hand-written questions): small-N limit result — lessons help only when the model's underlying knowledge is right, and can hurt when it isn't.
 - **Phase 2** (Gemma 3 4B, 500 TriviaQA questions, plus activations): at scale, lessons are **net harmful** — they break ~2× as many correct answers as they fix; the harm lands on less-confident knowledge, acts in the late layers where the answer forms, and no confidence gate rescues it. See [Phase 2](#phase-2--harm-at-scale-gemma-3-4b-triviaqa-interpretability).
+- **Phase 3** (same model and questions, plus 236 paraphrases): storing the **corrected fact** instead of a lesson fixes 126 / 129 training failures and 106 / 119 paraphrased ones, but as a lookup: the retriever matches the rewording and the model copies the stored answer. On unrelated questions, corrections are noise (14 fixed, 15 broke), and a similarity gate removes all of that harm. Lessons on top only hurt. See [Phase 3](#phase-3--two-track-memory-corrections-vs-lessons).
 
 ## Question
 
@@ -118,9 +119,70 @@ Phase 1 said reflection helps only under narrow conditions. Phase 2 says that **
 - **Grader noise.** TriviaQA aliases are sometimes loose; spot-checking the 59 changed pairs found ~4–6 alias artifacts per side (e.g. "The DLS method" counted as broke). Not enough to close the broke/fixed gap.
 - **Logit lens uses the first answer token only,** and averages over 34 broke / 13 fixed cases.
 
+## Phase 3 — two-track memory (corrections vs lessons)
+
+Phase 2 showed that rule-shaped lessons can't fix a wrong fact. Phase 3 stores the fact itself. A **correction** is a failed question, the model's wrong answer, and the correct (canonical) answer. It is indexed by the question's embedding, and the top 3 are put in the prompt above any lessons. Same model (Gemma 3 4B, 8-bit, greedy), same 129 phase 2 lessons, same 129 failures (each gets one correction). Design and predictions were [pre-registered](#phase-3-design-updated-after-phase-2-pre-registered-2026-11-16-before-any-run) before the run. The memory-off and lessons runs are reused from phase 2, since a fresh-process re-run of 40 questions gave 40/40 identical answers.
+
+### Results
+
+| Set | Arm | Accuracy | Fixed | Broke | Harm rate |
+|---|---|---|---|---|---|
+| Training (250) | off | 48.4% | | | |
+| | lessons | 44.8% | 9 / 129 | 18 / 121 | 14.9% |
+| | **corrections** | **94.8%** | **126 / 129** | 10 / 121 | 8.3% |
+| | both | 90.0% | 118 / 129 | 14 / 121 | 11.6% |
+| Paraphrase (236) | off | 49.6% | | | |
+| | lessons | 45.8% | 8 / 119 | 17 / 117 | 14.5% |
+| | **corrections** | **89.8%** | **106 / 119** | 11 / 117 | 9.4% |
+| | both | 89.0% | 104 / 119 | 11 / 117 | 9.4% |
+| Held-out (250) | off | 52.8% | | | |
+| | lessons | 48.8% | 11 / 118 | 21 / 132 | 15.9% |
+| | corrections | 52.4% | 14 / 118 | 15 / 132 | 11.4% |
+| | both | 51.2% | 17 / 118 | 21 / 132 | 15.9% |
+
+Held-out sign tests (fixed vs broke): lessons p = 0.11, corrections p = 1.0, both p = 0.63.
+
+### Predictions, checked
+
+| # | Prediction | Result | Verdict |
+|---|---|---|---|
+| 1 | Training, corrections fix > 60% | 126 / 129 = 97.7% | **Holds** (expected: it's a lookup) |
+| 2 | Paraphrase, corrections fix > 40% of those wrong without memory | 106 / 119 = 89.1% | **Holds, but doesn't test what it was meant to.** See finding 13 |
+| 3 | Held-out, corrections harm < 15.9% | 11.4% (15 vs 21 broken) | **Holds in direction**, but 15 vs 21 isn't a significant difference |
+| 4 | Both = same fixes, harm ≥ corrections | Fewer fixes (118 vs 126 train), harm ≥ on every set | **Holds.** Lessons cost fixes as well as adding harm |
+
+### Findings
+
+**12. Storing the fact fixes the fact.** With corrections, 126 of 129 training failures are fixed, and every one of the 126 answers is the stored correct answer. Phase 2's lessons fixed 9. Of the 3 left, 2 are grader artifacts ("Thetis" vs alias "(HMS) Thetis"; a 9-item list). The third is a question the model answered with dimensions instead of a ship's name.
+
+**13. The paraphrase test measured the retriever, not the model.** Every paraphrase whose source question had a correction retrieved that correction at rank 1 (122 / 122). The lowest cosine similarity was 0.76, and the median was 0.95. 102 of the 106 fixes are the stored answer copied over. So the corrections "transfer" to new wording only because the embedding treats the rewording as the same question. That shows the lookup is robust to wording. It doesn't show the model learned the fact, and the pre-registered framing ("learning vs lookup keyed on wording") was too generous to this test. A real transfer test needs a question that *uses* the fact without asking for it, such as a second hop or an inverse question. Of the 13 paraphrases still wrong, several are grader artifacts ("GM", "tonycurtis") and a few paraphrases changed the question ("who currently serves as Taoiseach" dropped the date).
+
+**14. Off-topic memory acts as noise on fragile answers, whatever it says.** On held-out, where no correction is relevant, corrections fixed 14 and broke 15. That's symmetric, and **none of the 29 changed answers is copied from a retrieved correction.** The "fixes" are as accidental as the breaks. The same questions break across arms: 17 of the 33 broken held-out answers break under at least two arms. In every arm, broken answers had lower memory-off confidence than answers memory never broke (held-out median 0.92–0.97 vs 1.00, Mann-Whitney p < 0.0001). Prediction 3's risk, that the model copies an irrelevant correction, did not happen. The picture: **any extra context flips answers the model holds loosely, and lessons tilt those flips toward harm** (11 fixed vs 21 broke). Irrelevant corrections don't tilt them (14 vs 15). Training shows the same thing: the 10 training answers that corrections broke are questions the model already had right, which therefore have no correction of their own and only retrieved neighbours'.
+
+**15. A similarity gate separates relevant from irrelevant corrections almost perfectly.** The top-1 cosine similarity between a question and the nearest stored question is ≥ 0.76 for every paraphrase or training question whose own correction exists. It is ≤ 0.64 for every held-out question. Simulating "use corrections only when top-1 similarity ≥ 0.7":
+
+| Set | Off | Corrections, ungated | Corrections, gated at 0.7 | Fixed / broke (gated) |
+|---|---|---|---|---|
+| Training | 48.4% | 94.8% | **98.8%** | 126 / 0 |
+| Paraphrase | 49.6% | 89.8% | **93.2%** | 103 / 0 |
+| Held-out | 52.8% | 52.4% | **52.8%** | 0 / 0 |
+
+This is exact rather than an estimate, because a gated-out prompt is byte-identical to the memory-off prompt and decoding is deterministic. But **the threshold was chosen after seeing these results**, so it needs confirming on a fresh split. Compare finding 11: confidence couldn't gate lessons, because a lesson's value doesn't depend on how well it matches the question. A correction's value depends on exactly that.
+
+### What phase 3 means
+
+The two-track hypothesis splits into two answers. The correction track works, but only as what it is: a cache of fixed facts, keyed robustly enough to survive rewording, with its harm removable by a similarity gate. The principle track adds nothing on factual recall. Layered on top of corrections, it loses fixes (126 → 118) and adds harm. Across three phases, nothing here is evidence of the model *learning* from a mistake. When it improves, a lookup supplied the answer. When it gets worse, extra context knocked loose an answer it held weakly. That points the next step at either (a) changing what the model knows (weight editing, e.g. ROME/MEMIT), or (b) testing whether a stored fact can be *used* rather than just retrieved.
+
+### Phase 3 caveats
+
+- **Corrections are only as good as the answer key.** TriviaQA's canonical answers are sometimes odd ("Pent house"), and the stored correct answer is taken from the key without checking.
+- **The 0.7 gate is post hoc** (finding 15), and the gap it exploits (0.64 vs 0.76) is specific to these 500 random trivia questions with MiniLM embeddings. Near-duplicate questions with different answers ("consolation prize a chequebook and pen" vs "… a dustbin", both in training) would defeat a pure similarity gate.
+- **Paraphrases come from one model** (Nemotron 3.5 Super). 14 were rejected for leaking the answer, and 3 are near-copies of the original.
+- **Same single seed and 8-bit model as phase 2.** The harm counts on held-out are small (15–21), and differences between arms there are within noise.
+
 ## Where this goes next
 
-This experiment is one slice of a longer arc. The next slice is sharply defined; the broader trajectory is intentionally loose.
+This experiment is one slice of a longer arc. The two-track experiment below is now done (see [Phase 3](#phase-3--two-track-memory-corrections-vs-lessons)). The candidates after it are: confirm the similarity gate on a fresh split; add a placebo arm (irrelevant text of matched length) to test finding 14 directly; build a fact-*use* test (two-hop or inverse questions) for real transfer; and try weight editing (ROME/MEMIT), which changes what the model knows instead of what it's shown.
 
 ### The immediate next experiment — two-track memory (correction + principle)
 
@@ -205,4 +267,10 @@ Phase 2:
 - `run_cycle.py` (full cycle into `runs/<name>/`), `compare.py` (fixed/broke/harm rate), `build_triviaqa.py`
 - `interp_capture.py` (residual stream + logit lens), `interp_analyze.py` (harm probe, baselines, permutation null)
 - `questions_trivia.csv`, `questions_trivia_holdout.csv` — 250 + 250 TriviaQA questions
-- `runs/gemma3-4b/` — pilot on the phase 1 questions; `runs/gemma3-4b-trivia/` — the 500-question run, lessons, `*_pairs.csv`, `analysis.txt`, `probe_auc_by_layer.csv` (`activations.npz` is 136MB)
+- `runs/gemma3-4b/` — pilot on the phase 1 questions; `runs/gemma3-4b-trivia/` — the 500-question run, lessons, `*_pairs.csv`, `analysis.txt`, `probe_auc_by_layer.csv` (`activations.npz`, 165MB, is gitignored; regenerate with `interp_capture.py`)
+
+Phase 3:
+
+- `build_paraphrases.py` → `questions_trivia_paraphrase.csv` (236 reworded training questions, with `source_question`)
+- `run_twotrack.py` (builds corrections, runs 3 sets × 4 arms, resumable, then compares)
+- `runs/gemma3-4b-twotrack/`: `corrections.csv` (129), `{train,paraphrase,holdout}_{off,lessons,corrections,both}.csv`, and `*_pairs.csv` with retrieved lesson and correction ids

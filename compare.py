@@ -19,6 +19,10 @@ OUTCOMES = {(0, 1): "fixed", (1, 0): "broke", (1, 1): "stayed_right", (0, 0): "s
 def compare(off_path, on_path, out=None, label=""):
     off = pd.read_csv(off_path)
     on = pd.read_csv(on_path)
+    # Retrieval ids describe the memory-on run; take them from there even if the off run lacks
+    # the column (phase 2 off runs predate retrieved_correction_ids, so the merge wouldn't suffix it).
+    off = off.drop(columns=[c for c in off.columns if c.startswith("retrieved_")])
+    on = on.rename(columns={c: f"{c}_on" for c in on.columns if c.startswith("retrieved_")})
     pairs = off.merge(on, on="question", suffixes=("_off", "_on"))
     if len(pairs) != len(off) or len(pairs) != len(on):
         raise ValueError(f"runs don't pair up: off={len(off)} on={len(on)} matched={len(pairs)}")
