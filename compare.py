@@ -46,15 +46,17 @@ def compare(off_path, on_path, out=None, label=""):
         for _, r in rows.iterrows():
             print(f"  {r['question'][:70]}")
             print(f"    off: {str(r['answer_off'])[:50]!r}  on: {str(r['answer_on'])[:50]!r}"
-                  f"  expected: {r['expected_answer_on']}  lessons: {r['retrieved_lesson_ids_on']}")
+                  f"  expected: {str(r['expected_answer_on']).split('|')[0]}  lessons: {r['retrieved_lesson_ids_on']}"
+                  + (f"  corrections: {r['retrieved_correction_ids_on']}" if "retrieved_correction_ids_on" in r else ""))
 
     if out:
         cols = ["question", "category_on", "expected_answer_on", "answer_off", "answer_on",
-                "correct_off", "correct_on", "outcome", "retrieved_lesson_ids_on"]
+                "correct_off", "correct_on", "outcome", "retrieved_lesson_ids_on", "retrieved_correction_ids_on"]
         cols = [c for c in cols if c in pairs.columns]
         renamed = pairs[cols].rename(columns={
             "category_on": "category", "expected_answer_on": "expected_answer",
             "retrieved_lesson_ids_on": "retrieved_lesson_ids",
+            "retrieved_correction_ids_on": "retrieved_correction_ids",
         })
         renamed.to_csv(out, index=False)
         print(f"\nSaved pairs to {out}")

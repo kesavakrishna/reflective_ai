@@ -44,6 +44,8 @@ def main():
         "ATTEMPTS_CSV": os.path.join(d, "attempts.csv"),
         "LESSONS_CSV": os.path.join(d, "lessons.csv"),
         "LESSONS_FAISS": os.path.join(d, "lessons.faiss"),
+        "CORRECTIONS_CSV": os.path.join(d, "corrections.csv"),
+        "CORRECTIONS_FAISS": os.path.join(d, "corrections.faiss"),
     }
     if args.backend == "local":
         env["HF_HUB_OFFLINE"] = "1"  # model is cached; don't hit the network

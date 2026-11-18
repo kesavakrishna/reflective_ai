@@ -24,6 +24,8 @@ RUN_DIR = sys.argv[1] if len(sys.argv) > 1 else "runs/gemma3-4b-trivia"
 os.environ.setdefault("LESSONS_CSV", os.path.join(RUN_DIR, "lessons.csv"))
 os.environ.setdefault("LESSONS_FAISS", os.path.join(RUN_DIR, "lessons.faiss"))
 os.environ.setdefault("ATTEMPTS_CSV", os.path.join(RUN_DIR, "attempts.csv"))
+os.environ.setdefault("CORRECTIONS_CSV", os.path.join(RUN_DIR, "corrections.csv"))
+os.environ.setdefault("CORRECTIONS_FAISS", os.path.join(RUN_DIR, "corrections.faiss"))
 os.environ["LLM_BACKEND"] = "local"
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
 

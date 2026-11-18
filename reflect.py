@@ -1,9 +1,10 @@
-"""Step 4: turn failed attempts into lessons. See NOTES.md.
+"""Step 4: turn failed attempts into lessons (and, phase 3, corrections). See NOTES.md.
 
 Reads failures (correct == 0) from attempts.csv, asks the model to write itself a
-transferable lesson for each, and stores them via memory.record_lesson. Retrieval is
-NOT enabled here — that's step 5. Run this on the baseline run, then read the lessons by
-hand before turning memory on.
+transferable lesson for each, and stores them via memory.record_lesson. Each failure also
+becomes a correction (question, wrong answer, right answer) via memory.record_correction —
+no model call. Retrieval is NOT enabled here — that's step 5. Run this on the baseline run,
+then read the lessons by hand before turning memory on.
 """
 
 import argparse
@@ -11,7 +12,7 @@ import argparse
 import pandas as pd
 
 import memory
-from memory import record_lesson, ATTEMPTS_CSV
+from memory import record_lesson, record_correction, ATTEMPTS_CSV
 from llm_client import generate
 
 # v2: force diagnosis before the rule, demand a self-applicable strategy, and explicitly
@@ -32,30 +33,43 @@ REFLECT_PROMPT = (
 )
 
 
-def reflect(reset=False):
+def reflect(reset=False, corrections_only=False):
     if reset:
-        memory.reset_lessons()
+        memory.reset_corrections()
+        if not corrections_only:
+            memory.reset_lessons()
 
     attempts = pd.read_csv(ATTEMPTS_CSV)
     failures = attempts[attempts["correct"] == 0]
     print(f"{len(failures)} failures to reflect on\n")
 
     for _, row in failures.iterrows():
+        # TriviaQA expected answers are "canonical|alias|alias…". Phase 2 passed the whole list into
+        # the reflection prompt; use the canonical answer only.
+        correct = str(row["expected_answer"]).split("|")[0]
+        cid = record_correction(row["question"], row["answer"], correct, source_attempt_id=int(row["id"]))
+        if corrections_only:
+            continue
         prompt = REFLECT_PROMPT.format(
             question=row["question"],
             answer=row["answer"],
-            expected=row["expected_answer"],
+            expected=correct,
         )
         lesson = generate(prompt).strip()
         lid = record_lesson(lesson, source_attempt_id=int(row["id"]))
-        print(f"[lesson {lid}] from attempt {int(row['id'])}")
+        print(f"[lesson {lid} / correction {cid}] from attempt {int(row['id'])}")
         print(f"  Q:      {row['question'][:72]}")
-        print(f"  wrong:  {str(row['answer'])[:40]}   correct: {row['expected_answer']}")
+        print(f"  wrong:  {str(row['answer'])[:40]}   correct: {correct}")
         print(f"  lesson: {lesson}\n")
+
+    if corrections_only:
+        print(f"Recorded {len(failures)} corrections (lessons left as they are)")
 
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
-    p.add_argument("--reset", action="store_true", help="wipe existing lessons first")
+    p.add_argument("--reset", action="store_true", help="wipe existing lessons and corrections first")
+    p.add_argument("--corrections-only", action="store_true",
+                   help="record corrections only; keep existing lessons (reuse a previous run's)")
     args = p.parse_args()
-    reflect(reset=args.reset)
+    reflect(reset=args.reset, corrections_only=args.corrections_only)

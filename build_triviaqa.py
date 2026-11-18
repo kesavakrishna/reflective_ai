@@ -17,7 +17,10 @@ MIN_ALIAS_LEN = 3  # 1–2 char aliases ("US", "4") match inside unrelated answe
 
 def build(parquet_path, n_train, n_holdout, train_out, holdout_out):
     df = pd.read_parquet(parquet_path, columns=["question", "answer"])
-    df["aliases"] = df["answer"].map(lambda a: sorted({str(x).strip() for x in a["aliases"]}))
+    # Canonical answer first (correction memos show it), then the remaining aliases sorted.
+    df["aliases"] = df["answer"].map(
+        lambda a: [str(a["value"]).strip()] + sorted({str(x).strip() for x in a["aliases"]} - {str(a["value"]).strip()})
+    )
     df = df[df["aliases"].map(
         lambda al: bool(al) and all("|" not in x for x in al) and min(map(len, al)) >= MIN_ALIAS_LEN
     )]
