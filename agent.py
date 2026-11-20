@@ -47,7 +47,21 @@ def lorem_block(length):
     return head + body + tail
 
 
-def build_prompt(question, lessons, corrections=None, correction_block=None):
+CHAIN_INSTRUCTION = (  # phase 7: name the described entity first, then answer what is asked
+    "Answer the question below. The question may describe a person, place or thing without naming it. "
+    "First name what it describes, then answer the question that is actually asked. "
+    "Reply in exactly this format, and nothing else:\n"
+    "Entity: <name>\nAnswer: <short answer>\n\n"
+)
+
+
+def final_answer(reply):
+    """The part after the last "Answer:" (phase 7 chain replies); the whole reply if there is none."""
+    i = reply.rfind("Answer:")
+    return reply[i + len("Answer:"):].strip() if i >= 0 else reply.strip()
+
+
+def build_prompt(question, lessons, corrections=None, correction_block=None, style=None):
     # With no corrections this is byte-identical to the phase 1/2 prompt, so those runs stay comparable.
     # correction_block overrides the formatted corrections (the lorem placebo uses this slot).
     if correction_block is None:
@@ -61,6 +75,8 @@ def build_prompt(question, lessons, corrections=None, correction_block=None):
     else:
         lesson_block = ""
 
+    if style == "chain":
+        return f"{CHAIN_INSTRUCTION}{correction_block}{lesson_block}Question: {question}\n"
     return (
         "Answer the question below. Reply with ONLY the answer itself — "
         "no preamble, no reasoning shown, no commentary on your process.\n\n"
@@ -71,7 +87,9 @@ def build_prompt(question, lessons, corrections=None, correction_block=None):
     )
 
 
-def answer(question, use_memory=True, memory_mode=None, gate=None):
+def answer(question, use_memory=True, memory_mode=None, gate=None, query=None, style=None):
+    """query: retrieve corrections with this text instead of the question (phase 6 "oracle" retrieval:
+    the two-hop question's own source question, so retrieval always finds the right correction)."""
     mode = memory_mode or MEMORY_MODE
     gate = CORRECTION_GATE if gate is None else gate
     if mode not in MEMORY_MODES:
@@ -81,7 +99,7 @@ def answer(question, use_memory=True, memory_mode=None, gate=None):
         if mode in ("lessons", "both"):
             lessons = retrieve_lessons(question, top_k=TOP_K_LESSONS)
         if mode in ("corrections", "both"):
-            corrections = retrieve_corrections(question, top_k=TOP_K_CORRECTIONS)
+            corrections = retrieve_corrections(query or question, top_k=TOP_K_CORRECTIONS)
             if gate is not None and corrections and corrections[0]["sim"] < gate:
                 corrections = []
         elif mode == "placebo_random":
@@ -89,7 +107,7 @@ def answer(question, use_memory=True, memory_mode=None, gate=None):
         elif mode == "placebo_lorem":
             real = _correction_block(retrieve_corrections(question, top_k=TOP_K_CORRECTIONS))
             block = lorem_block(len(real)) if real else ""
-    prompt = build_prompt(question, lessons, corrections, correction_block=block)
+    prompt = build_prompt(question, lessons, corrections, correction_block=block, style=style)
     reply = generate(prompt).strip()
     attempt_id = record_attempt(
         question=question,

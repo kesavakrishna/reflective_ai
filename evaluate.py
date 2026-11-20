@@ -6,7 +6,7 @@ import time
 
 import pandas as pd
 
-from agent import answer, MEMORY_MODES
+from agent import answer, final_answer, MEMORY_MODES
 from grader import grade
 from memory import record_attempt_outcome, ATTEMPTS_CSV, ATTEMPTS_COLS
 
@@ -18,7 +18,8 @@ def _reset_attempts():
     pd.DataFrame(columns=ATTEMPTS_COLS).to_csv(ATTEMPTS_CSV, index=False)
 
 
-def evaluate(limit=None, reset=False, questions_path=QUESTIONS_CSV, use_memory=True, out=None, memory_mode=None, gate=None):
+def evaluate(limit=None, reset=False, questions_path=QUESTIONS_CSV, use_memory=True, out=None, memory_mode=None, gate=None,
+             retrieve_by=None, style=None):
     if reset:
         _reset_attempts()
         # Re-import to pick up the empty file (module-level _attempts was loaded at import).
@@ -34,8 +35,11 @@ def evaluate(limit=None, reset=False, questions_path=QUESTIONS_CSV, use_memory=T
         if i > 0 and THROTTLE_SECS:
             time.sleep(THROTTLE_SECS)
         q, expected, category = row["question"], row["expected_answer"], row["category"]
-        reply, attempt_id = answer(q, use_memory=use_memory, memory_mode=memory_mode, gate=gate)
-        correct, note = grade(q, reply, expected)
+        query = row[retrieve_by] if retrieve_by else None
+        reply, attempt_id = answer(q, use_memory=use_memory, memory_mode=memory_mode, gate=gate, query=query,
+                                   style=style)
+        # chain replies ("Entity: ..." then "Answer: ...") are graded on the final answer; the full reply is stored
+        correct, note = grade(q, final_answer(reply) if style == "chain" else reply, expected)
         record_attempt_outcome(attempt_id, correct, expected, notes=note)
         results.append({"category": category, "correct": int(correct)})
         flag = "+" if correct else "-"
@@ -68,7 +72,12 @@ if __name__ == "__main__":
                         help="which memory tracks to retrieve (default: MEMORY_MODE env, else lessons)")
     parser.add_argument("--gate", type=float, default=None,
                         help="use corrections only if top-1 cosine similarity >= this (phase 4)")
+    parser.add_argument("--retrieve-by", default=None,
+                        help="retrieve corrections with this column of the questions CSV instead of the question (phase 6)")
+    parser.add_argument("--style", choices=["chain"], default=None,
+                        help="chain: name the described entity, then answer (phase 7)")
     parser.add_argument("--out", default=None, help="also save this run's graded attempts to this CSV")
     args = parser.parse_args()
     evaluate(limit=args.limit, reset=args.reset, questions_path=args.questions,
-             use_memory=not args.no_memory, out=args.out, memory_mode=args.memory_mode, gate=args.gate)
+             use_memory=not args.no_memory, out=args.out, memory_mode=args.memory_mode, gate=args.gate,
+             retrieve_by=args.retrieve_by, style=args.style)

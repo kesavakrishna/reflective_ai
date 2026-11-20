@@ -1,0 +1,115 @@
+question,category,expected_answer,answer_off,answer_on,correct_off,correct_on,outcome
+In which Massachusetts town was Emily Dickinson born?,twohop_direct,Amherst,Amherst,Amherst,1,1,stayed_right
+What is the nationality of R D Wingfield?,twohop_direct,British,British,British,1,1,stayed_right
+What is the capital of Belarus?,twohop_direct,Minsk,Minsk,Minsk,1,1,stayed_right
+In what city is Numb3rs set?,twohop_direct,Los Angeles|LA|L.A.,Los Angeles,Los Angeles,1,1,stayed_right
+In what year was the transistor invented?,twohop_direct,1947,1947,1947,1,1,stayed_right
+Where was Tina Turner born?,twohop_direct,"Nutbush, Tennessee|Nutbush","Nutbush, Tennessee","Nutbush, Tennessee",1,1,stayed_right
+In which country is Galway Bay located?,twohop_direct,Ireland|Éire,Ireland,Ireland,1,1,stayed_right
+In what city were the Twin Sisters born?,twohop_direct,"Sioux City|Sioux City, Iowa",Pittsburgh,Pittsburgh,0,0,stayed_wrong
+In what year did Nixon resign from office?,twohop_direct,1974,1974,1974,1,1,stayed_right
+In which French town was Pierre Laval born?,twohop_direct,Châteldon|Chateldon,Saint-Malo,Saint-Malo,0,0,stayed_wrong
+In what year was the cooperative movement founded in Rochdale?,twohop_direct,1844,1844,1844,1,1,stayed_right
+"Until what year was Rio de Janeiro, Brazil the capital of Brazil?",twohop_direct,1960,1960,1960,1,1,stayed_right
+What is the capital of Sweden?,twohop_direct,Stockholm,Stockholm,Stockholm,1,1,stayed_right
+"The Lumberjack World Championships, which include Birling, are held every year in which U.S. state?",twohop_direct,Wisconsin|WI,Minnesota,Maine,0,0,stayed_wrong
+In which cycling race does the overall leader wear a yellow jersey?,twohop_direct,Tour de France|Le Tour de France,Tour de France,Tour de France,1,1,stayed_right
+In which city was Ty Hardin born?,twohop_direct,New York City|New York|NYC,Oklahoma City,Oklahoma City,0,0,stayed_wrong
+Rawalpindi is located in which province?,twohop_direct,Punjab,Punjab,Punjab,1,1,stayed_right
+In which country is Sheffield located?,twohop_direct,England|United Kingdom,England,England,1,1,stayed_right
+What is the nationality of Nick Hancock?,twohop_direct,British|English,British,British,1,1,stayed_right
+Who plays Caractacus Potts in the 1968 film Chitty Chitty Bang Bang?,twohop_direct,Dick Van Dyke|Richard Van Dyke,Dick Van Dyke,Dick Van Dyke,1,1,stayed_right
+Farming has its earliest known origins in which region?,twohop_direct,Fertile Crescent|Mesopotamia,Fertile Crescent,The Near East,1,0,broke
+In what year did Concorde retire from service?,twohop_direct,2003,2003,2003,1,1,stayed_right
+In which country was Gisele Bundchen born?,twohop_direct,Brazil|Brasil,Brazil,Brazil,1,1,stayed_right
+Which actor portrayed John Lennon in Nowhere Boy?,twohop_direct,Aaron Johnson|Aaron Taylor-Johnson,Jamie Bell,Jamie Bell,0,0,stayed_wrong
+In which year was Jean-Paul Gaultier born?,twohop_direct,1952,1957,1952,0,1,fixed
+The word Affairs is the last word in DEFRA's name. DEFRA is part of the government of which country?,twohop_direct,United Kingdom|UK|United Kingdom of Great Britain and Northern Ireland,United Kingdom,United Kingdom,1,1,stayed_right
+Where was Human rights lawyer born?,twohop_direct,Beirut|Bayrut|Beyrouth,London,London,0,0,stayed_wrong
+Where on a fish is A priest typically used?,twohop_direct,Head,The dorsal fin,Eyes,0,0,stayed_wrong
+What is Joan Baez's nationality?,twohop_direct,American|USA|United States|U.S.,American,American,1,1,stayed_right
+"Who directed They Shoot Horses, Don't They?",twohop_direct,Sydney Pollack,Robert Altman,Marlon Brando,0,0,stayed_wrong
+Caviar is traditionally harvested from which sea?,twohop_direct,Caspian Sea|the Caspian Sea,Black Sea,Black Sea,0,0,stayed_wrong
+In which city was the company that manufactured BlackBerry headquartered?,twohop_direct,"Waterloo, Ontario|Waterloo",Waterloo,Waterloo,1,1,stayed_right
+What is the nationality of Franz Hals?,twohop_direct,Dutch,Dutch,Dutch,1,1,stayed_right
+In what year was Mutiny On The Bounty first published?,twohop_direct,1932,1794,1794,0,0,stayed_wrong
+What is the capital of the United Arab Emirates?,twohop_direct,Abu Dhabi,Abu Dhabi,Abu Dhabi,1,1,stayed_right
+Which famous fictional detective was created by Arthur Conan Doyle?,twohop_direct,SHERLOCK HOLMES|Sherlock Holmes,Sherlock Holmes,Sherlock Holmes,1,1,stayed_right
+In which city was Neil Young born?,twohop_direct,Toronto,Winnipeg,Winnipeg,0,0,stayed_wrong
+Rollmops are traditionally associated with which country?,twohop_direct,Germany|Deutschland,Sweden,Sweden,0,0,stayed_wrong
+"According to the Old Testament, how old was Noah when the flood began?",twohop_direct,600|600 years old|600 years,500,500,0,0,stayed_wrong
+In what year was The Rhubarb Triangle granted Protected Designation of Origin status?,twohop_direct,2010,2017,2017,0,0,stayed_wrong
+What is the capital of Switzerland?,twohop_direct,Bern|Berne,Bern,Bern,1,1,stayed_right
+"Approximately how thick, in kilometers, is the Mantle?",twohop_direct,"2900|2,900|2900 km|2,900 km",2900,2900,1,1,stayed_right
+Who wrote the book in which the hedgehog is used as the ball in the game of croquet in 'Alice In Wonderland'?,twohop_direct,Lewis Carroll|Charles Lutwidge Dodgson|Charles Dodgson|Carroll,Lewis Carroll,Lewis Carroll,1,1,stayed_right
+In which U.S. state was Edward born?,twohop_direct,Louisiana|LA,Pennsylvania,Pennsylvania,0,0,stayed_wrong
+"A Brecon Buff is a variety of Goose. In the 2019 film Captain Marvel, a cat is given the name Goose. What alien species is that cat revealed to be?",twohop_direct,Flerken,Kree,Kree,0,0,stayed_wrong
+Who founded the company that produced the Model T?,twohop_direct,Henry Ford,Henry Ford,Henry Ford,1,1,stayed_right
+In which English town was Ellie Simmonds born?,twohop_direct,Walsall,Redditch,Stoke-on-Trent,0,0,stayed_wrong
+In what year was Friends Reunited sold to ITV?,twohop_direct,2005,2006,2006,0,0,stayed_wrong
+"Which president signed the Homestead Act, which allowed a settler to claim a quarter section?",twohop_direct,Abraham Lincoln|Abe Lincoln|Lincoln,Abraham Lincoln,Abraham Lincoln,1,1,stayed_right
+In which U.S. state is Detroit located?,twohop_direct,Michigan,Michigan,Michigan,1,1,stayed_right
+In what year was Norman Hartnell born?,twohop_direct,1901,1907,1907,0,0,stayed_wrong
+Who was the wife of Priam?,twohop_direct,Hecuba|Hekabe|Hekuba,Hecuba,Hecuba,1,1,stayed_right
+In what year was Douglas Bader born?,twohop_direct,1910,1903,1903,0,0,stayed_wrong
+Phil Silvers was born in which borough of New York City?,twohop_direct,Brooklyn|Kings County,Brooklyn,Brooklyn,1,1,stayed_right
+Where was Bizet born?,twohop_direct,Paris,Barcelona,Barcelona,0,0,stayed_wrong
+In which year of the 40's was the Peace of Westphalia signed?,twohop_direct,1648,1648,1648,1,1,stayed_right
+"Which British rock band scored a 1964 transatlantic number-one hit with ""The House of the Rising Sun""?",twohop_direct,The Animals,The Animals,The Animals,1,1,stayed_right
+Which film series used Lacock Abbey as a filming location for Hogwarts?,twohop_direct,Harry Potter|Harry Potter series|Harry Potter films,Harry Potter,Harry Potter,1,1,stayed_right
+In which city was Karl Pilkington born?,twohop_direct,Manchester,Preston,Preston,0,0,stayed_wrong
+Which country is the traditional puppet show featuring TOBY most closely associated with?,twohop_direct,England|United Kingdom|UK|Great Britain|Britain,Mongolia,Germany,0,0,stayed_wrong
+Which American author is considered the creator of the literary genre devoted to Detection?,twohop_direct,Edgar Allan Poe|E. A. Poe,Edgar Allan Poe,Edgar Allan Poe,1,1,stayed_right
+"Czarevitch was borne by the only son of which Russian emperor, whose family was executed by the Bolsheviks in 1918?",twohop_direct,Nicholas II|Nikolai II|Nikolay II|Tsar Nicholas II|Czar Nicholas II|Nicholas II of Russia,Nicholas II,Nicholas II,1,1,stayed_right
+What is the nationality of Frank Saul?,twohop_direct,English,British,British,0,0,stayed_wrong
+In which country is Suzuki headquartered?,twohop_direct,Japan,Japan,Japan,1,1,stayed_right
+Which city was Sabena headquartered in?,twohop_direct,Brussels|Bruxelles|Brussel,Brussels,Brussels,1,1,stayed_right
+Into which river does the Wensum flow?,twohop_direct,Yare|River Yare,Norfolk River,Norfolk Broads,0,0,stayed_wrong
+Which country has as its official language German?,twohop_direct,Germany|Deutschland,Germany,Germany,1,1,stayed_right
+In which city was Groucho Marx born?,twohop_direct,New York City|New York|NYC,New York City,New York City,1,1,stayed_right
+Who wrote the book featuring Miss Honey?,twohop_direct,Roald Dahl,Roald Dahl,Roald Dahl,1,1,stayed_right
+Who wrote the novel that was adapted into Tipping The Velvet?,twohop_direct,Sarah Waters,Sarah Waters,Thomas Hardy,1,0,broke
+Who originally played Holly in Red Dwarf?,twohop_direct,Norman Lovett,Liz Harris,Lizzy Caplan,0,0,stayed_wrong
+In which country are the Cevennes located?,twohop_direct,France,France,France,1,1,stayed_right
+Which ancient city on the Gulf of Tunis was traditionally founded by settlers from Phoenicia?,twohop_direct,Carthage|Carthago,Sousse,Sousse,0,0,stayed_wrong
+Who created Tintin?,twohop_direct,Hergé|Georges Remi|Georges Prosper Remi,Georges Remi,Georges Remi,1,1,stayed_right
+"The No. 617 Squadron of the Royal Air Force which operated with the motto """"After me, the flood"""" is known for its attacks on dams during WWII? The Three Gorges dam is located in which country?",twohop_direct,China|People's Republic of China,China,China,1,1,stayed_right
+What is the surname of the chauffeur who works for Lady Penelope Creighton-Ward?,twohop_direct,Parker,Jones,Jones,0,0,stayed_wrong
+In which city is Madison Square Garden located?,twohop_direct,New York City|New York|NYC,New York City,New York City,1,1,stayed_right
+On what scientific chart are both Copper and Zinc listed?,twohop_direct,Periodic Table|Periodic Table of Elements|periodic table,Periodic Table,Periodic Table,1,1,stayed_right
+Which English word for isolating people to stop disease spread derives from the Italian phrase meaning 40 days?,twohop_direct,quarantine,quarantine,quarantine,1,1,stayed_right
+In which U.S. state is Davenport located?,twohop_direct,Iowa,Iowa,Iowa,1,1,stayed_right
+Which annual meteor shower takes its name from the constellation Gemini?,twohop_direct,Geminids|Geminid|Geminids meteor shower,Perseids,Perseids,0,0,stayed_wrong
+What is the capital of the country where Maltese is the national language?,twohop_direct,Valletta,Valletta,Valletta,1,1,stayed_right
+Finisterre was named after a headland on the Atlantic coast of which country?,twohop_direct,Spain,Spain,Spain,1,1,stayed_right
+What company makes Kix cereal?,twohop_direct,"General Mills|General Mills, Inc.",General Mills,General Mills,1,1,stayed_right
+Which amendment to the United States Constitution protects freedom of the press for the profession of the Journalist?,twohop_direct,First Amendment|1st Amendment|Amendment I,First Amendment,First Amendment,1,1,stayed_right
+In which English city was Stephen Hawking born?,twohop_direct,Oxford,Oxford,Oxford,1,1,stayed_right
+Which bartender is credited with creating the Mai Tai?,twohop_direct,Victor Bergeron|Trader Vic|Victor J. Bergeron,Victor Bergeron,Trader Vic Bergeron,1,1,stayed_right
+In what year was The Old Curiosity Shop first published in book form?,twohop_direct,1841,1841,1841,1,1,stayed_right
+In which English city was CAST formed?,twohop_direct,Liverpool,London,Cambridge,0,0,stayed_wrong
+What is the capital of the country where Danish is the official language?,twohop_direct,Copenhagen|København,Copenhagen,Copenhagen,1,1,stayed_right
+In which U.S. state was Mase born?,twohop_direct,Florida|FL,Arkansas,Arkansas,0,0,stayed_wrong
+Which Greek sculptor is said to have created the Colossus of Rhodes?,twohop_direct,Chares of Lindos|Chares,Chares of Lindos,Chares of Lindos,1,1,stayed_right
+In what U.S. city was Kobe Bryant born?,twohop_direct,Philadelphia,Philadelphia,Philadelphia,1,1,stayed_right
+The corset became a defining fashion symbol during the reign of which British queen?,twohop_direct,Victoria|Queen Victoria,Victoria,Victoria,1,1,stayed_right
+In which city was Joan Crawford born?,twohop_direct,San Antonio,"Martínez, Mexico",Crawfordville,0,0,stayed_wrong
+What is the scientific term for the ability to reproduce asexually?,twohop_direct,Parthenogenesis|parthenogenesis,Parthenogenesis,Parthenogenesis,1,1,stayed_right
+"Sett, the traditional technical term for a road/paving granite block incorrectly called a cobble or cobblestone, is alternatively called a 'Belgian block.' Which country does that alternative name refer to?",twohop_direct,Belgium,Belgium,Belgium,1,1,stayed_right
+Which British prime minister was nicknamed the 'Milk Snatcher' for ending the free school milk program that used third-of-a-pint bottles?,twohop_direct,Margaret Thatcher|Margaret Hilda Thatcher|Baroness Thatcher,Margaret Thatcher,Margaret Thatcher,1,1,stayed_right
+Which country was the person who lived from 1890 to 1937 from?,twohop_direct,United States|USA|U.S.,United States,United States,1,1,stayed_right
+Who founded the retail chain whose mascot is Geoffrey?,twohop_direct,Charles Lazarus,Walmart,Walmart,0,0,stayed_wrong
+Which country recognizes kabaddi as its national sport?,twohop_direct,Bangladesh,India,India,0,0,stayed_wrong
+Which country did Helen Glover and Heather Stanning represent?,twohop_direct,Great Britain|United Kingdom|UK|Britain,Great Britain,Great Britain,1,1,stayed_right
+What is the name of the tune by William Croft for 'OH GOD OUR HELP IN AGES PAST'?,twohop_direct,St. Anne|St Anne|Saint Anne,Sweet is the voice of prayer,"Sweet Jesu, we do bless",0,0,stayed_wrong
+Which scientist's first law of motion is commonly known as the law of inertia?,twohop_direct,Isaac Newton|Sir Isaac Newton|Newton,Newton,Newton,1,1,stayed_right
+In which country was ALDI founded?,twohop_direct,Germany|Deutschland,Germany,Germany,1,1,stayed_right
+In which realm is Valhalla located?,twohop_direct,Asgard|Ásgard,Asgard,Asgard,1,1,stayed_right
+In which English county is Morecambe located?,twohop_direct,Lancashire,Lancashire,Lancashire,1,1,stayed_right
+Who created Professor Henry Higgins?,twohop_direct,George Bernard Shaw|Bernard Shaw|G. B. Shaw,George Bernard Shaw,George Bernard Shaw,1,1,stayed_right
+In which country was Scoop published?,twohop_direct,United Kingdom|UK|Britain,New Zealand,New Zealand,0,0,stayed_wrong
+Who stars as the vicar in REV?,twohop_direct,Tom Hollander|Thomas Hollander,Tom Hollander,Tom Hollander,1,1,stayed_right
+In which English city was Amy Johnson born?,twohop_direct,Kingston upon Hull|Hull,Hull,Hull,1,1,stayed_right
+Where was Vaughan Williams born?,twohop_direct,"Down Ampney|Down Ampney, Gloucestershire","Dorchester, England","Dorchester, England",0,0,stayed_wrong
+What is the most widely spoken language in Australia and Ireland?,twohop_direct,English|English language,English,English,1,1,stayed_right
+In what year did 'After the Fall' premiere?,twohop_direct,1964,2017,2017,0,0,stayed_wrong

@@ -1,0 +1,119 @@
+question,category,expected_answer,answer_off,answer_on,correct_off,correct_on,outcome,retrieved_lesson_ids,retrieved_correction_ids
+"Which 19th century English poet wrote over 1,000 poems which were published between 1890 and 1945, after her death?",neardup,Christina Rossetti|Christina Georgina Rossetti,Christina Rossetti,Emily Dickinson,1,0,broke,,1;36;113
+"Who created the fictional detective Hercule Poirot, played on TV by David Suchet?",neardup,Agatha Christie,Agatha Christie,Agatha Christie,1,1,stayed_right,,
+"Which country is bordered by Poland to the north, Austria to the south, and Germany to the west?",neardup,CZECH REPUBLIC|Czechia,Czechia,Czechia,1,1,stayed_right,,3;35;85
+Name the tv series about FBI agent Fox Mulder and his partner Dana Scully,neardup,The X-Files|X-Files|The X Files,The X-Files,The X-Files,1,1,stayed_right,,
+What was developed at the Bell Telephone Company under the direction of Dr. Claude Shannon?,neardup,information theory,Information theory,Information theory,1,1,stayed_right,,5;20;4
+Who played 'Max Rockatansky' in the film 'Mad Max Beyond the Thunderdome'?,neardup,Mel Gibson,Mel Gibson,Mel Gibson,1,1,stayed_right,,6;20;9
+The city of San Francisco is located at the mouth of which bay?,neardup,San Francisco Bay,San Francisco Bay,San Francisco Bay,1,1,stayed_right,,
+"What, if any, relationship was shared between Minneapolis and St. Paul?",neardup,Twin Cities|Minneapolis–Saint Paul,Twin Cities,Twin Cities,1,1,stayed_right,,
+Which US president did Daniel Day-Lewis play in a film whose title was simply his name?,neardup,Lincoln|Abraham Lincoln,Daniel Day-Lewis,Daniel Day-Lewis,0,0,stayed_wrong,,
+Which Norwegian prime minister was executed for treason in 1945?,neardup,Vidkun Quisling|Quisling,Ludvig Wilhelm Munn,Carl Schmitt,0,0,stayed_wrong,,10;54;93
+In which town in Greater Manchester is the TV series Phoenix Nights set?,neardup,BOLTON,Stockport,Stockport,0,0,stayed_wrong,,
+"In 1997, the Fdracion International del Volleyball arranged the first World Beach Volleyball Championships, which was played where?",neardup,"Los Angeles, California, USA|Los Angeles|Los Angeles, California|Los Angeles, USA|Los Angeles, United States","Copacabana Beach, Rio de Janeiro","Fort Lauderdale, Florida",0,0,stayed_wrong,,12;118;107
+The world was first aware of the Fukushima disaster after detectors were triggered at a nuclear plant in which country?,neardup,Japan,Japan,Japan,1,1,stayed_right,,13;78;17
+What is the name of the sport in which your opponent tries to knock you off a horse,neardup,Jousting,Polo,Polo,0,0,stayed_wrong,,
+"In the board game Monopoly, what is the colour of the property ""Oxford Street""?",neardup,GREEN,Dark Blue,RED,0,0,stayed_wrong,,15;43;114
+Who played the title role in the TV western series Maverick,neardup,James Garner|Jim Garner,James Garner,James Garner,1,1,stayed_right,,
+Between 1959 and 1960 which city was the capital of Brazil (Brasilia was being built)?,neardup,RIO DE JANEIRO|Rio de Janeiro,Rio de Janeiro,Rio de Janeiro,1,1,stayed_right,,
+In which town or city were most of the German knives made,neardup,Solingen,Solingen,Solingen,1,1,stayed_right,,
+Who was the first presenter of Room 101 when it reopened in 2012?,neardup,Frank Skinner,Mr. Jones,Stephen Fry,0,0,stayed_wrong,,19;50;61
+In the 1968 film Chitty Chitty Bang Bang who plays the character who buys the car from garage owner Mr Coggins and rebuilds it?,neardup,Dick Van Dyke|Richard Van Dyke,Dick Van Dyke,Caractacus Potts,1,0,broke,,20;66;6
+The word hustings is derived from the ancient Old Norse meanings of 'house' and what activity?,neardup,Assembly|Meeting,gathering,Assembly,0,1,fixed,,21;111;83
+Russia's TU-154 plane was the broad equivalent of which western airliner?,neardup,Boeing 727|727,Boeing 707,Boeing 737,0,0,stayed_wrong,,22;67;64
+Who was declared Designer of the Millennium by Vogue editor Anna Wintour?,neardup,Coco Chanel|Gabrielle Chanel,Karl Lagerfeld,Karl Lagerfeld,0,0,stayed_wrong,,23;25;52
+What is the title of the 2009 biopic film directed by Jean-Marc Vallée about the early life of Queen Victoria,neardup,The Young Victoria|Young Victoria,Victoria,Victoria,0,0,stayed_wrong,,
+Which French film director regularly co-hosted UK TV’s ‘Eurotrash’?,neardup,Antoine de Caunes,Jacques Audiard,Jean-Paul GAULTIER,0,0,stayed_wrong,,25;61;85
+"In the acronym NATO, for what does the A stand?",neardup,Atlantic,Atlantic,Atlantic,1,1,stayed_right,,
+George Clooney is an internationally renowned?,neardup,Actor,Actor,Human rights lawyer,1,0,broke,,27;61;70
+What is the small hook used for landing fish called,neardup,A gaff|gaff,Lure hook,Lure hook,0,0,stayed_wrong,,
+To whom was Joan Baez supposed to be singing It Ain’t Me Babe,neardup,Bob Dylan|Robert Zimmerman,Bob Dylan,Bob Dylan,1,1,stayed_right,,
+Which 1940 film concerns the Joad family during the Depression Era in America?,neardup,THE GRAPES OF WRATH|The Grapes of Wrath,The Grapes of Wrath,The Grapes of Wrath,1,1,stayed_right,,
+Cheddar and brie are types of what?,neardup,Cheese,Cheese,Cheese,1,1,stayed_right,,
+What consumer electronics product shares its name with the common name of the fruit Malus domestica?,neardup,APPLE|Apple,Apple,APPLE,1,1,stayed_right,,32;87;66
+"Who painted 'Mona Lisa' found in the Louvre, Paris?",neardup,LEONARDO DA VINCI|Leonardo da Vinci|Leonardo,Leonardo da Vinci,Leonardo da Vinci,1,1,stayed_right,,33;84;27
+Little Men and Jo's Boys were two sequels to what famous novel?,neardup,Little Women,Little Women,Little Women,1,1,stayed_right,,
+"Which country shares a 658 km border with Saudi Arabia on the northwest, a 450 km border with the United Arab Emirates on the northeast, and a smaller border with Yemen in the southwest?",neardup,Oman|Sultanate of Oman,Jordan,Jordan,0,0,stayed_wrong,,35;3;76
+Which American author who died in 1901 had Ignatius as one of his christian names?,neardup,IGNATIUS DONNELLY|Ignatius Donnelly,Robert Louis Stevenson,F. Scott Fitzgerald,0,0,stayed_wrong,,36;1;77
+NO LIMP USA is an anagram of which singer songwriter?,neardup,Paul Simon,Neil Young,Neil Young,0,0,stayed_wrong,,
+What is a dish of slices of beef wrapped around an onion or gerkhin called,neardup,Rouladen|Roulade,Beef Wellington,Beef Wellington,0,0,stayed_wrong,,
+"According to the Old Testament, who was the first person to have a mark?",neardup,CAIN|Kain,The hand,The hand,0,0,stayed_wrong,,
+"What name is given to the area of the North Atlantic Ocean, between Miami, Bermuda and Puerto Rico, famous for mysterious disappearances?",neardup,THE BERMUDA TRIANGLE|BERMUDA TRIANGLE,Devil's Triangle,Devil's Triangle,0,0,stayed_wrong,,
+The FIFA (Fédération Internationale de Football Association) was founded in which European country in 1904?,neardup,France,Belgium,Belgium,0,0,stayed_wrong,,
+Which part of the earth's structure lies between the mantle and the inner core?,neardup,The outer core|Outer core|outer core,Outer core,The outer core,1,1,stayed_right,,42;35;76
+In 'Alice In Wonderland' what was used as the mallet in the game of croquet?,neardup,The Flamingo|Flamingo,Flamingos,A hedgehog,0,0,stayed_wrong,,43;114;15
+What was the first name of the jazz trombonist J.J. Johnson?,neardup,James,John,James,0,1,fixed,,44;98;116
+A Merino is a variety of which type of creature,neardup,Sheep,Sheep,Sheep,1,1,stayed_right,,
+What DeLorean automobile came in any color you want - as long as it was silver?,neardup,DMC-12|DeLorean DMC-12,Delorean DMC-12,DMC DeLorean,1,0,broke,,46;66;81
+"Which American paralympian swimmer won 2 gold, a silver and a bronze in the 2012 Para Olympics?",neardup,JESSICA LONG|Jessica Long,Josh Holden,ELLIE SIMMONDS,0,0,stayed_wrong,,47;107;27
+Mark Zuckerberg made a fortune creating which website?,neardup,Facebook|Facebook.com,Facebook,Facebook,1,1,stayed_right,,
+Which late comedienne wrote the 1989 best-selling book ‘It’s Always Something’?,neardup,Gilda Radner,Phil Donahue,Phil Donahue,0,0,stayed_wrong,,
+Of the three most populated cities of the USA which is furthest north?,neardup,Chicago,Chicago,Detroit,1,0,broke,,51;3;112
+Who designed Kate Middleton's wedding dress?,neardup,Sarah Burton,Sarah Burton,Sarah Burton,1,1,stayed_right,,52;99;48
+"Which ‘P’ was the last king of Macedon, according to ancient history?",neardup,Perseus|Perseus of Macedon,Philip,Philip,0,0,stayed_wrong,,
+Who was the top-scoring Marine World War II fighter pilot who was detained in Japanese prisoner of war camps until 1945?,neardup,"Gregory ""Pappy"" Boyington|Pappy Boyington|Gregory Boyington",Major Earl Harper,Ace Adams,0,0,stayed_wrong,,54;116;78
+"In ‘Ocean's Eleven’, the 1960 film, Frank Sinatra was replaced by which US actor?",neardup,George Clooney,Sammy Davis Jr.,Sammy Davis Jr.,0,0,stayed_wrong,,
+"Who is the composer of """"The Nutcracker Suite""""?",neardup,TCHAIKOVSKY|TCHAIKOVSKII|PYOTR ILYICH TCHAIKOVSKY|PETER ILYICH TCHAIKOVSKY,Pyotr Ilyich Tchaikovsky,Pyotr Ilyich Tchaikovsky,1,1,stayed_right,,
+In which decade of the 17th Century was the Royal Society created?,neardup,60's|1660s|1660's|sixties,1660s,1660s,1,1,stayed_right,,
+"What house in Washington, D.C. has been the ruin of many a poor boy?",neardup,The White House|White House,Georgetown,The Decatur House,0,0,stayed_wrong,,58;21;114
+Which English town's Anglo Saxon name was Eoforwic pronounced Evorwick,neardup,York,York,York,1,1,stayed_right,,
+Which National Trust property in Wiltshire was once owned by Henry Hoare the banker?,neardup,Stourhead|Stourhead House|Stourhead Gardens,Courtney Hill,Stourton Hall,0,0,stayed_wrong,,60;48;40
+Who on television is the 'Crocodile Hunter'?,neardup,STEVE IRWIN|Stephen Irwin,Steve Irwin,Steve Irwin,1,1,stayed_right,,
+What is the name of the dog in the Mickey Mouse shows?,neardup,PLUTO,Pluto,Pluto,1,1,stayed_right,,
+"What science does Sir Arthur Conan Doyle's creation, Dr. Watson, practise?",neardup,Medicine,Medicine,Medicine,1,1,stayed_right,,63;104;5
+What title was given to the eldest son of a French King?,neardup,Dauphin,Heir apparent,Heir apparent,0,0,stayed_wrong,,
+"Sharing his surname with a biblical character, which footballer scored the deciding goal in the 1926 FA Cup Final?",neardup,DAVID JACK,Stanley Matthews,George Headley,0,0,stayed_wrong,,65;36;41
+Which car manufacturer produces the Mustang model?,neardup,FORD|Ford,Ford,Ford,1,1,stayed_right,,
+Which national airline announced it had gone bankrupt on November 29,neardup,American Airlines|American|AA,Icelandair,Lufthansa,0,0,stayed_wrong,,67;22;116
+On what river is the city of Paris,neardup,Seine|River Seine,Seine,Seine,1,1,stayed_right,,
+Mitt Romney is fairly fluent in which language other than English?,neardup,French,Spanish,Spanish,0,0,stayed_wrong,,
+Which US comedian/actor is credited with saying ‘I don’t get no respect’?,neardup,Rodney Dangerfield,Bill Cosby,Bill Cosby,0,0,stayed_wrong,,
+"What was the name of Oliver’s guardian, who adopted him at the end of the book?",neardup,MR. BROWNLOW|Mr Brownlow|Brownlow,Mr. Giles,Mr. Giles,0,0,stayed_wrong,,
+Which serialised TV drama had a title that is a slang term for lesbian?,neardup,The L Word|L Word,Rumpur,Tipping The Velvet,0,0,stayed_wrong,,72;62;73
+What was the name of the computer in the film 2001: A Space Odyssey?,neardup,HAL 9000|HAL|HAL9000,HAL 9000,HAL 9000,1,1,stayed_right,,
+"Which author has been nominated for the Booker Prize for the novels 'The Dressmaker', 'The Bottle Factory Outing' and 'An Awfully Big Adventure' but is yet to win the award?",neardup,BERYL BAINBRIDGE|Beryl Bainbridge,Liane Moriarty,Liane Moriarty,0,0,stayed_wrong,,74;50;104
+In which mountains does the Ganges river rise?,neardup,Himalayas|Himalaya,Himalayas,Himalayas,1,1,stayed_right,,
+"What ancient civilization was centred in the south of ancient Canaan, with its heartland along the coastal regions of modern day Israel and Gaza?",neardup,Philistia|Philistines,Philistines,Philistine,1,0,broke,,76;97;111
+'Doctor Watson' is an associate of which character?,neardup,SHERLOCK HOLMES|Sherlock Holmes,Sherlock Holmes,Sherlock Holmes,1,1,stayed_right,,
+"The Special Air Service which operated with the motto """"Who Dares Wins"""" is known for its attacks on what type of installations during WWII?",neardup,Airfields|Airfield,Strategic enemy installations,Strategic enemy installations,0,0,stayed_wrong,,
+"In the television series ‘Thunderbirds’, what is Lady Penelope’s chauffeur’s surname?",neardup,Parker,Croft,Creighton,0,0,stayed_wrong,,79;62;6
+Singer and musician Bono called which hall ‘Rock and roll’s great cathedral’?,neardup,Royal Albert Hall|Albert Hall,London’s Wembley Stadium,Madison Square Garden,0,0,stayed_wrong,,80;111;56
+Bronze is an alloy of what 2 metals?,neardup,Copper and Tin|Tin and Copper|copper and tin|tin and copper,Copper and tin,Copper and Zinc,1,0,broke,,81;47;42
+"In 1403, Venice imposed a waiting period for those wishing to enter the city, to see if they would develop the plague. What is this period of isolation called?",neardup,Quarantine|quarantine,Quarantine,Quarantena,1,0,broke,,82;97;76
+What do the Canadians call what we call a 'sofa'?,neardup,CHESTERFIELD,couch,Love seat,0,0,stayed_wrong,,83;105;99
+What is the star sign of the date of the Battle of Hastings?,neardup,Libra,Libra,Leo,1,0,broke,,84;78;116
+Which is the only Celtic language that is an official language of the EU?,neardup,Irish|Irish Gaelic|Gaeilge,Irish,Irish,1,1,stayed_right,,85;41;69
+By what name was the city Mumbai known until 1995?,neardup,Bombay,Bombay,Bombay,1,1,stayed_right,,
+What cereal is magically delicious?,neardup,Lucky Charms,Froot Loops,Froot Loops,0,0,stayed_wrong,,
+"What profession was Maximilien Robespierre, noted for his involvement in the French Revolution at the end of the 18th century?",neardup,Lawyer,Lawyer,Lawyer,1,1,stayed_right,,
+Whose 1994 best seller argues that our universe is part of a super universe?,neardup,MICHIO KAKU|Michio Kaku,Brad Paisley,STEPHEN HAWKING,0,0,stayed_wrong,,89;109;42
+"Which cocktail consists of tequila, curacao and lime juice?",neardup,Margarita,Blue Hawaiian,Blue Lagoon,0,0,stayed_wrong,,90;31;32
+Fagin and Bill Sikes are villains in which novel by Charles Dickens?,neardup,Oliver Twist,Oliver Twist,Oliver Twist,1,1,stayed_right,,
+"'Wonderwall', 'Don't Look Back in Anger' and 'Roll with It' were top ten hits for which group in the mid '90's?",neardup,Oasis,Oasis,Oasis,1,1,stayed_right,,
+What language did the playwright Anton Chekhov write his plays in?,neardup,Russian,Russian,Russian,1,1,stayed_right,,
+Who is featured on Puff Daddy's Satisfy You?,neardup,R. Kelly|R Kelly|Robert Kelly,Alicia Keys,Mario,0,0,stayed_wrong,,94;27;61
+What was late singer Michael Jackson’s first solo US number one hit single?,neardup,Ben,Billie Jean,Billie Jean,0,0,stayed_wrong,,95;92;29
+"What Latin phrase, which translates as Seize the day, is taken to mean Seize the day?",neardup,Carpe Diem|Carpe diem|carpe diem,Carpe diem,Carpe diem,1,1,stayed_right,,
+Which of the seven wonders of the ancient world was thought to have stood in the harbour of Alexandria?,neardup,Lighthouse of Alexandria|Pharos|Pharos of Alexandria|Lighthouse of Pharos,The Lighthouse of Alexandria,PHARAOH’S TOWER,1,0,broke,,97;76;111
+"In 1962, who became the first basketball player to score over 80 points in an NBA game?",neardup,Wilt Chamberlain|Wilton Norman Chamberlain,Wilt Chamberlain,Wilt Chamberlain,1,1,stayed_right,,98;44;12
+What bell-shaped women's garment was made using whalebone?,neardup,Crinoline|hoop skirt|hoopskirt,Crinoline,Corset,1,0,broke,,99;52;107
+Which Bette's career revived in Whatever Happened to Baby Jane?,neardup,Davis|Bette Davis,Joan Crawford,Davis,0,1,fixed,,100;94;44
+"What is a common feature of komodo dragons, snakes, and whiptail lizards?",neardup,Reptiles|Reptile,Venom,Venom,0,0,stayed_wrong,,101;45;105
+"What is the common incorrect term for a road/paving granite block, alternatively called a Belgian block, and technically a sett?",neardup,Cobblestone|cobblestones,paver,Cobble,0,0,stayed_wrong,,102;83;49
+When free school milk was given out what size were the cartons?,neardup,Half a pint|Half pint|1/2 pint|half-pint|Half of a pint,18 fluid ounces,Third of a pint,0,0,stayed_wrong,,103;87;99
+Give a year in the life of author William Shakespeare?,neardup,1564-1616|1564–1616,1564-1616,1564-1616,1,1,stayed_right,,
+What is the name of the mouse that Disney uses as its' mascot?,neardup,Mickey|Mickey Mouse,Mickey Mouse,Mickey Mouse,1,1,stayed_right,,
+Which equipment-free sport did Gichin Funakoshi introduce to Japan in 1922?,neardup,KARATE|karate,Tennis,Tennis,0,0,stayed_wrong,,
+"In Rowing, who received gold medals for the Men's coxless pair?",neardup,Eric Murray and Hamish Bond|Hamish Bond and Eric Murray,Steven Floate and Olaf Tufte,Stevenage and Lawrence Freeman,0,0,stayed_wrong,,107;47;118
+"Which hymn, based on Psalm 98, by Isaac Watts to a tune by Lowell Mason, is particularly associated with Christmas?",neardup,Joy to the World|Joy to the World! The Lord Is Come,Joy to the World,Joy to the World,1,1,stayed_right,,
+What marketing term refers to the largely prohibited selling method by which customers are said to have agreed to buy something unless they refuse unsolicited goods or services?,neardup,negative option|negative option marketing|negative option billing|negative option plan,Interception marketing,Inertia,0,0,stayed_wrong,,109;32;110
+"Which company uses the advertising slogan ""Save Money, Live Better""?",neardup,Walmart|Wal-Mart,McDonald's,ALDI,0,0,stayed_wrong,,110;66;32
+What is the name of the vast realm where the Norse gods live?,neardup,Asgard|Ásgarðr,Asgard,Valhalla,1,0,broke,,111;21;97
+Which is the second largest city in Britain?,neardup,Birmingham,Birmingham,Birmingham,1,1,stayed_right,,112;51;40
+Who taught Helen Keller to be a lady ?,neardup,Anne Sullivan|Annie Sullivan|Anne Sullivan Macy,Anne Sullivan,Anne Sullivan,1,1,stayed_right,,113;52;71
+What was the name of the old Waddington’s game based on clues?,neardup,Cluedo|Clue,Clueckers,Anagram,0,0,stayed_wrong,,114;43;73
+Which BBC2 comedy is set around the hotel in Torquay?,neardup,Fawlty Towers,The Lakes,The Lakes,0,0,stayed_wrong,,
+Which early aviator flew in a plane christened Spirit of St. Louis?,neardup,Charles Lindbergh|Charles A. Lindbergh|Charles Augustus Lindbergh|Lindbergh,Charles Lindbergh,Charles Lindbergh,1,1,stayed_right,,116;54;44
+Who composed the first ever concerto for organ and orchestra?,neardup,Handel|George Frideric Handel|Georg Friedrich Händel,Johann Sebastian Bach,Johann Sebastian Bach,0,0,stayed_wrong,,117;56;44
+The Calcutta Cup is competed for in rugby union by which two countries?,neardup,England and Scotland,England and Scotland,Scotland and England,1,0,broke,,118;47;75
+The plot of which Tennessee Williams play takes place entirely within the mind of a St. Louis narrator called 'Tom'?,neardup,The Glass Menagerie|Glass Menagerie,Notebook,Notebook,0,0,stayed_wrong,,

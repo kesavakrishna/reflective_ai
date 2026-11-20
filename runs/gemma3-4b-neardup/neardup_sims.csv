@@ -1,0 +1,119 @@
+question,cos_source,gate_fired,own_top1,copy_off,copy_gated
+"Which 19th century English poet wrote over 1,000 poems which were published between 1890 and 1945, after her death?",0.9419944725441427,True,True,False,True
+"Who created the fictional detective Hercule Poirot, played on TV by David Suchet?",0.5381746772876835,False,True,False,False
+"Which country is bordered by Poland to the north, Austria to the south, and Germany to the west?",0.7899374302661996,True,True,False,False
+Name the tv series about FBI agent Fox Mulder and his partner Dana Scully,0.4338636913135167,False,True,False,False
+What was developed at the Bell Telephone Company under the direction of Dr. Claude Shannon?,0.7394790470321613,True,True,False,False
+Who played 'Max Rockatansky' in the film 'Mad Max Beyond the Thunderdome'?,0.8031120897050252,True,True,False,False
+The city of San Francisco is located at the mouth of which bay?,0.38096700742900874,False,True,False,False
+"What, if any, relationship was shared between Minneapolis and St. Paul?",0.3177699231290799,False,True,False,False
+Which US president did Daniel Day-Lewis play in a film whose title was simply his name?,0.5905317832101045,False,True,False,False
+Which Norwegian prime minister was executed for treason in 1945?,0.7117251309816229,True,True,False,False
+In which town in Greater Manchester is the TV series Phoenix Nights set?,0.6903892282588961,False,True,False,False
+"In 1997, the Fdracion International del Volleyball arranged the first World Beach Volleyball Championships, which was played where?",0.9124825021527113,True,True,True,False
+The world was first aware of the Fukushima disaster after detectors were triggered at a nuclear plant in which country?,0.892629559396268,True,True,False,False
+What is the name of the sport in which your opponent tries to knock you off a horse,0.6576134961602172,False,True,False,False
+"In the board game Monopoly, what is the colour of the property ""Oxford Street""?",0.8356923266228083,True,True,False,False
+Who played the title role in the TV western series Maverick,0.5387581972956523,False,True,False,False
+Between 1959 and 1960 which city was the capital of Brazil (Brasilia was being built)?,0.34568823114798447,False,True,False,False
+In which town or city were most of the German knives made,0.6111701383160587,False,True,False,False
+Who was the first presenter of Room 101 when it reopened in 2012?,0.9128384881688311,True,True,False,False
+In the 1968 film Chitty Chitty Bang Bang who plays the character who buys the car from garage owner Mr Coggins and rebuilds it?,0.9662914226435987,True,True,False,True
+The word hustings is derived from the ancient Old Norse meanings of 'house' and what activity?,0.7665246833203258,True,True,False,False
+Russia's TU-154 plane was the broad equivalent of which western airliner?,0.9010851549487547,True,True,False,False
+Who was declared Designer of the Millennium by Vogue editor Anna Wintour?,0.9054442062491191,True,True,False,False
+What is the title of the 2009 biopic film directed by Jean-Marc Vallée about the early life of Queen Victoria,0.25006240499085025,False,False,False,False
+Which French film director regularly co-hosted UK TV’s ‘Eurotrash’?,0.7987781011668552,True,True,False,True
+"In the acronym NATO, for what does the A stand?",0.5721391304503092,False,True,False,False
+George Clooney is an internationally renowned?,0.876172125840211,True,True,False,True
+What is the small hook used for landing fish called,0.6275171324126222,False,True,False,False
+To whom was Joan Baez supposed to be singing It Ain’t Me Babe,0.6786708900450675,False,True,False,False
+Which 1940 film concerns the Joad family during the Depression Era in America?,0.572725049404698,False,True,False,False
+Cheddar and brie are types of what?,0.36997233859834927,False,False,False,False
+What consumer electronics product shares its name with the common name of the fruit Malus domestica?,0.7441865733509595,True,True,False,False
+"Who painted 'Mona Lisa' found in the Louvre, Paris?",0.7008155700754263,True,True,False,False
+Little Men and Jo's Boys were two sequels to what famous novel?,0.5467289555715964,False,True,False,False
+"Which country shares a 658 km border with Saudi Arabia on the northwest, a 450 km border with the United Arab Emirates on the northeast, and a smaller border with Yemen in the southwest?",0.8950607578914362,True,True,False,False
+Which American author who died in 1901 had Ignatius as one of his christian names?,0.8264081163081594,True,True,False,False
+NO LIMP USA is an anagram of which singer songwriter?,0.4805650671241879,False,True,True,True
+What is a dish of slices of beef wrapped around an onion or gerkhin called,0.691653456705667,False,True,False,False
+"According to the Old Testament, who was the first person to have a mark?",0.5254591818254648,False,True,False,False
+"What name is given to the area of the North Atlantic Ocean, between Miami, Bermuda and Puerto Rico, famous for mysterious disappearances?",0.14114703802014703,False,False,False,False
+The FIFA (Fédération Internationale de Football Association) was founded in which European country in 1904?,0.6224551504826055,False,True,False,False
+Which part of the earth's structure lies between the mantle and the inner core?,0.9424979182190146,True,True,False,False
+In 'Alice In Wonderland' what was used as the mallet in the game of croquet?,0.8999294417811925,True,True,False,False
+What was the first name of the jazz trombonist J.J. Johnson?,0.7519202613717536,True,True,False,False
+A Merino is a variety of which type of creature,0.2769923236527952,False,False,False,False
+What DeLorean automobile came in any color you want - as long as it was silver?,0.7807995763466087,True,True,False,False
+"Which American paralympian swimmer won 2 gold, a silver and a bronze in the 2012 Para Olympics?",0.9425821673942331,True,True,False,True
+Mark Zuckerberg made a fortune creating which website?,0.4356592154711383,False,True,False,False
+Which late comedienne wrote the 1989 best-selling book ‘It’s Always Something’?,0.5064526482604049,False,True,False,False
+Of the three most populated cities of the USA which is furthest north?,0.9584879400503634,True,True,False,True
+Who designed Kate Middleton's wedding dress?,0.7534990049307208,True,True,False,False
+"Which ‘P’ was the last king of Macedon, according to ancient history?",0.5652723710115107,False,True,False,False
+Who was the top-scoring Marine World War II fighter pilot who was detained in Japanese prisoner of war camps until 1945?,0.799837037144786,True,True,False,False
+"In ‘Ocean's Eleven’, the 1960 film, Frank Sinatra was replaced by which US actor?",0.08080340023756911,False,False,False,False
+"Who is the composer of """"The Nutcracker Suite""""?",0.44778675943428314,False,True,False,False
+In which decade of the 17th Century was the Royal Society created?,0.45518240933003323,False,True,False,False
+"What house in Washington, D.C. has been the ruin of many a poor boy?",0.7325556294849522,True,True,False,False
+Which English town's Anglo Saxon name was Eoforwic pronounced Evorwick,0.6208576815123275,False,True,False,False
+Which National Trust property in Wiltshire was once owned by Henry Hoare the banker?,0.7065623235175276,True,True,False,False
+Who on television is the 'Crocodile Hunter'?,0.5058270377324335,False,True,False,False
+What is the name of the dog in the Mickey Mouse shows?,0.6329458089038176,False,True,False,False
+"What science does Sir Arthur Conan Doyle's creation, Dr. Watson, practise?",0.9528774315047335,True,True,False,False
+What title was given to the eldest son of a French King?,0.5313437332230099,False,True,False,False
+"Sharing his surname with a biblical character, which footballer scored the deciding goal in the 1926 FA Cup Final?",0.843245111294325,True,True,False,False
+Which car manufacturer produces the Mustang model?,0.6721551299553031,False,True,False,False
+Which national airline announced it had gone bankrupt on November 29,0.9761184560426748,True,True,False,False
+On what river is the city of Paris,0.3433900243315533,False,False,False,False
+Mitt Romney is fairly fluent in which language other than English?,0.6582244891779271,False,True,False,False
+Which US comedian/actor is credited with saying ‘I don’t get no respect’?,0.5730612531266487,False,True,False,False
+"What was the name of Oliver’s guardian, who adopted him at the end of the book?",0.4533300106888841,False,True,False,False
+Which serialised TV drama had a title that is a slang term for lesbian?,0.9338891338504384,True,True,False,True
+What was the name of the computer in the film 2001: A Space Odyssey?,0.5293774866186476,False,True,False,False
+"Which author has been nominated for the Booker Prize for the novels 'The Dressmaker', 'The Bottle Factory Outing' and 'An Awfully Big Adventure' but is yet to win the award?",0.7307181458963726,True,True,False,False
+In which mountains does the Ganges river rise?,0.553691965200026,False,True,False,False
+"What ancient civilization was centred in the south of ancient Canaan, with its heartland along the coastal regions of modern day Israel and Gaza?",0.9111121175184466,True,True,False,False
+'Doctor Watson' is an associate of which character?,0.3217817988210012,False,False,False,False
+"The Special Air Service which operated with the motto """"Who Dares Wins"""" is known for its attacks on what type of installations during WWII?",0.6004684875571762,False,True,False,False
+"In the television series ‘Thunderbirds’, what is Lady Penelope’s chauffeur’s surname?",0.9024495522778689,True,True,False,False
+Singer and musician Bono called which hall ‘Rock and roll’s great cathedral’?,0.9416936203199033,True,True,False,True
+Bronze is an alloy of what 2 metals?,0.8670192878369953,True,True,False,True
+"In 1403, Venice imposed a waiting period for those wishing to enter the city, to see if they would develop the plague. What is this period of isolation called?",0.9467121268451659,True,True,False,False
+What do the Canadians call what we call a 'sofa'?,0.9258693829465287,True,True,False,False
+What is the star sign of the date of the Battle of Hastings?,0.7832383686589082,True,True,False,False
+Which is the only Celtic language that is an official language of the EU?,0.7404827219395326,True,True,False,False
+By what name was the city Mumbai known until 1995?,0.17893824492898044,False,False,False,False
+What cereal is magically delicious?,0.6610862709549603,False,True,False,False
+"What profession was Maximilien Robespierre, noted for his involvement in the French Revolution at the end of the 18th century?",0.6799171258642079,False,True,False,False
+Whose 1994 best seller argues that our universe is part of a super universe?,0.9737953184277129,True,True,False,True
+"Which cocktail consists of tequila, curacao and lime juice?",0.9425270509282379,True,True,False,False
+Fagin and Bill Sikes are villains in which novel by Charles Dickens?,0.5708664618175032,False,True,False,False
+"'Wonderwall', 'Don't Look Back in Anger' and 'Roll with It' were top ten hits for which group in the mid '90's?",0.5979084621355597,False,True,False,False
+What language did the playwright Anton Chekhov write his plays in?,0.6070809397660942,False,True,False,False
+Who is featured on Puff Daddy's Satisfy You?,0.8031067840706878,True,True,False,False
+What was late singer Michael Jackson’s first solo US number one hit single?,0.9585268413339729,True,True,False,False
+"What Latin phrase, which translates as Seize the day, is taken to mean Seize the day?",0.5316408032347426,False,True,False,False
+Which of the seven wonders of the ancient world was thought to have stood in the harbour of Alexandria?,0.8228028459138373,True,True,False,False
+"In 1962, who became the first basketball player to score over 80 points in an NBA game?",0.865485829369833,True,True,False,False
+What bell-shaped women's garment was made using whalebone?,0.9152259132597342,True,True,False,True
+Which Bette's career revived in Whatever Happened to Baby Jane?,0.7791974618540372,True,True,True,False
+"What is a common feature of komodo dragons, snakes, and whiptail lizards?",0.9243644094344353,True,True,False,False
+"What is the common incorrect term for a road/paving granite block, alternatively called a Belgian block, and technically a sett?",0.8755616189188759,True,True,False,False
+When free school milk was given out what size were the cartons?,0.888723397834115,True,True,False,True
+Give a year in the life of author William Shakespeare?,0.6700229750669021,False,True,False,False
+What is the name of the mouse that Disney uses as its' mascot?,0.5829976892435741,False,True,False,False
+Which equipment-free sport did Gichin Funakoshi introduce to Japan in 1922?,0.3919479389287641,False,True,False,False
+"In Rowing, who received gold medals for the Men's coxless pair?",0.9362549280630749,True,True,False,False
+"Which hymn, based on Psalm 98, by Isaac Watts to a tune by Lowell Mason, is particularly associated with Christmas?",0.6772478726055354,False,True,False,False
+What marketing term refers to the largely prohibited selling method by which customers are said to have agreed to buy something unless they refuse unsolicited goods or services?,0.8982183465420288,True,True,False,True
+"Which company uses the advertising slogan ""Save Money, Live Better""?",0.7415371378878444,True,True,False,True
+What is the name of the vast realm where the Norse gods live?,0.89249252851117,True,True,False,True
+Which is the second largest city in Britain?,0.757813906235263,True,True,False,False
+Who taught Helen Keller to be a lady ?,0.7040254053647887,True,True,False,False
+What was the name of the old Waddington’s game based on clues?,0.8532225012657938,True,True,False,False
+Which BBC2 comedy is set around the hotel in Torquay?,0.591550818484864,False,True,False,False
+Which early aviator flew in a plane christened Spirit of St. Louis?,0.7318929509888126,True,True,False,False
+Who composed the first ever concerto for organ and orchestra?,0.8137690006261656,True,True,False,False
+The Calcutta Cup is competed for in rugby union by which two countries?,0.7251091421108612,True,True,False,False
+The plot of which Tennessee Williams play takes place entirely within the mind of a St. Louis narrator called 'Tom'?,0.247038801459405,False,False,False,False

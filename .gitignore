@@ -208,3 +208,9 @@ __marimo__/
 
 # Activation dumps (100MB+, over GitHub's file limit) — regenerate with interp_capture.py
 *.npz
+
+# phase 5 weight-edit caches (covariances ~420MB/layer, deltas); regenerate with weight_edit.py
+runs/gemma3-4b-edit/cache/
+
+# resume files written by the API builders (build_neardup.py, build_rewordings.py)
+*.partial

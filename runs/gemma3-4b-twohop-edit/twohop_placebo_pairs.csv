@@ -1,0 +1,115 @@
+question,category,expected_answer,answer_off,answer_on,correct_off,correct_on,outcome
+"In which Massachusetts town was the 19th century American poet who wrote over 1,000 poems published between 1890 and 1945 after her death born?",twohop,Amherst,Concord,Concord,0,0,stayed_wrong
+"What is the nationality of the creator of the fictional detective Jack Frost, played on TV by David Jason?",twohop,British,British,British,1,1,stayed_right
+"What is the capital of the country bordered by Latvia to the north, Ukraine to the south, and Poland to the west?",twohop,Minsk,Vilnius,Lithuania,0,0,stayed_wrong
+In what city is the series about FBI agent Don Eppes and his mathematical genius brother Charlie set?,twohop,Los Angeles|LA|L.A.,"Abington, Pennsylvania",Portland,0,0,stayed_wrong
+In what year was the device developed at the Bell Telephone Company under the direction of Dr William Shockley invented?,twohop,1947,1928,1937,0,0,stayed_wrong
+Where was the actress who played 'Aunty Entity' in the film 'Mad Max Beyond the Thunderdome' born?,twohop,"Nutbush, Tennessee|Nutbush",Australia,Melbourne,0,0,stayed_wrong
+In which country is the bay at the mouth of which the Aran Islands are located?,twohop,Ireland|Éire,Ireland,Ireland,1,1,stayed_right
+In what city were Dear Abby and Ann Landers born?,twohop,"Sioux City|Sioux City, Iowa",Pittsburgh,Pittsburgh,0,0,stayed_wrong
+In what year did the US president Anthony Hopkins played in a film whose title was simply his name resign from office?,twohop,1974,2022,2020,0,0,stayed_wrong
+In which French town was the French prime minister executed for treason in 1945 born?,twohop,Châteldon|Chateldon,Suresnes,Toulon,0,0,stayed_wrong
+In what year was the cooperative movement founded in the town in Greater Manchester where the TV series is set?,twohop,1844,1825,1829,0,0,stayed_wrong
+Until what year was the place where the first World Beach Volleyball Championships arranged by the Fdracion International del Volleyball in 1987 was played the capital of Brazil?,twohop,1960,1993,1989,0,0,stayed_wrong
+What is the capital of the country where detectors at a nuclear plant first alerted the world to the Chernobyl disaster?,twohop,Stockholm,Kyiv,Kyiv,0,0,stayed_wrong
+"The Lumberjack World Championships, which include the sport in which your opponent tries to knock you off a floating spinning log, are held every year in which U.S. state?",twohop,Wisconsin|WI,Maine,Maine,0,0,stayed_wrong
+"In which cycling race does the overall leader wear a jersey of the colour of the property ""Coventry Street"" in the board game Monopoly?",twohop,Tour de France|Le Tour de France,Tour de France,Tour de France,1,1,stayed_right
+In which city was the actor who played the title role in the TV western series Bronco born?,twohop,New York City|New York|NYC,Oklahoma City,Madrid,0,0,stayed_wrong
+The city that was the capital of Pakistan between 1959 and 1967 while Islamabad was being built is located in which province?,twohop,Punjab,Rawalpindi,Punjab,0,1,fixed
+In which country is the town or city where most of the Bowie knives were made?,twohop,England|United Kingdom,United States,Poland,0,0,stayed_wrong
+What is the nationality of the first presenter of Room 101 when it opened in 1994?,twohop,British|English,Indian,British,0,1,fixed
+Who plays the character who buys the car from garage owner Mr Coggins and rebuilds it in the 1968 film Chitty Chitty Bang Bang?,twohop,Dick Van Dyke|Richard Van Dyke,Dick Van Dyke,Jeff Rawle,1,0,broke
+The activity paired with 'house' among the ancient Old Norse sources of the word 'husband' has its earliest known origins in which region?,twohop,Fertile Crescent|Mesopotamia,Sweden,Southern Scandinavia,0,0,stayed_wrong
+In what year did the western airliner that was the broad equivalent of Russia's TU-144 plane retire from service?,twohop,2003,1992,2003,0,1,fixed
+In which country was the model declared Model of the Millennium by Vogue editor Anna Wintour born?,twohop,Brazil|Brasil,United Kingdom,United Kingdom,0,0,stayed_wrong
+Which actor portrayed John Lennon in the 2009 biopic directed by Sam Taylor-Wood about the early life of John Lennon?,twohop,Aaron Johnson|Aaron Taylor-Johnson,Jamie Bell,Jamie Bell,0,0,stayed_wrong
+In which year was the French fashion designer who regularly co-hosted UK TV’s ‘Eurotrash’ born?,twohop,1952,1958,1962,0,0,stayed_wrong
+The word that the A stands for in DEFRA is the last word in that department's name. DEFRA is part of the government of which country?,twohop,United Kingdom|UK|United Kingdom of Great Britain and Northern Ireland,United Kingdom,United Kingdom,1,1,stayed_right
+Where was the internationally renowned Amal Clooney born?,twohop,Beirut|Bayrut|Beyrouth,Lebanon,Lebanon,0,0,stayed_wrong
+Where on a fish is the small club used for killing landed fish typically used?,twohop,Head,Tail,Ventral surface of the lower jaw,0,0,stayed_wrong
+What is the nationality of the person to whom Bob Dylan was supposed to be singing It Ain’t Me Babe?,twohop,American|USA|United States|U.S.,John Lennon,British,0,0,stayed_wrong
+Who directed the 1969 film that concerns the dance marathon competitions during the Depression Era in America?,twohop,Sydney Pollack,George Cukor,George Cukor,0,0,stayed_wrong
+Patusnaya and mallasol are types of a food traditionally harvested from which sea?,twohop,Caspian Sea|the Caspian Sea,The Baltic Sea,Mediterranean Sea,0,0,stayed_wrong
+In which city was the company that manufactured the consumer electronics product sharing its name with the common name of the fruit Rubus Fructicosis headquartered?,twohop,"Waterloo, Ontario|Waterloo",Seattle,Seattle,0,0,stayed_wrong
+"What is the nationality of the painter of 'Gypsy Girl' found in the Louvre, Paris?",twohop,Dutch,French,French,0,0,stayed_wrong
+In what year was the famous novel to which Men Against the Sea and Pitcairn's Island were two sequels first published?,twohop,1932,1778,1776,0,0,stayed_wrong
+"What is the capital of the country that shares a 530 km border with Saudi Arabia on the west, south, and southeast, a 450 km border with Oman on the southeast and northeast, and a smaller border with Qatar in the northwest?",twohop,Abu Dhabi,Kuwait,Qatar,0,0,stayed_wrong
+Which famous fictional detective was created by the Scottish author who died in 1930 and had Ignatius as one of his christian names?,twohop,SHERLOCK HOLMES|Sherlock Holmes,Sherlock Holmes,Rebus,1,0,broke
+In which city was the singer songwriter whose name is an anagram of O UGLY NINE born?,twohop,Toronto,Nashville,New York,0,0,stayed_wrong
+A dish of pickled herring fillets wrapped around an onion or gherkin is traditionally associated with which country?,twohop,Germany|Deutschland,Denmark,Denmark,0,0,stayed_wrong
+"According to the Old Testament, how old was the first person to have a hangover when the flood began?",twohop,600|600 years old|600 years,Unknown.,Unknown.,0,0,stayed_wrong
+"In what year was the nine square mile area of West Yorkshire, between Wakefield, Morley and Rothwell, famous for growing a certain vegetable, granted Protected Designation of Origin status?",twohop,2010,2021,2023,0,0,stayed_wrong
+What is the capital of the European country where UEFA was founded in 1954?,twohop,Bern|Berne,Neuchâtel,Paris,0,0,stayed_wrong
+"Approximately how thick, in kilometers, is the part of the earth's structure that lies between the outer core and the crust?",twohop,"2900|2,900|2900 km|2,900 km",2900,2900 km,1,1,stayed_right
+Who wrote the book in which the object used as the ball in the game of croquet in 'Alice In Wonderland' appears?,twohop,Lewis Carroll|Charles Lutwidge Dodgson|Charles Dodgson|Carroll,Lewis Carroll,Lewis Carroll,1,1,stayed_right
+In which U.S. state was the first name of the jazz trombonist Kid Ory born?,twohop,Louisiana|LA,Louisiana,Louisiana,1,1,stayed_right
+"A Brecon Buff is a variety of this creature. In the 2019 film Captain Marvel, a cat is given this creature's name. What alien species is that cat revealed to be?",twohop,Flerken,Kree,Kree,0,0,stayed_wrong
+Who founded the company that produced the Ford automobile that came in any color you want as long as it was black?,twohop,Henry Ford,Henry Ford,BlackBerry,1,0,broke
+"In which English town was the British paralympian swimmer who won 2 gold, a silver and a bronze in the 2012 Para Olympics born?",twohop,Walsall,Taunton,Leicester,0,0,stayed_wrong
+In what year was the website Julie Pankhurst made a fortune creating sold to ITV?,twohop,2005,2007,2006,0,0,stayed_wrong
+"Which president signed the Homestead Act, which allowed a settler to claim an area of land of 160 acres (half a mile square)?",twohop,Abraham Lincoln|Abe Lincoln|Lincoln,Abraham Lincoln,Abraham Lincoln,1,1,stayed_right
+In which U.S. state is the northernmost of the ten most populated cities located?,twohop,Michigan,Alaska,Alaska,0,0,stayed_wrong
+In what year was the person who designed the Queen's wedding dress born?,twohop,1901,1895,1908,0,0,stayed_wrong
+"Who was the wife of the last king of Troy, according to Greek mythology?",twohop,Hecuba|Hekabe|Hekuba,Helen,Helen,0,0,stayed_wrong
+In what year was the legless World War II fighter pilot who was detained in German prisoner of war camps for 4 years born?,twohop,1910,1914,1914,0,0,stayed_wrong
+"In ‘Follow That Camel’, the fourteenth Carry On film, Sid James was replaced by a US actor. In which borough of New York City was that actor born?",twohop,Brooklyn|Kings County,Brooklyn,Los Angeles,1,0,broke
+"Where was the composer of """"The L'Arlesienne Suite"""" born?",twohop,Paris,Paris,Arles,1,0,broke
+In which year of the decade of the 17th Century in which the new model army was created was the Peace of Westphalia signed?,twohop,1648,1648,1648,1,1,stayed_right
+Which British rock band scored a 1964 transatlantic number-one hit with the song named for the house in New Orleans that has been the ruin of many a poor boy?,twohop,The Animals,The Beatles,The Beatles,0,0,stayed_wrong
+Which film series used the National Trust property in Wiltshire once owned by William Henry Fox-Talbot the pioneer of photography as a filming location for Hogwarts?,twohop,Harry Potter|Harry Potter series|Harry Potter films,Harry Potter,Harry Potter,1,1,stayed_right
+In which city was the television personality known as the 'Idiot Abroad' born?,twohop,Manchester,London,London,0,0,stayed_wrong
+Which country is the traditional puppet show featuring the dog in the Punch and Judy shows most closely associated with?,twohop,England|United Kingdom|UK|Great Britain|Britain,Italy,Italy,0,0,stayed_wrong
+"Which American author is considered the creator of the literary genre devoted to the science Sir Arthur Conan Doyle's creation, Sherlock Holmes, practises?",twohop,Edgar Allan Poe|E. A. Poe,Edgar Allan Poe,Edgar Allan Poe,1,1,stayed_right
+"The title given to the eldest son of a Russian Czar was borne by the only son of which Russian emperor, whose family was executed by the Bolsheviks in 1918?",twohop,Nicholas II|Nikolai II|Nikolay II|Tsar Nicholas II|Czar Nicholas II|Nicholas II of Russia,Nicholas II,Nicholas II,1,1,stayed_right
+What is the nationality of the footballer who shared his surname with a biblical character and scored the deciding goal in the 1967 FA Cup Final?,twohop,English,English,English,1,1,stayed_right
+In which country is the car manufacturer that produces the Jimmy model headquartered?,twohop,Japan,Japan,United States,1,0,broke
+Which city was the headquarters of the national airline that announced it had gone bankrupt on November 7?,twohop,Brussels|Bruxelles|Brussel,Dallas,Kansas City,0,0,stayed_wrong
+Into which river does the river on which the city of Norwich stands flow?,twohop,Yare|River Yare,The River Yare,The Bure,1,0,broke
+Which country has as its official language the language other than English that Bill Clinton is fairly fluent in?,twohop,Germany|Deutschland,France,France,0,0,stayed_wrong
+In which city was the US comedian/actor credited with saying 'A man is only as old as the woman he feels' born?,twohop,New York City|New York|NYC,New York City,New York City,1,1,stayed_right
+"Who wrote the book featuring Matilda’s teacher, who adopted her at the end of the book?",twohop,Roald Dahl,Roald Dahl,Roald Dahl,1,1,stayed_right
+Who wrote the novel that was adapted into the serialised TV drama whose title is a Lesbian slang term for oral sex?,twohop,Sarah Waters,Paolo Bacigalupi,Taylor Jenkins Reid,0,0,stayed_wrong
+Who originally played the computer in the sitcom Red Dwarf?,twohop,Norman Lovett,Chris Barrie,Chris Barrie,0,0,stayed_wrong
+In which country are the mountains where the Loire river rises located?,twohop,France,France,France,1,1,stayed_right
+"Which ancient city on the Gulf of Tunis was traditionally founded by settlers from the ancient civilization centred in the north of ancient Canaan, with its heartland along the coastal regions of modern day Lebanon, Syria and Israel?",twohop,Carthage|Carthago,Susa,Susa,0,0,stayed_wrong
+Who created the character that Professor Cuthbert Calculus is an associate of?,twohop,Hergé|Georges Remi|Georges Prosper Remi,Morton Newman,Archibald Finch,0,0,stayed_wrong
+"The No. 617 Squadron of the Royal Air Force which operated with the motto """"After me, the flood"""" is known for its attacks on what type of installations during WWII? The Three Gorges example of these installations is located in which country?",twohop,China|People's Republic of China,"Naval installations, China",Chinese dams,1,0,broke
+What is the surname of the chauffeur who works for the character whose surname is Lady Penelope's in the television series 'Thunderbirds'?,twohop,Parker,Sinclair,Sinclair,0,0,stayed_wrong
+In which city is the venue that singer and musician Bono called ‘Rock and roll’s great cathedral’ located?,twohop,New York City|New York|NYC,Rome,Paris,0,0,stayed_wrong
+On what scientific chart are both of the two metals that make up brass listed?,twohop,Periodic Table|Periodic Table of Elements|periodic table,Periodic Table of Elements,Periodic Table,1,1,stayed_right
+Which English word for isolating people to stop disease spread derives from the Italian phrase meaning the length of the waiting period Venice imposed in 1403 on those wishing to enter the city to see if they would develop the plague?,twohop,quarantine,quarantine,Quarantine,1,1,stayed_right
+In which U.S. state is the city that shares its name with the American term for what the British call a 'sofa' located?,twohop,Iowa,Missouri,Massachusetts,0,0,stayed_wrong
+Which annual meteor shower takes its name from the constellation associated with the star sign of the date of the Battle of Waterloo?,twohop,Geminids|Geminid|Geminids meteor shower,Leonid,Leonid,0,0,stayed_wrong
+What is the capital of the country where the only Semitic language that is an official language of the EU is the national language?,twohop,Valletta,Brussels,Brussels,0,0,stayed_wrong
+The shipping area known as Fitzroy until 2002 was named after a headland on the Atlantic coast of which country?,twohop,Spain,Ireland,Ireland,0,0,stayed_wrong
+What company makes the cereal that is kid-tested and mother-approved?,twohop,"General Mills|General Mills, Inc.",Kellogg’s,Cheerios,0,0,stayed_wrong
+"Which amendment to the United States Constitution protects freedom of the press for the profession of Jean-Paul Marat, noted for his involvement in the French Revolution at the end of the 18th century?",twohop,First Amendment|1st Amendment|Amendment I,First,First,0,0,stayed_wrong
+In which English city was the author of the 1995 best seller that argues our universe is part of a super universe born?,twohop,Oxford,Oxford,Johannesburg,1,0,broke
+"Which bartender is credited with creating the cocktail made from rum, curacao and lime juice?",twohop,Victor Bergeron|Trader Vic|Victor J. Bergeron,Victor Bergeron,Victor Bergeron,1,1,stayed_right
+In what year was the Charles Dickens novel in which Codlin and Short are Punch and Judy men first published in book form?,twohop,1841,1843,1837,0,0,stayed_wrong
+"In which English city was the group that had mid-'90s top ten hits with 'Sanstorm', 'Walkaway' and 'Flying' formed?",twohop,Liverpool,Newcastle,Seattle,0,0,stayed_wrong
+What is the capital of the country where the language Henrik Ibsen wrote his plays in is the official language?,twohop,Copenhagen|København,Oslo,Oslo,0,0,stayed_wrong
+"In which U.S. state was the artist featured on Puff Daddy's ""Can't Hold Me Down"" born?",twohop,Florida|FL,Mississippi,Georgia,0,0,stayed_wrong
+Which Greek sculptor is said to have created the one of the seven wonders of the ancient world thought to have straddled the harbour of a Greek island?,twohop,Chares of Lindos|Chares,Chryseleastes,Phidias,0,0,stayed_wrong
+In what U.S. city was the second basketball player to score over 80 points in an NBA game in 2006 born?,twohop,Philadelphia,Sacramento,Salt Lake City,0,0,stayed_wrong
+The hourglass-shaped women's garment made using whalebone became a defining fashion symbol during the reign of which British queen?,twohop,Victoria|Queen Victoria,Victoria,Victoria,1,1,stayed_right
+In which city was the Joan whose career revived in Whatever Happened to Baby Jane born?,twohop,San Antonio,New York City,New York City,0,0,stayed_wrong
+"What is the scientific term for the common feature of komodo dragons, aphids, and whiptail lizards?",twohop,Parthenogenesis|parthenogenesis,Symbiosis,Scent,0,0,stayed_wrong
+The traditional technical term for a road/paving granite block—incorrectly called a cobble or cobblestone—is alternatively called a 'Belgian block.' Which country does that alternative name refer to?,twohop,Belgium,Belgium,Belgium,1,1,stayed_right
+Which British prime minister was nicknamed the 'Milk Snatcher' for ending the free school milk program that used bottles of the size given out when free school milk was given out?,twohop,Margaret Thatcher|Margaret Hilda Thatcher|Baroness Thatcher,Margaret Thatcher,Margaret Thatcher,1,1,stayed_right
+Which country was the author whose life is described by 'Give a year in the life of author H P Lovecraft' from?,twohop,United States|USA|U.S.,United States,United States,1,1,stayed_right
+Who founded the retail chain whose mascot is the giraffe that Toys-r-us uses as its' mascot?,twohop,Charles Lazarus,Charles Lazarus,Charles Lazarus,1,1,stayed_right
+Which country recognizes the equipment-free sport that Ashok Das introduced to the British Army in 2005 as its national sport?,twohop,Bangladesh,India,Bhutan,0,0,stayed_wrong
+Which country did the rowers who received gold medals for the Women's coxless pair represent?,twohop,Great Britain|United Kingdom|UK|Britain,Great Britain,Great Britain,1,1,stayed_right
+"What is the name of the tune by William Croft for the hymn based on Psalm 90 by Isaac Watts, particularly associated with Remembrance Sunday?",twohop,St. Anne|St Anne|Saint Anne,"""The Lord is Life""","""The Lord is King""",0,0,stayed_wrong
+Which scientist's first law of motion is commonly known by the name of the physics term that refers to the largely prohibited selling method by which customers are said to have agreed to buy something unless they refuse unsolicited goods or services?,twohop,Isaac Newton|Sir Isaac Newton|Newton,Inertia,Pyramid scheme,0,0,stayed_wrong
+"In which country was the company that uses the advertising slogan ""Spend A Little, Live A Lot"" founded?",twohop,Germany|Deutschland,Canada,United States,0,0,stayed_wrong
+In which realm is the vast hall where the Norse gods live located?,twohop,Asgard|Ásgard,Asgard,Asgard,1,1,stayed_right
+In which English county is the second largest bay in Britain located?,twohop,Lancashire,Lancashire,Essex,1,0,broke
+Who created the person who taught Eliza Dolittle to be a lady?,twohop,George Bernard Shaw|Bernard Shaw|G. B. Shaw,Shaw,Shaw,0,0,stayed_wrong
+In which country was the old Waddington's game based on newspapers published?,twohop,United Kingdom|UK|Britain,England,United Kingdom,0,1,fixed
+Who stars as the vicar in the BBC2 comedy set around the church of St Saviours in the Marshes in Hackney?,twohop,Tom Hollander|Thomas Hollander,Hugh Laurie,Mathew Horne,0,0,stayed_wrong
+In which English city was the early aviator who flew in a plane christened Jason born?,twohop,Kingston upon Hull|Hull,Leiston,Melbourne,0,0,stayed_wrong
+Where was the composer of the first ever concerto for tuba and orchestra born?,twohop,"Down Ampney|Down Ampney, Gloucestershire",Vienna,Salzburg,0,0,stayed_wrong
+What is the most widely spoken language in the two countries that compete for the Lansdowne Cup in rugby union?,twohop,English|English language,English,English,1,1,stayed_right
+In what year did the Arthur Miller play whose plot takes place entirely within the mind of a New York Jewish intellectual called Quentin premiere?,twohop,1964,1957,1946,0,0,stayed_wrong

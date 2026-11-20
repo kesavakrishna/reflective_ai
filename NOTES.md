@@ -499,6 +499,189 @@ Took 4 launches: the first skipped the corrections build (see setup), then the j
 - **Placebo:** lorem 11 fixed / 14 broke, random 13 / 18, against corrections 14 / 15. Pairwise broke overlap across lessons / corrections / random / lorem is 7–11 vs ~2 expected (hypergeom p < 2e-4). 98 / 132 right answers never break under any arm. Broken answers have lower memory-off confidence in every arm (lorem median 0.82, p = 7.6e-8).
 - **RAM investigation (why the reaper kept firing):** an eval process holds ~2 GB resident on top of 4.7 GB VRAM. Its ~7.5 GB "private" commit isn't resident and can't be freed: a pre-quantized 8-bit copy, `torch._C._host_emptyCache()` and `_heapmin` all left it unchanged. It's most likely the mmap'd safetensors commit charge. The reaper fires on system-wide pressure (VS Code ~3.6 GB, R ~2 GB, browser). Long runs belong in a user terminal or under `CLAUDE_CODE_DISABLE_BG_SHELL_PRESSURE_REAP=1`.
 
+## Phase 5 setup — weight editing (2026-11-18)
+
+Design, selection rule and predictions pre-registered in RESULTS.md ("Phase 5 design") before the dev sweep finished.
+
+- **Why not LoRA:** `peft` isn't installed. A closed-form MEMIT-style edit is closer to what "weight-space programming" means here (writing specific facts into specific weights), and it needs no training loop.
+- **Gemma 3 detail:** `post_feedforward_layernorm` (RMSNorm) sits after `down_proj`, so MEMIT's usual "residual-stream target spread across layers" doesn't hold exactly. The edit targets `down_proj`'s output at one layer, with delta optimized through the norm, which makes the least-squares solve exact for that layer.
+- **Dequantization:** `Linear8bitLt` weights are int8 `CB` + row scale `SCB`; W = CB·SCB/127. Kept in fp32 (`FP32Linear`), because bf16 has ~3 significant digits and would round small edit entries (~1e-4 against weights ~0.05) to nothing.
+- **Smoke test** (3 dev facts, layer 8): delta converges in 2–21 Adam steps (4–26 s per fact; ~1.2 s/step for a full fwd+bwd through 8-bit). Peak VRAM 5.9 GB. Key token = "?" (verified the encoding matches `apply_chat_template`).
+- **Baseline sensitivity:** dequantizing 4 down_projs changes 7/32 answers vs the int8 phase 3 run, and batched vs unbatched differs in 1/8. Hence a fresh unedited baseline in the same pipeline, plus a placebo edit (shuffled answers) as the collateral control.
+- **Batched generation:** left padding, batch 16, max 64 new tokens; 0.47 s/question vs 2.7 unbatched.
+- **Covariance:** keys from "Question:" onward only (the instruction prefix is identical in every prompt and would dominate), 3000 questions from no eval file, seed 2. Cached in `runs/gemma3-4b-edit/cache/` (gitignored). **This was a bug; see the next entry.**
+
+## Phase 5 dev sweep 1 — stopped, covariance bug (2026-11-18)
+
+I stopped the sweep after 2 of 4 layers (log: `runs/gemma3-4b-edit/dev.log`):
+
+| layer | lam 10 → 10000 | edit | para | drift held-out | drift train-right |
+|---|---|---|---|---|---|
+| 4 | | 22–28% | 7–8% | 19–30% | 10–23% |
+| 8 | (10 → 1000) | 5–6% | 5–8% | 16–18% | 7–9% |
+
+- **Symptoms:** at small lam the solve should reproduce the optimized deltas (NLL ≈ 0), so edit should be near 100%. It isn't, and drift barely moves with lam.
+- **Diagnosis** (L4, first 3 facts): at lam 10, ΔW·k at the edited position matches its target exactly (1.528 vs 1.532 of ‖m‖). But at the 30 shared instruction-prefix tokens it is **2.0× ‖m‖ on average, max 17.6×**, and 0.4–0.95× on the question's other tokens. At lam 10000 the prefix effect is still 0.68× while the edit itself drops to a third of its target.
+- **Cause:** the prefix is in every prompt, but I left it out of C, so the solve had no reason to leave it alone. The update therefore rewrote the prefix for every question. That gives drift everywhere, and edits fail once the whole prompt (not only the key token) carries the update.
+- **No-edit repeat check:** 0 / 20 first tokens differ, so the drift isn't nondeterminism.
+- **Fix:** C now covers every prompt token, prefix included (`cov_all_L{layer}.pt`; the old `cov_L*.pt` caches are stale). This is a method fix made on the dev split, before the test split was touched.
+- **Second issue:** delta norms are 1.5–3.4× ‖m‖ with WD 0.01. ROME/MEMIT use weight decay 0.5.
+- **The prefix fix alone didn't help** (L4, old deltas): prefix spillover fell from 2.0× to 0.05× ‖m‖, but edit stayed 22–32% and drift on 100 held-out questions stayed 18–33% for lam 10 → 1e5.
+- **The real cause is the key position.** Every edited key is the question's last token ("?"). Those keys share a large common direction: the mean key is 0.63 / 0.51 / 0.57 / 0.68 of a key's norm at L4 / 8 / 12 / 16, and pairwise cos averages 0.26–0.46. At L4 and lam 10 the solve reproduces every delta exactly (median residual 0.00), yet it adds a median **1.01× ‖m‖ to the "?" token of unseen held-out questions** (0.52× at lam 1e4). The all-token C barely weights that position (1 token in ~58).
+- **Fix 2:** C = (E_all[kkᵀ] + E_pos[kkᵀ]) / 2, where E_pos covers only the last-question-token keys of the 3000 covariance questions (`cov_mix_L*.pt`). WD raised to 0.5, the ROME default. Delta caches now carry the WD in their name; the old ones were renamed `*_wd0.01_*`.
+- **Pilot (L8, first 30 facts, fix 2):** edit 50–60% for lam 1 → 1e4 (sweep 1 had 5–6%), para 7–10% (n = 29), drift on 100 held-out questions 17–22%. Edit falls at lam ≥ 1e5 (10%, 7%, 3% at 1e5 / 1e6 / 1e7).
+- **The drift floor:** a random ΔW of relative Frobenius size 1e-6 / 1e-4 / 1e-3 gives drift 14 / 18 / 12%, against 0% after reset. lam 1e9 (edit ≈ 0) gives 14%. So ~15% first-token drift comes from *any* change to the weights; it's finding 17 again, probably amplified by LLM.int8 re-quantizing activations in later layers. That explains why drift ignored lam in sweep 1. The dev sweep now measures a null floor per layer (3 random 1e-6 perturbations), and the drift criterion is floor + 5 points (RESULTS.md, deviations).
+- **Sweep 2** started 2026-11-18 ~16:40 (`runs/gemma3-4b-edit/dev.log`; sweep 1's log is `dev_sweep1.log`). The 30 pilot deltas seeded L8's checkpoint. ETA ~4 h: covariance 6–15 min/layer, 129 deltas ~40 min/layer, 6 lams × ~3 min.
+- **Stopping rule I set before the pilot:** if the fixed method still fails the selection criteria on the dev sweep, run the test with the pre-registered fallback and report weight editing as failing in this setup. No further rounds of method tuning.
+
+## Phase 5 dev sweep 2 — L4 and L8 (2026-11-18)
+
+Claude Code's low-memory reaper stopped sweep 2 twice:
+- **First stop:** seconds after the start (log `dev_sweep2_killed.log`). Relaunched once the user had freed RAM.
+- **Second stop:** 23:37, during the L12 covariance. L4 and L8 were fully scored by then and the L12 deltas were cached.
+- **Resume:** I added `dev --layers`, which keeps earlier layers' rows in `dev_sweep.csv` and reruns only the requested ones. Resumed as `dev --layers 12 16` (log `dev_L12_16.log`).
+
+Results. The null floor is the mean held-out drift under 3 random 1e-6 perturbations: 10.9% at L4, 11.3% at L8.
+
+| layer | lam | edit | para | drift held-out | drift train-right |
+|---|---|---|---|---|---|
+| 4 | 1 / 10 / 100 / 1000 | 24.0 / 25.6 / 24.8 / 26.4% | 6.6–9.0% | 30.0–34.4% | 22.3–25.6% |
+| 4 | 1e4 | 27.9% | 6.6% | 20.8% | 11.6% |
+| 4 | 1e5 | 10.1% | 7.4% | 13.6% | 3.3% |
+| 8 | 1 | 56.6% | 17.2% | 22.0% | 9.9% |
+| 8 | 10 / 100 / 1000 | 55.0 / 54.3 / 55.8% | 13.9–15.6% | 21.6–22.8% | 7.4–9.9% |
+| 8 | 1e4 | 47.3% | 13.1% | 17.2% | 8.3% |
+| 8 | 1e5 | 15.5% | 10.7% | 15.2% | 5.0% |
+
+- **Fix 2 didn't rescue L4:** about 25% edit with 10–23 points of excess drift, the same as sweep 1. At L4 the "?" key doesn't yet carry enough about the specific question.
+- **L8 is the best so far:** edit about 55%, para 14–17%, but drift about 11 points over the floor. At lam 1e4 the excess is 5.9, just over the 5-point limit.
+- **Deltas:** at L8 they took 6581 s for 129 (L4: 2971 s). The slowdown coincided with RAM pressure on the machine.
+
+## Phase 5 dev sweep 2 — L12 and L16 (2026-11-19)
+
+The laptop slept overnight (L16 deltas 120 → 129 took 7600 s instead of about 100 s). The reaper stopped the run at 11:00 with only L16 lam 1e5 left. I resumed that one config (`dev --layers 16 --lams 100000`, log `dev_L16_1e5.log`; the sweep CSV before it is backed up as `dev_sweep.before_L16_1e5.csv`), after making `--layers` drop only the rows it reruns. Floors: 9.6% at L12, 7.9% at L16.
+
+| layer | lam | edit | para | drift held-out | excess over floor |
+|---|---|---|---|---|---|
+| 12 | 1 / 10 / 100 / 1000 | 69.8 / 75.2 / 68.2 / 72.1% | 14.8–19.7% | 16.0–19.6% | +6.4 to +10.0 |
+| 12 | 1e4 | 59.7% | 15.6% | 13.6% | +4.0 |
+| 12 | 1e5 | 13.2% | 10.7% | 13.6% | +4.0 |
+| 16 | 1 / 10 / 100 / 1000 | 75.2 / 72.9 / 72.9 / 72.1% | 29.5–32.0% | 17.6–22.0% | +9.7 to +14.1 |
+| 16 | 1e4 | 70.5% | 28.7% | 15.2% | +7.3 |
+
+- **Later layers edit better:** about 25% at L4, 55% at L8, 70–75% at L12 and L16. Paraphrase transfer rises too: 7%, 15%, 18% and 30%. The "?" key carries more of the question at depth.
+- **No config reaches edit 80%,** so the pre-registered rule fails and the fallback applies. The fallback is the highest edit with drift within floor + 5.
+- **L16 lam 1e5:** edit 25.6%, para 15.6%, drift 10.8% (+2.9). Its nulls reproduced exactly (6.0 / 8.4 / 9.2%), so the null floor is deterministic.
+- **Selection** (`select_edit.py`, output saved to `runs/gemma3-4b-edit/selection.txt`): **rule FAILED → fallback L12 lam 1e4** (edit 59.7%, para 15.6%, drift 13.6% vs floor 9.6%). Five configs met the drift limit: lam 1e5 at every layer, plus L12 lam 1e4.
+- **Test** launched 11:36: `weight_edit.py test --layer 12 --lam 10000`, log `runs/gemma3-4b-edit/test.log`.
+  - The reaper stopped it at 12:04 with the three unedited runs saved and 80 / 119 edited deltas checkpointed. Free RAM was 5.8 GB: the browser held 8.6 GB and another project's Python job had started at 11:45.
+  - The user chose to resume here rather than in their own terminal: log `test_resume.log`.
+
+## Phase 5 test — results (2026-11-19)
+
+- **Restarts:** after the 12:04 stop, the resume was stopped again at about 15:29. By then all 238 deltas and the three edited generations were done. A second resume (`test_resume2.log`) ran the placebo generations and the comparisons.
+- **Scoring:** `analyze_phase5.py` produces `runs/gemma3-4b-edit/analysis.md`. P1, P3 and P5 hold; P2 fails low (para 12.9%); P4 fails badly (placebo installs 2 / 119).
+- **Placebo diagnostics:**
+  - 11 / 119 placebo answers are unchanged from the unedited run.
+  - 9 / 119 start with the shuffled target's first token (unedited: 0), e.g. Morecambe → "Moretti", Farming → "F:Solid Gold".
+  - 6 / 119 match some other correction's answer.
+  - Delta convergence: edited median NLL 0.016 (97% below 0.1); placebo 0.027 (83% below 0.1).
+  - Sizes: median ‖δ‖ 3.4 for edited against 6.8 for placebo; ‖ΔW‖_F 21.9 against 44.8 at L12, lam 1e4.
+  - The solve realizes a median 0.73 of each target delta in **both** arms. So the gap is in what 73% of a push achieves: enough to reach a half-known true answer, not enough to reach a false one.
+- **Proxy against test:** dev teacher-forced edit was 59.7%, while test generation gets 78.2% right on the corrected questions. Exact teacher-forced match is stricter than the alias grader, and the split differs.
+- **Write-up:** RESULTS.md, "Phase 5 — results" (findings 18–21).
+
+## Phase 5 test + Phase 6 setup — tooling (2026-11-19)
+
+The user said to finish Phase 5 and then run the fact-use test, one after the other without stopping for approval, documenting everything.
+
+- **`select_edit.py`** applies the Phase 5 selection rule mechanically to `dev_sweep.csv` and prints the full table and the pick. Its last line is `LAYER LAM`. On L4 + L8 alone it falls back to L8 lam 1e5 (edit 15.5%). No config qualifies.
+- **`weight_edit.py test`:**
+  - saves the placebo's shuffled targets to `placebo_targets.csv`, for prediction 4;
+  - takes `--sets SPLIT=CSV ...` to evaluate other question sets with the same cached test deltas (Phase 6).
+- **`build_twohop.py`** (Phase 6 questions, Nemotron over the API, the same model as the paraphrases):
+  - For each Phase 4 correction it asks for a two-hop question (the bridge entity described, never named), a direct version (named), and the answer plus aliases, as JSON.
+  - Automatic rejections: the two-hop names the bridge or its own answer; the direct doesn't name the bridge; the answer is the bridge.
+  - A 4-item trial looked clean: Dickinson → Amherst, R D Wingfield → British, Belarus → Minsk, Numb3rs → CBS. Nationality-type answers are guessable; the memory-off run accounts for that.
+- **Two-hop build:** 114 items, 5 rejected (all five because the two-hop question named the bridge entity; listed in `questions_twohop_rejected.csv`; log `runs/twohop_build.log`). No answer appears more than 3 times; the most common are Germany and New York City.
+  - Spot checks look right: Mutiny on the Bounty → 1932, Twin Sisters (Dear Abby / Ann Landers) → Sioux City, Tintin → Hergé, Jean-Paul Gaultier → 1952.
+  - Some are loosely worded, e.g. Rochdale → 1844, "the town … where the TV series is set". The direct-question filter catches items Gemma can't resolve either way.
+- **`agent.answer(query=...)` / `evaluate.py --retrieve-by COLUMN`:** retrieve corrections with another column's text, such as the source question. This is Phase 6's "oracle" retrieval. Prompts are unchanged when the flag is unused.
+- **`run_phase6.py --layer L --lam X`:**
+  - retrieval arms (direct off; two-hop off / ungated / gated / oracle) in `runs/gemma3-4b-twohop/`;
+  - weights arms (off / edited / placebo on both sets) in `runs/gemma3-4b-twohop-edit/`.
+  - It's resumable.
+
+## Phase 6 run — results (2026-11-19)
+
+- **Run:** `run_phase6.py --layer 12 --lam 10000` (log `runs/gemma3-4b-twohop.log`) finished without a reaper stop. All generations completed.
+- **compare.py crash:** the final `compare()` crashed on the weight-pipeline CSVs, which have no `retrieved_lesson_ids` column. The Phase 5 test had hit the same crash at its end unnoticed: its `*_pairs.csv` were never written, though `analyze_phase5.py` reads the run CSVs directly, so its numbers stand. Fixed in `compare.py` (the lessons column is printed only if present). I regenerated every Phase 5 and Phase 6 pairs file (`runs/pairs_regen.log`), and the counts match the analysis.
+- **Scoring:** `analyze_phase6.py` produces `runs/gemma3-4b-twohop/analysis.md`. All 6 predictions hold, P3 (42.6% against a 40% threshold) and P6 (21.4% against 20%) narrowly.
+- **"Knows both hops but can't chain" count:** of the 43 weight targets, 34 have the source question right under the edit (`runs/gemma3-4b-edit/train_edited.csv`), and 1 of those 34 two-hop questions is fixed.
+- **The 27 oracle failures:**
+  - 6 answer the bridge entity itself (Sweden, Caractacus Potts, UAE, TINTIN, Inertia, Henry Higgins).
+  - The rest give wrong second hops: Switzerland → Zurich, Numb3rs → Chicago, BlackBerry → Toronto, Priam → Helen, Kix → Kellogg's.
+  - One grader near-miss: "First" for "First Amendment".
+- **Write-up:** RESULTS.md, "Phase 6 — results" (findings 22–24).
+- **Approval scope:** this ends the task list the user approved on 2026-11-19 (finish Phase 5, then Phase 6). Next steps need the user's approval.
+
+## Phases 7–9 setup (2026-11-19)
+
+The user approved all three proposed next steps ("do them all"). The approval covers only these; after them, ask again. Each is pre-registered in RESULTS.md before its runs.
+
+- **Phase 7, chain prompt:**
+  - `agent.build_prompt(style="chain")` uses `CHAIN_INSTRUCTION` ("First name what it describes, then answer…", reply as `Entity:` / `Answer:` lines).
+  - `agent.final_answer()` takes the text after the last "Answer:". `evaluate.py --style chain` grades only that and stores the full reply.
+  - The default prompt is unchanged.
+- **Phase 8, near-duplicates:**
+  - `build_neardup.py`: Nemotron changes as few words of each Phase 4 question as possible so that the answer differs.
+  - The trial item reworded Dickinson's description as "author … 1,000 letters" → Mark Twain, which is factually shaky. So the primary measure is copy harm (the answer contains the stored A), which doesn't depend on B being right.
+  - `build_twohop.parse` was generalized to `parse_json(text, keys)`, shared by both builders; its behavior is unchanged.
+- **Runner:** `run_phase78.py` runs Phase 7 (`runs/gemma3-4b-chain/`), then Phase 8 (`runs/gemma3-4b-neardup/`) once `questions_neardup.csv` exists. It's resumable.
+- **Phase 9, MEMIT:**
+  - `memit.py` (design in its docstring and RESULTS.md). `weight_edit.Editor(layers=...)` now takes the set of layers to dequantize (default unchanged).
+  - `build_rewordings.py` writes `rewordings_trivia.csv` for dev and `rewordings_trivia_v2.csv` for test.
+  - Covariances for L10 and L14 are new; L8, L12 and L16 reuse `cov_mix`. Those were computed with L4 also dequantized, which makes a negligible difference to the keys at L8 and above.
+
+## Phase 7 run — results (2026-11-19)
+
+- **Run:** `run_phase78.py` finished the three chain arms (log `runs/gemma3-4b-phase78.log`), then stopped as designed because `questions_neardup.csv` didn't exist yet. Scoring is in `analyze_phase78.py 7` → `runs/gemma3-4b-chain/analysis.md`.
+- **Predictions:** all 5 fail. oracle_chain fixes 23 / 47 targets (oracle: 20) but breaks 18 / 36 right answers (oracle: 4). off_chain alone breaks 16.
+- **Slot confusion** (post-hoc counts):
+  - The Entity line holds the *final* expected answer in 15 / 19 / 19 of 114 replies (off / gated / oracle chain).
+  - Full swaps (entity = answer and answer = bridge) occur 1 / 3 / 2 times.
+  - Of oracle_chain's 18 breaks, 6 have the right answer on the Entity line.
+- **Lenient rescoring** (expected answer anywhere in the reply, post hoc): off_chain 8 / 47 targets with 12 / 36 broken; gated_chain 24 / 11; oracle_chain 27 / 12.
+- **Write-up:** RESULTS.md, "Phase 7 — results" (findings 25–26).
+
+## Phases 8–9 — API builds and reaper (2026-11-19 evening)
+
+- **Rate limits:** running the near-duplicate and rewording builds at the same time hit Nemotron rate limits (15–30 s sleeps). Near-duplicates crawled (about 40 / 119 in 3 h), while the dev rewordings finished: 244 for 129 questions, 7 with fewer than 2.
+- **Reaper stop at 19:33:** it stopped all three background jobs (near-duplicate build, test rewording build, MEMIT smoke test) moments after the smoke test started. Free RAM was 7.9 GB. Neither builder saved partial work, so their progress was lost.
+- **Fix:** both builders now append each finished item to `<out>.partial` and skip finished items on restart. I restarted them as one sequential chain (log `runs/api_builds.log`), so they no longer compete for the rate limit, and reran the smoke test.
+  - The first restart crashed on an empty-frame bug in the new resume code (missing `source_question` column); fixed and restarted.
+- **Builds done:**
+  - `questions_neardup.csv`: 118 near-duplicates, 1 rejected (its answer was the original's).
+  - `rewordings_trivia_v2.csv`: 229 rewordings for 119 questions, 5 with fewer than 2.
+- **Covariances:** L10 and L14 computed (`cov_mix_L10/14.pt`). L14 took about 1.6 h, the machine was busy.
+- **MEMIT smoke test 1** (`runs/memit_smoke.log`, 3 facts, lam 1000) showed the residual-target design can't work on Gemma 3:
+  - The residual stream after L16 has norms in the tens of thousands, so the clamped residual delta (0.75 ‖h‖) asked for per-layer residual steps of median 4,200–19,900.
+  - Every MLP output passes through `post_feedforward_layernorm`, whose output size is bounded, so no down_proj change can supply that. The numerical norm-inverse error was 0.85–0.92, and after all 5 layers |z − h| / |z| stayed at 0.51–0.52.
+  - Teacher-forced edit success was 1 / 3 without aug and 0 / 3 with it. VRAM peaked at 8.13 GB, Windows shared memory included.
+- **Method change** (before any Phase 9 dev or test result):
+  - Targets are now in down_proj-output space. Per fact, one delta per layer for all 5 layers, optimized jointly through the norms, with weight decay summed over layers (Phase 5's settings: clamp 4 ‖m‖, WD 0.5).
+  - The layers are then solved in order, re-run after each edit, each to its target m_l + delta_l.
+  - This keeps MEMIT's "spread over layers, solve sequentially" and drops the residual-target step that Gemma's post-norm makes infeasible. The RESULTS.md Phase 9 design records the deviation. Smoke test 2: `runs/memit_smoke2.log`.
+- **Smoke test 2** (the first launch was stopped by the reaper during model load and rerun):
+  - Every layer's solve is exact (residual 0.01–0.06), and deltas are 0.7–1.5 ‖m‖ per layer.
+  - The aug arm installs 3 / 3 facts and 5 / 6 rewordings; no-aug only 1 / 3.
+  - **Bug:** targets were v_l = m⁰_l + δ_l, with m⁰ the *unedited* output. In the joint optimization, downstream layers' outputs already carry the upstream deltas' effect, so the solve aimed layers 10–16 at the wrong values.
+  - **Fix:** take v_l from a forward pass with all deltas applied (each layer's output there plus its own delta). Smoke test 3: `runs/memit_smoke3.log`.
+- **Smoke test 3:** aug 3 / 3 facts and 6 / 6 rewordings. No-aug is still 1 / 3, though every solve is exact at the key (residual ≤ 0.06). Probably the same within-prompt spillover onto other tokens that Phase 5's diagnosis found, with 5 layers edited. 3 facts settle nothing; the dev sweep measures it. VRAM peaks at 7.7 GB.
+- **Launched (one chain, log files as named):**
+  - Phase 8 evaluations (`run_phase78.py` skips the finished Phase 7 arms): `runs/gemma3-4b-phase8.log`.
+  - Then the Phase 9 dev sweep (`memit.py dev`, lam 1e2 / 1e3 / 1e4 / 1e5 per arm): `runs/gemma3-4b-memit-dev.log`.
+
 ## Open follow-ups (not done tonight)
 
 For the **strategic forward plan** (two-track memory experiment + the broader human-cognition arc), see RESULTS.md → "Where this goes next." The items below are the *tactical* leftover work from the current experiment.
@@ -507,3 +690,17 @@ For the **strategic forward plan** (two-track memory experiment + the broader hu
 - Re-run seen-40 baseline + memory-on with Llama to repopulate `results_baseline.csv` / save a `results_memory.csv`. The held-out result files are saved; the seen-40 attempt files were overwritten by the held-out runs and only exist in logged stdout.
 - Step 4 prompt v3: explicitly steer the model toward identifying *factual gaps* vs *process errors* as distinct lesson types. Currently it conflates them.
 - Curated held-out v2: pre-screen candidate held-out questions against the target model and keep only the ones it fails. Current held-out was designed by hypothesizing failure modes; a model-targeted design would have actual signal.
+
+## Phases 8–9 — runs finished (2026-11-20)
+
+- **Chain finished cleanly**, with no reaper stop: Phase 8 evaluations (`runs/gemma3-4b-phase8.log`), then the Phase 9 dev sweep (`runs/gemma3-4b-memit-dev.log`).
+- **Phase 8:** `analyze_phase78.py 8` → `runs/gemma3-4b-neardup/analysis.md`. P1, P3, P4 and P5 hold; P2 fails narrowly (gated copy harm 16 / 118 = 13.6% against ≥ 15%, but 15 / 63 among items the gate let through).
+  - Post hoc (scratchpad `p89extra.py`): copy harm by cosine bin is 1 / 38 (< 0.6), 0 / 17, 2 / 22, 5 / 18, 8 / 23 (≥ 0.9).
+  - The 3 memory-off copies are Gemma's own wrong answers that coincide with the stored one: Rio for the 1997 beach volleyball item, Neil Young for the other anagram, and Joan Crawford for "Which Bette's career revived…?".
+  - 55 / 118 items are below 0.7 cosine to their source, because Nemotron changed more than "as few words as possible".
+- **Phase 9 selection bug:** `memit.py select` printed "floor nan%" because pandas parses the arm name `null` as NaN. Fixed with `keep_default_na=False, na_values=[""]` in `select()` and in the `dev` resume read. That resume read would also have mislabelled the null rows on a restart; it didn't matter here, since the sweep ran in one go.
+  - With the correct floor (9.2%, limit 14.2%), no λ in either arm qualifies (lowest drift 16.4% memit, 19.2% memit_aug).
+  - Per the pre-registration, **neither arm was tested**. I didn't extend the λ grid, since that would be tuning past the registered plan, so it's left as a candidate needing a go-ahead.
+- **Rewording vs test-paraphrase similarity** (promised above): dev median cos 0.942 (best of 2: 0.960; 45% ≥ 0.95), test 0.923 (0.936; 30%). The paraphrases' own cosine to the original is 0.945 / 0.930. So memit_aug's dev paraphrase gain (55–67% against 21–32%) is mostly near-duplicate keys.
+- **Write-up:** RESULTS.md "Phase 8 — results" (findings 27–28), "Phase 9 — results" (findings 29–30), intro bullets for Phases 7–9, "Where this goes next" and Files updated.
+- **The approved task list (Phases 7, 8, 9) is now complete.** Further work waits for the user's go-ahead.

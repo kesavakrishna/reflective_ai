@@ -6,6 +6,11 @@ A controlled experiment testing whether a frozen LLM can improve on novel questi
 - **Phase 2** (Gemma 3 4B, 500 TriviaQA questions, plus activations): at scale, lessons are **net harmful** — they break ~2× as many correct answers as they fix; the harm lands on less-confident knowledge, acts in the late layers where the answer forms, and no confidence gate rescues it. See [Phase 2](#phase-2--harm-at-scale-gemma-3-4b-triviaqa-interpretability).
 - **Phase 3** (same model and questions, plus 236 paraphrases): storing the **corrected fact** instead of a lesson fixes 126 / 129 training failures and 106 / 119 paraphrased ones, but as a lookup: the retriever matches the rewording and the model copies the stored answer. On unrelated questions, corrections are noise (14 fixed, 15 broke), and a similarity gate removes all of that harm. Lessons on top only hurt. See [Phase 3](#phase-3--two-track-memory-corrections-vs-lessons).
 - **Phase 4** (500 fresh questions plus paraphrases, and a placebo test): the similarity gate, fixed in advance at 0.7, replicates. It gives 100% training, 89.4% paraphrase, and held-out identical to memory-off, with **0 broken answers out of 735**. Lorem-ipsum filler of the same length breaks as many correct answers as real off-topic memory, and the same ones, so most of the "harm" in phases 2–3 comes from a longer prompt, not from what memory says. See [Phase 4](#phase-4--results).
+- **Phase 5** (writing the 119 corrections into the weights with a single-layer, MEMIT-style edit): the edit gets 93 / 119 corrected questions right and breaks only 4 / 134 right training answers. But it transfers to 13 / 101 paraphrases (retrieval: 98 / 101) and breaks 12 held-out answers that can't be gated (retrieval: 0). A placebo edit toward shuffled answers installs almost none of them (2 / 119), so the edit mostly unlocks answers the model half-knew rather than writing new facts. See [Phase 5](#phase-5--results).
+- **Phase 6** (114 two-hop questions that need a corrected fact as an intermediate step): with the correction in the prompt, Gemma completes the second hop on 20 / 47 target items, and gated retrieval nearly matches that (19). With the fact in the weights it manages 1 / 43, even though in 34 of those items the edited model answers the original question right and Gemma knows the second hop. So retrieval gives a fact the model can reason with about 40% of the time, while the edit gives a lookup tied to one question. See [Phase 6](#phase-6--results).
+- **Phase 7** (an "Entity: … / Answer: …" chain prompt on the same two-hop set): with the fact in context it fixes 23 / 47 targets (plain prompt: 20), but it breaks 18 of the 36 two-hop answers Gemma gets right without memory, because the 4B model confuses the two slots. The plain prompt is the better trade. See [Phase 7](#phase-7--results).
+- **Phase 8** (118 near-duplicate questions that reuse a stored question's wording but have a different answer): the 0.7 gate fires on 63 of them, and on 15 of those Gemma answers with the stored, wrong answer. Gated retrieval breaks 13 / 60 right answers here. No similarity threshold separates near-duplicates from true paraphrases (best: about 75% / 75%). See [Phase 8](#phase-8--results).
+- **Phase 9** (multi-layer MEMIT-style edit over 5 layers, with and without reworded keys): no setting kept collateral within the pre-registered drift limit (lowest 16.4% against a 14.2% limit), so neither arm was tested. On dev, spreading over layers raised drift, and reworded keys doubled paraphrase transfer only because they nearly duplicate the paraphrases. See [Phase 9](#phase-9--results-dev-sweep-only-neither-arm-reached-the-test).
 
 ## Question
 
@@ -256,13 +261,436 @@ None of this makes the model know anything new. Gated corrections are a good cac
 - **Confidence for the placebo analysis comes from phase 2's activation capture** (first answer token, memory off), and covers the phase 3 held-out set only.
 - **Lorem is one kind of filler.** Other content-free text (blank notes, repeated tokens) might behave differently. What this shows is that the content of off-topic corrections is not what's needed for the harm.
 
+## Phase 5 design — write the corrections into the weights (pre-registered 2026-11-18, before any result)
+
+Retrieval makes the model copy a stored answer. Weight editing changes what the model computes, so it can't be gated per question, but it might transfer differently. **Method** (`weight_edit.py`): a single-layer, batched least-squares edit in the style of ROME/MEMIT.
+
+- **Key and value.** For each training failure, the key is the input to one layer's MLP `down_proj` at the question's last token, in the exact eval prompt. A change to that layer's output at that position is optimized so the model emits the correct answer.
+- **The update.** One update ΔW = R Kᵀ(λC + KKᵀ)⁻¹ applies all of those changes at once. C is the key covariance over 3000 TriviaQA questions from no eval set.
+- **Precision and baseline.** The candidate layers' `down_proj` weights are dequantized to fp32. The unedited model with that change is the baseline, and every run in this phase shares the same batched generation.
+- **Why a new baseline.** A smoke test found that dequantizing alone changes 7 of 32 answers, and batching 1 of 8. That's finding 17 again, so phase 5 compares only against its own baseline.
+
+**Tuning on the phase 3 split** (its 129 corrections). Layers {4, 8, 12, 16} × λ {10, 100, 1000, 10000}, scored with cheap proxies:
+
+- *edit*: greedy would emit the answer on the edited question
+- *para*: the same on its paraphrase
+- *drift*: share of held-out questions whose first answer token changes
+
+**Selection rule:** highest *para* among configurations with *edit* ≥ 80% and *drift* ≤ 5% (ties go to lower drift). If none qualifies, take the highest *edit* with drift ≤ 5% and report that the rule failed.
+
+**One-shot test on the phase 4 split** (its 119 corrections), with the selected configuration. Arms:
+
+- **edited**
+- **placebo edit**: the same 119 questions, each edited toward *another* question's answer (fixed derangement). It has the same keys and the same procedure, but wrong facts.
+
+Predictions:
+
+1. **Training:** the edit fixes ≥ 60% of the 119 failures. That's below retrieval's 100%, because a shared least-squares update can't satisfy every fact exactly.
+2. **Paraphrase:** among paraphrases wrong without memory whose source was edited, the edit fixes 25–60%, less than gated retrieval (which fixed 98). The key is a whole-question representation at "?", and a rewording moves it.
+3. **Held-out:** the edit breaks ≥ 3 held-out answers (it can't be gated), and **the placebo edit breaks about as many** (within ± 5). Collateral comes from moving the weights, not from which facts were written.
+4. **Placebo on its own targets:** on the 119 edited training questions, it makes the model emit the *shuffled* answer for ≥ 50%. The edits are specific, not generic damage.
+5. **Overall:** weight editing doesn't beat gated retrieval in accuracy on any of the three sets.
+
+**Deviations from this design, made on the dev split before the test split was touched** (details in NOTES.md, "Phase 5 dev sweep 1"):
+
+- **The covariance was wrong.** The first sweep was stopped after 2 layers (edit 5–28%, drift 16–30% at every λ).
+  - The original C left out the shared instruction prefix, and the update rewrote it (2× ‖m‖ on average).
+  - More importantly, all edited keys sit at the "?" token and share a large common direction, so each edit spilled ≈ 1× ‖m‖ onto every unseen question's "?".
+  - C is now (E_all[kkᵀ] + E_pos[kkᵀ]) / 2: all prompt tokens, plus the last-question-token keys of the 3000 covariance questions.
+- **Weight decay** on the delta raised from 0.01 to 0.5 (the ROME default). Deltas had been 1.5–3.4× ‖m‖.
+- **λ grid widened** to {1, 10, 100, 1000, 10⁴, 10⁵}.
+- **Drift is judged against a null floor.** A random weight change of relative size 10⁻⁶ flips 12–18% of held-out first tokens, against 0% with no change: finding 17, likely amplified by LLM.int8's activation re-quantization. So "drift ≤ 5%" can't be met by any edit.
+  - The rule now reads: drift ≤ (mean drift of 3 null perturbations at that layer) + 5 points.
+  - Everything else in the rule is unchanged, including the fallback.
+  - Test predictions 1–5 are unchanged. Prediction 3 already compares against the placebo edit, which carries the same floor.
+
+## Phase 5 — results
+
+### Tuning (phase 3 split, proxies)
+
+Edit success is teacher-forced exact match on the 129 edited questions. The drift floor is the mean held-out first-token drift under 3 random weight changes of size 10⁻⁶.
+
+| layer | floor | best edit (λ) | its para | its drift (excess) | edit at the drift limit (λ) |
+|---|---|---|---|---|---|
+| 4 | 10.9% | 27.9% (10⁴) | 6.6% | 20.8% (+9.9) | 10.1% (10⁵) |
+| 8 | 11.3% | 56.6% (1) | 17.2% | 22.0% (+10.7) | 15.5% (10⁵) |
+| 12 | 9.6% | 75.2% (10) | 18.0% | 16.0% (+6.4) | **59.7% (10⁴)** |
+| 16 | 7.9% | 75.2% (1) | 29.5% | 18.4% (+10.5) | 25.6% (10⁵) |
+
+- **The rule failed.** No configuration reaches edit ≥ 80%, so the pre-registered fallback picked **layer 12, λ = 10⁴**: the highest edit with drift ≤ floor + 5. The full table is in `runs/gemma3-4b-edit/selection.txt`.
+- **Depth helps.** Edit (about 25 → 55 → 70–75%) and para (7 → 15 → 18 → 30%) both rise with depth.
+
+### One-shot test (phase 4 split, 119 corrections)
+
+Each arm is compared with the unedited run in the same pipeline.
+
+| set | arm | accuracy (unedited → arm) | fixed | broke |
+|---|---|---|---|---|
+| train | **edited** | 53.6% → **87.6%** | 89 / 116 | **4** / 134 |
+| train | placebo | 53.6% → 48.0% | 7 / 116 | 21 / 134 |
+| paraphrase | **edited** | 46.0% → 51.5% | 19 / 127 | 6 / 108 |
+| paraphrase | placebo | 46.0% → 43.0% | 5 / 127 | 12 / 108 |
+| held-out | **edited** | 46.4% → 44.0% | 6 / 134 | **12** / 116 |
+| held-out | placebo | 46.4% → 45.6% | 7 / 134 | 9 / 116 |
+
+Against gated retrieval (phase 4), each with its own memory-off baseline:
+
+| set | weight edit | gated retrieval |
+|---|---|---|
+| the 119 corrected questions | 93 / 119 right (78.2%) | 119 / 119 (100%) |
+| paraphrases of edited questions, wrong without memory | 13 / 101 fixed (12.9%) | 98 / 101 (97.0%) |
+| held-out | 12 broken, 6 fixed (44.0%, from 46.4%) | 0 broken, 0 fixed (44.0% = off) |
+
+### Predictions, checked
+
+1. **Training fixes ≥ 60%: holds.** 93 / 119 (78.2%) are right after the edit. Of the 111 wrong in this pipeline's unedited run, 86 are fixed and 1 breaks. Every fix contains the canonical corrected answer.
+2. **Paraphrase 25–60%, fewer than gated retrieval: fails on the low side.** Only 13 / 101 (12.9%), against 98 / 101 for gated retrieval.
+3. **Edit breaks ≥ 3 held-out answers, and the placebo about as many: holds.** 12 against 9 (+3).
+4. **Placebo emits its shuffled answer on ≥ 50%: fails badly.** 2 / 119 (1.7%). Only 9 / 119 even start with the target's first token, against 0 unedited.
+5. **The edit doesn't beat gated retrieval on any set: holds.** It's worse on train and paraphrase, and ties on held-out accuracy only because its 12 breaks and 6 fixes net to −6 against an unedited baseline 2.4 points higher.
+
+### Findings
+
+18. **A single-layer edit nearly matches retrieval on the exact questions, and barely transfers.**
+    - It fixes 86 of 111 failures and breaks only 4 of 134 right training answers.
+    - Paraphrases of the same questions get 13 / 101. The key is the "?" token's representation of the exact wording, so the edit is a lookup keyed even more narrowly than retrieval. Retrieval matches rewordings through the embedding model (97%).
+19. **The edit "writes" true facts and not false ones: it amplifies what the model nearly knows.**
+    - The placebo uses the same keys and procedure and converges just as well per fact (83% of deltas reach NLL < 0.1, against 97% for the true facts).
+    - The batched solve realizes the same 73% of every delta in both arms (median projection).
+    - But false facts need deltas twice as large (median ‖δ‖ 6.8 against 3.4; ‖ΔW‖_F 44.8 against 21.9). 73% of a push toward a true answer is enough, and 73% of a push toward a false one isn't: 2 / 119 installed.
+    - So at a regularization strong enough to keep collateral near the floor, the edit mostly pulls out answers the model already half-knows. It isn't writing arbitrary new facts.
+20. **Collateral is real, can't be gated, and sits near what any change of this size does.**
+    - The edit breaks 12 of 116 right held-out answers. The placebo, with twice the ΔW, breaks 9; on train and paraphrase it breaks more than the edit (21 and 12, against 4 and 6).
+    - Gated retrieval breaks 0, because it changes nothing when no stored question is close. A weight edit is always on.
+21. **Method lessons** (dev split; NOTES.md, "Phase 5 dev sweep 1" and "2"):
+    - The covariance must cover the shared prompt and the key position. Without them the edit rewrote every prompt (20–30% drift).
+    - This 8-bit model flips 10–15% of first tokens under *any* weight change, so collateral needs a null or placebo.
+    - Teacher-forced exact match understates generation success: 59.7% on dev against 78.2% at test.
+
+### What phase 5 means
+
+On this model and task, gated retrieval beats a closed-form weight edit on every measure:
+
+| measure | retrieval | weight edit |
+|---|---|---|
+| failures fixed | 100% | 78% |
+| paraphrases fixed | 97% | 13% |
+| held-out answers broken | 0 | 12 |
+
+The edit's advantages are an unchanged prompt and no retrieval step at run time. Its result is also narrower than "the model learned the fact". It mostly unlocks answers Gemma half-knew, keyed to the exact question wording. Whether either method gives knowledge the model can *use* is phase 6's question.
+
+### Phase 5 caveats
+
+- **One method, one layer, one λ.** The λ was chosen by the fallback rule, because the selection rule failed. Multi-layer MEMIT spreads each edit over several layers, which shrinks the per-layer change. It might transfer and collateralize differently.
+- **The keys come from the exact eval prompt.** MEMIT averages keys over random prefixes for robustness. Doing that here might help paraphrases.
+- **The placebo isn't size-matched.** Its ΔW is 2× the edit's, so "about as many broken" is conservative for the edit.
+- **Different pipelines.** The dequantized-fp32 pipeline has its own baseline (53.6 / 46.0 / 46.4%), so retrieval's numbers come from the int8 pipeline. Each is compared only with its own memory-off run.
+- **The test set is smaller than it looks.** 111 failures, 101 eligible paraphrases and 116 right held-out answers. Differences of a few answers (12 against 9) are within noise.
+
+## Phase 6 design — can the model *use* a corrected fact? (pre-registered 2026-11-19, before any result)
+
+Every fix so far has been a copy of the stored answer: the model was asked for exactly the fact it was given. Phase 6 asks for a *different* fact that needs the corrected one as an intermediate step.
+
+**Questions** (`build_twohop.py`, written by Nemotron over the API, not by Gemma). For each of the 119 phase 4 corrections (question Q, corrected answer A):
+
+| kind | example (A = Emily Dickinson) | answer |
+|---|---|---|
+| two-hop | "In which Massachusetts town was the 19th century American poet who wrote over 1,000 poems published between 1890 and 1945 after her death born?" | Amherst |
+| direct | "In which Massachusetts town was Emily Dickinson born?" | Amherst |
+
+- The two-hop question refers to A only through Q's description.
+- Items are rejected automatically if the two-hop question names A or its own answer, the direct question doesn't name A, or the new answer is A.
+
+**Arms:**
+
+- **Retrieval** (int8 pipeline, phase 4 correction store), each against its own memory-off run:
+  - *ungated* corrections;
+  - *gated* (0.7);
+  - *oracle*: retrieval by the source question Q, so the right correction is always in the prompt. This separates "can it use the fact" from "does retrieval find it".
+- **Weights** (dequantized pipeline): the phase 5 selected configuration and its test deltas, as *edited* and *placebo*, each against its own unedited run.
+
+**Primary set:** items Gemma can finish but doesn't start, in each pipeline's own memory-off run. That means the direct question is answered right and the two-hop question wrong. A fix is a target item answered right. The usual fixed/broke counts on all items are reported too.
+
+**Predictions:**
+
+1. **Solvability:** memory off, Gemma answers ≥ 50% of the direct questions right.
+2. **The gate finds the fact:** on two-hop questions, the top-1 retrieved correction is the item's own and has cos ≥ 0.7 for ≥ 50% of items. The two-hop questions reuse Q's description.
+3. **Oracle retrieval composes:** with its correction in the prompt, the model fixes ≥ 40% of target items. A 4B model can do one hop in context once the bridge entity is stated.
+4. **Gated ≤ oracle:** gated retrieval fixes no more target items than oracle, and at least half as many.
+5. **Weight edits don't compose:** the edit fixes ≤ 10% of target items, and no more than the placebo edit + 5 points. This matches multi-hop failures of ROME/MEMIT edits reported in the literature (MQuAKE).
+6. **Copying shows up as a failure mode:** in the retrieval arms, ≥ 20% of the target items that stay wrong are answered with the bridge entity A itself. The model copies the stored answer instead of using it.
+
+## Phase 6 — results
+
+There are 114 items; 5 more were rejected automatically. Target items are those where Gemma answers the direct question right and the two-hop question wrong with memory off. There are 47 in the retrieval pipeline and 43 in the weights pipeline.
+
+| pipeline | arm | two-hop accuracy (all 114) | target items fixed |
+|---|---|---|---|
+| retrieval | off | 31.6% | — |
+| retrieval | ungated corrections | 46.5% (fixed 23, broke 6) | 19 / 47 (40.4%) |
+| retrieval | gated 0.7 | 46.5% (fixed 23, broke 6) | 19 / 47 (40.4%) |
+| retrieval | oracle | 49.1% (fixed 24, broke 4) | **20 / 47 (42.6%)** |
+| weights | off | 32.5% | — |
+| weights | edited (L12, λ 10⁴) | 31.6% (fixed 2, broke 3) | **1 / 43 (2.3%)** |
+| weights | placebo | 27.2% (fixed 4, broke 10) | 3 / 43 (7.0%) |
+
+### Predictions, checked
+
+1. **Solvability ≥ 50%: holds.** The direct questions score 67.5% in the int8 pipeline and 65.8% dequantized. They score 64.9% and 63.2% under the edited and placebo weights.
+2. **The gate finds the fact on ≥ 50%: holds.** The item's own correction is top-1 with cos ≥ 0.7 on 105 / 114 (92.1%), and top-1 at any similarity on 113.
+3. **Oracle fixes ≥ 40% of targets: holds, narrowly.** 20 / 47 (42.6%).
+4. **Oracle/2 ≤ gated ≤ oracle: holds.** 19 against 20.
+5. **The edit fixes ≤ 10% and ≤ placebo + 5 points: holds.** 1 / 43, against the placebo's 3 / 43.
+6. **≥ 20% of the targets still wrong under retrieval are answered with A: holds, narrowly.** 6 / 28 (21.4%) ungated and gated, 6 / 27 oracle, against 1 of the same items with memory off.
+
+### Findings
+
+22. **With the fact in the prompt, Gemma completes the second hop in about 4 of 10 cases.**
+    - Oracle fixes 20 / 47 targets, and gated retrieval nearly matches it (19). The two-hop questions reuse the original description, so the gate fires on 92%. On these questions retrieval is effectively the oracle.
+    - On all 114 items retrieval fixes 23–24 and breaks 4–6.
+23. **The weight edit's facts can't be used: Gemma "knows" A when asked the original question, knows A → B, and still can't chain them.**
+    - In 34 of the 43 weight-pipeline targets, the edited model answers the source question right *and* Gemma answers the direct question right. The two-hop question is fixed in **1** of those 34. The placebo, which installs no facts, fixes 3.
+    - This fits finding 18: the edit is keyed to the "?" representation of the exact question wording, and a question that merely contains the description doesn't trigger it.
+24. **Composition, not knowledge, is the bottleneck for retrieval.**
+    - Of the 27 targets oracle leaves wrong, 6 answer the bridge entity itself (copying: "Sweden" for the capital of Sweden).
+    - The other 21 give a wrong second hop even though the direct version is answered right in the same pipeline: Switzerland → "Zurich", Numb3rs → "Chicago", Priam → "Helen".
+    - The model holds both hops separately but chains them only about 43% of the time, even with the bridge stated in the prompt.
+
+### What phase 6 means
+
+- **Retrieval gives working memory.** It puts the corrected fact where the model can sometimes reason with it, up to the limit of a 4B model's one-hop composition (about 43%).
+- **The weight edit gives a lookup.** It's tied to a specific question, and the fact behind it isn't available as knowledge: 1 / 34 even when both hops are known.
+
+So on this model and task, neither method changes what the model *knows* in a usable sense, and retrieval is better on every measure tested in phases 4–6.
+
+### Phase 6 caveats
+
+- **Small numbers:** 47 and 43 target items. P3 and P6 hold by 1–2 items.
+- **Generated questions:** Nemotron wrote them, and the filters don't catch every factual or wording error. The direct-question filter removes unanswerable ones but not ambiguous two-hop phrasing (e.g. "the town … where the TV series is set").
+- **Grader near-misses:** e.g. "First" for "First Amendment" counts as wrong.
+- **Not a test of retrieval robustness:** the two-hop questions reuse the source description, which is why the gate fires 92% of the time.
+- **One weight configuration:** the phase 5 selection. Multi-layer MEMIT and keys averaged over random prefixes are untested. MEMIT-style edits are known to compose poorly too (MQuAKE).
+
+## Phase 7 design — does naming the entity first help composition? (pre-registered 2026-11-19, before any run)
+
+Phase 6's oracle fixes 20 / 47 two-hop targets. Of the 27 it misses, 6 answer the bridge entity itself and 21 give a wrong second hop. Phase 7 changes only the instruction:
+
+> Answer the question below. The question may describe a person, place or thing without naming it. First name what it describes, then answer the question that is actually asked. Reply in exactly this format, and nothing else:
+> Entity: \<name\>
+> Answer: \<short answer\>
+
+Only the text after the last "Answer:" is graded; the full reply is stored. The arms are on the same 114 two-hop questions, int8 pipeline, phase 4 correction store: **off_chain, gated_chain, oracle_chain**. The target items are phase 6's 47, defined by the original prompt's memory-off runs. Each chain arm is compared with the matching phase 6 arm.
+
+**Predictions:**
+
+1. **Chain alone doesn't supply the fact:** off_chain fixes ≤ 10% of targets. Gemma got the source question wrong, so naming "the entity" mostly names the wrong one.
+2. **Chain helps when the fact is there:** oracle_chain fixes ≥ 55% of targets, against oracle's 42.6%.
+3. **Copying drops:** among targets still wrong under oracle_chain, at most 2 answer the bridge entity itself (oracle: 6).
+4. **Gated tracks oracle:** gated_chain is within 2 targets of oracle_chain, because the gate fires on 92% of these questions.
+5. **No new harm:** on the 36 two-hop questions right with memory off, oracle_chain breaks no more than oracle + 2 (oracle broke 4).
+
+## Phase 7 — results
+
+Same 114 two-hop questions and the same 47 targets as phase 6. Chain arms are graded on the text after "Answer:"; every reply had that line.
+
+| arm | two-hop accuracy (114) | targets fixed (of 47) | right-off broken (of 36) | still-wrong targets answering the bridge |
+|---|---|---|---|---|
+| oracle (phase 6) | 49.1% | 20 (42.6%) | 4 | 6 / 27 |
+| gated (phase 6) | 46.5% | 19 (40.4%) | 6 | 6 / 28 |
+| off_chain | 23.7% | 6 (12.8%) | 16 | 2 / 41 |
+| gated_chain | 37.7% | 17 (36.2%) | 15 | 5 / 30 |
+| oracle_chain | 40.4% | **23 (48.9%)** | **18** | 5 / 24 |
+
+### Predictions, checked
+
+1. **off_chain fixes ≤ 10%: fails, narrowly.** 6 / 47 (12.8%).
+2. **oracle_chain fixes ≥ 55%: fails.** 23 / 47 (48.9%), 3 more than oracle.
+3. **≤ 2 still-wrong targets copy the bridge: fails.** 5, against oracle's 6.
+4. **gated_chain within 2 of oracle_chain: fails.** 17 against 23.
+5. **No new harm (≤ 6 breaks): fails badly.** oracle_chain breaks 18 of the 36 two-hop questions Gemma answers right without memory. off_chain alone breaks 16, so the prompt causes the harm, not the memory.
+
+### Findings
+
+25. **Asking the model to name the entity first costs more than it gains.** oracle_chain fixes 3 more targets than oracle, and it breaks 14 more right answers.
+    - The Entity line often isn't the bridge. Under oracle_chain it names the bridge on only 20 / 47 targets, even with the correction in the prompt. Sometimes it holds the final answer instead (19 / 114 replies), or the two slots are swapped (2 / 114: "Entity: Minsk / Answer: Belarus").
+    - Scoring post hoc as correct whenever the expected answer appears anywhere in the reply gives oracle_chain 27 / 47 targets. It still breaks 12 / 36.
+    - So the two-step format is a burden for a 4B model, and it doesn't make the hop more reliable.
+26. **The composition ceiling stands.** With the fact in context, the best prompt tested completes the second hop for about half of targets: 20–23 / 47 strictly, 27 leniently. The original one-line prompt is the better trade.
+
+### Phase 7 caveats
+
+- **One instruction, not tuned.** Few-shot examples of the format might fix the slot confusion. That wasn't tried, to avoid tuning on the test set.
+- **Grading on the "Answer:" line** penalizes replies with the answer in the wrong slot. The lenient rescoring is reported, but it's post hoc.
+
+## Phase 8 design — near-duplicate questions with different answers (pre-registered 2026-11-19, before any run)
+
+Phase 6 showed the 0.7 gate fires on 92% of questions that reuse a stored question's description. That's good when the answer is related, and harmful when a question reuses the wording but asks about something else.
+
+**Questions** (`build_neardup.py`, Nemotron): for each phase 4 correction (Q, A), a question Q′ that changes as few words of Q as possible but has a different answer B. For example, "…American **author** wrote over 1,000 **letters**…" → Mark Twain. Items are rejected if B matches A, Q′ contains B, or Q′ = Q.
+
+**Arms** (int8 pipeline, phase 4 correction store): off, ungated corrections, gated 0.7.
+
+**Primary measure:** *copy harm*, the share of near-duplicates answered with the stored answer A. It doesn't depend on whether Nemotron's B is right. Fixed/broke against B are reported too, but B may sometimes be wrong.
+
+**Predictions:**
+
+1. **The gate fires on ≥ 50% of near-duplicates.** Their own source correction is top-1 with cos ≥ 0.7, because MiniLM similarity is dominated by shared wording.
+2. **Copy harm ≥ 15% under gated retrieval** (answer contains A), against ≤ 3% memory off.
+3. **Gated ≈ ungated:** copy harm under gated is within 3 items of ungated, since the gate fires on most items.
+4. **Breakage:** among near-duplicates answered right memory off, gated retrieval breaks ≥ 15%.
+5. **No threshold separates the cases.** The threshold would have to keep a correction for phase 4 paraphrases of the same question (the case where it should apply) and block it for near-duplicates. No single threshold keeps ≥ 90% of phase 4 paraphrases at or above it while keeping ≥ 90% of near-duplicates below it.
+
+## Phase 8 — results
+
+118 near-duplicates (1 rejected), int8 pipeline, phase 4 correction store. Scoring: `analyze_phase78.py 8` → `runs/gemma3-4b-neardup/analysis.md`.
+
+| arm | accuracy against B (118) | copy harm: answer contains the stored A | fixed (of 58 wrong off) | broke (of 60 right off) |
+|---|---|---|---|---|
+| off | 50.8% | 3 (2.5%) | – | – |
+| corrections, ungated | 43.2% | 15 (12.7%) | 8 | 17 |
+| gated 0.7 | 42.4% | **16 (13.6%)** | 3 | **13** |
+
+**Not all items are near.** Nemotron changed more wording than asked on many items. Their median MiniLM cosine to the source question is 0.718, against 0.930 for phase 4 paraphrases, and 55 / 118 fall below the 0.7 gate. The gate fired on exactly the other 63, and every time its top-1 was the item's own source correction. Copy harm by similarity, gated arm:
+
+| cos to source question | items | gate fired | copy harm |
+|---|---|---|---|
+| < 0.6 | 38 | 0 | 1 (also copied with memory off) |
+| 0.6–0.7 | 17 | 0 | 0 |
+| 0.7–0.8 | 22 | 22 | 2 |
+| 0.8–0.9 | 18 | 18 | 5 |
+| ≥ 0.9 | 23 | 23 | 8 |
+
+### Predictions, checked
+
+1. **The gate fires on ≥ 50%: holds, narrowly.** 63 / 118 (53.4%), always with the item's own source correction top-1.
+2. **Copy harm ≥ 15% gated, ≤ 3% off: fails, narrowly.** 16 / 118 (13.6%) gated, 3 / 118 (2.5%) off. Among the 63 items where the gate fired, it is 15 / 63 (23.8%).
+3. **Gated within 3 of ungated: holds.** 16 against 15.
+4. **Gated breaks ≥ 15% of right-off: holds.** 13 / 60 (21.7%). 7 of the 13 answer with the stored A.
+5. **No threshold separates paraphrases from near-duplicates: holds.** The best threshold is 0.88, which keeps 75.7% of 115 phase 4 paraphrases and blocks 75.4% of near-duplicates. Nothing reaches 90% / 90%.
+
+### Findings
+
+27. **The gate can't tell "the same question reworded" from "the same wording, a different question."** When a near-duplicate clears 0.7, Gemma answers with the stored answer on 15 / 63 (24%). The rate rises with similarity, to 8 / 23 above 0.9. Examples:
+    - "Bronze is an alloy of what 2 metals?" → "Copper and Zinc", the stored answer for brass.
+    - "Which company uses the advertising slogan 'Save Money, Live Better'?" → ALDI (expected Walmart).
+    - "What is the name of the vast realm where the Norse gods live?" → Valhalla (expected Asgard).
+
+    Phase 4's "0 broken out of 735" holds for questions unrelated to the store. Near-duplicates are a separate failure, and the gate doesn't cover it: 13 of the 60 near-duplicates Gemma answers right without memory break.
+28. **No cosine threshold fixes it.** Paraphrases and near-duplicates overlap in MiniLM similarity. Raising the gate from 0.7 to its best value, 0.88, would block 3 in 4 near-duplicates and also lose about 1 in 4 paraphrase fixes. Separating the two cases needs more than surface similarity, for example a check that the stored answer fits the new question.
+
+### Phase 8 caveats
+
+- **Nemotron's answers B aren't verified.** Copy harm doesn't depend on them, but accuracy, fixed and broke do. 3 items get the stored answer even with memory off, because Gemma's own wrong answer coincides with it (for example Joan Crawford for "Which Bette's career revived…?").
+- **55 / 118 items aren't near duplicates** by the gate's own measure. The sample that actually tests the gate is the 63 that cleared it.
+
+## Phase 9 design — can a better edit be less of a lookup? (pre-registered 2026-11-19, before any run)
+
+Phase 5's single-layer edit transferred to 13% of paraphrases and 1 / 43 two-hop targets. Phase 9 tests two standard improvements (`memit.py`).
+
+**Method:**
+
+- **Multi-layer MEMIT** over layers {8, 10, 12, 14, 16}:
+  - One residual-stream change at the question's last token, after layer 16, is optimized per fact. It uses MEMIT's GPT-J settings: clamp 0.75 ‖h‖, weight decay 0.5.
+  - The layers are edited in order. Before each one, the model is re-run with the earlier edits in place, and that layer supplies 1 / (layers left) of the residual change still missing.
+  - Gemma's post-feedforward RMSNorm is inverted numerically for each target.
+  - Each layer's solve is phase 5's, with the `cov_mix` covariance.
+- **Arms:**
+  - *memit*: one key per fact.
+  - *memit_aug*: the same, plus 2 automatic rewordings per question as extra keys with the same target. The rewordings come from a different prompt than the test paraphrases (`build_rewordings.py`); any rewording identical to the test paraphrase is rejected.
+- **No placebo arm** this time, to save GPU time. Collateral is judged against the null floor and phase 5's numbers.
+
+**Tuning** (phase 3 split, the phase 5 proxies):
+
+- λ ∈ {10², 10³, 10⁴, 10⁵} per arm.
+- Floor: mean held-out drift under 3 random 10⁻⁶ changes to all 5 layers.
+- Selection: phase 5's rule (edit ≥ 80% and drift ≤ floor + 5, best para; otherwise the fallback).
+- An arm with no λ inside the drift limit is not tested, and that is reported.
+
+**Test** (phase 4 split): train, paraphrase and held-out, plus phase 6's two-hop and direct sets, against this pipeline's own unedited run (its dequantized layers differ from phase 5's).
+
+**Predictions:**
+
+1. **Spreading lowers collateral:** memit breaks ≤ 8 held-out answers (phase 5: 12), with ≥ 70% of the 119 corrected questions right.
+2. **Spreading alone doesn't fix the lookup:** memit fixes ≤ 25% of wrong-off paraphrases of edited questions (phase 5: 12.9%).
+3. **Reworded keys help:** memit_aug fixes ≥ 35% of them, at least 15 points more than memit.
+4. **Neither arm composes:** each fixes ≤ 10% of two-hop targets (direct right, two-hop wrong, in this pipeline's unedited run).
+5. **Neither arm beats gated retrieval** on train, paraphrase or held-out accuracy.
+
+**Deviation, made before any phase 9 dev or test result** (NOTES.md, "Phases 8–9 — API builds and reaper"):
+
+- **What failed:** MEMIT's residual-stream target can't be delivered in Gemma 3. Every MLP output passes through a post-feedforward RMSNorm, whose output size is bounded, while the residual stream after layer 16 has norms in the tens of thousands. The 3-fact smoke test needed per-layer residual steps of 4,000–20,000, and the norm inversion had a relative error of about 0.9.
+- **Replacement:** each fact gets one change per layer, on the down_proj outputs of all 5 layers. They are optimized jointly, with weight decay summed over the layers so the change is shared out. The layers are then solved in order, as before.
+- **Unchanged:** the arms, tuning, selection rule and predictions.
+
+## Phase 9 — results (dev sweep only: neither arm reached the test)
+
+Dev sweep on the phase 3 split: 129 facts; held-out drift on 250 questions; `memit.py dev` → `runs/gemma3-4b-memit/dev_sweep.csv`, log `runs/gemma3-4b-memit-dev.log`.
+
+- **Floor:** 9.2%, the mean of 3 random 10⁻⁶ changes to all 5 layers (10.4%, 9.2%, 8.0%).
+- **Drift limit:** floor + 5 = 14.2%.
+
+| arm | λ | edit | para | held-out drift | train-right drift |
+|---|---|---|---|---|---|
+| memit | 10² | 68.2% | 27.9% | 25.6% | 15.7% |
+| memit | 10³ | 60.5% | 29.5% | 30.0% | 15.7% |
+| memit | 10⁴ | 77.5% | 32.0% | 21.2% | 9.1% |
+| memit | 10⁵ | 39.5% | 20.5% | 16.4% | 6.6% |
+| memit_aug | 10² | 77.5% | 64.8% | 23.6% | 14.0% |
+| memit_aug | 10³ | 73.6% | 67.2% | 23.2% | 15.7% |
+| memit_aug | 10⁴ | 79.1% | 63.1% | 24.8% | 14.9% |
+| memit_aug | 10⁵ | 70.5% | 54.9% | 19.2% | 10.7% |
+| *phase 5, L12 (the tested edit)* | 10⁴ | 59.7% | 15.6% | 13.6% (floor 9.6%) | 8.3% |
+| *phase 5, L16* | 10³ | 72.1% | 32.0% | 17.6% (floor 7.9%) | 9.1% |
+
+**Outcome: the pre-registered rule stops both arms.** No λ keeps held-out drift within 14.2%. The lowest values are 16.4% (memit at λ 10⁵, where edit success has fallen to 39.5%) and 19.2% (memit_aug at λ 10⁵). As pre-registered, an arm with no λ inside the limit isn't tested. **Predictions 1–5 therefore have no test result.** The λ grid wasn't extended after seeing this, because that would mean tuning past the pre-registered plan.
+
+(`memit.py select` first printed the floor as "nan%": pandas reads the arm name "null" as a missing value. That is fixed, and with the right floor the outcome is the same, since no row was within any limit below 16.4%.)
+
+**What the dev numbers point to** (dev proxies, not scored as predictions):
+
+- **Collateral rose rather than fell** (against prediction 1's direction). The best memit setting drifts 21.2%, against phase 5 L12's 13.6%. λ barely controls it: across 10²–10⁴, drift stays at 21–30% while edit success holds. At 10⁵ the edit collapses before drift reaches the limit.
+- **memit alone transfers to 32% of paraphrases** (prediction 2 said ≤ 25%). Phase 5's single L16 edit already reached that on dev (32.0%), so spreading over layers adds about what editing a later layer adds.
+- **Reworded keys roughly double transfer** (prediction 3's direction): memit_aug 55–67% against memit 21–32%. But the rewordings are near-copies of the paraphrases (MiniLM cosine):
+
+  | | cos(rewording, test paraphrase), median | the closer of each question's 2 | share ≥ 0.95 | cos(paraphrase, original), median |
+  |---|---|---|---|---|
+  | dev (`rewordings_trivia.csv`, 244) | 0.942 | 0.960 | 45.1% | 0.945 |
+  | test (`rewordings_trivia_v2.csv`, 229) | 0.923 | 0.936 | 30.1% | 0.930 |
+
+  The extra keys sit about as close to the paraphrases as the paraphrases sit to the original. The gain is coverage of wording, the same mechanism as retrieval.
+
+### Findings
+
+29. **Spreading the edit over 5 layers raised collateral in Gemma 3 4B, and λ can't bring it down without killing the edit.** Every setting drifts 16–30% on held-out questions, against a 9.2% floor. A likely cause, not tested: each fact's change is up to 4 ‖m‖ at each of 5 layers, and it spills onto the prompt's other tokens. Phase 5's diagnosis found that spillover was the main source of drift, and the covariance only constrains directions common in ordinary text.
+30. **Extra keys buy paraphrase coverage the way retrieval does, not a more usable fact.** Two automatic rewordings per question double dev paraphrase transfer, but they nearly duplicate the paraphrases. Whether any of this helps two-hop use wasn't measured, because no setting passed the drift rule.
+
+### What phases 5 and 9 mean together
+
+Both weight-edit attempts end in the same place: a lookup keyed on wording, with collateral on unrelated questions that can't be gated. Retrieval with the 0.7 gate remains the better store for corrected facts in this model. Its known weak spot is near-duplicate questions (phase 8).
+
+### Phase 9 caveats
+
+- **Not standard MEMIT.** Gemma's post-norm made residual targets infeasible (see the deviation above), so this is per-layer down_proj targets solved in sequence. A residual-target MEMIT on a model without post-norm could behave differently.
+- **4-point λ grid, fixed in advance.** Larger λ, a smaller clamp, or editing at the subject token weren't tried.
+- **Dev size:** 129 facts. Held-out drift is on 250 questions, so its standard error is about ±2.5 points.
+
 ## Where this goes next
 
-This experiment is one slice of a longer arc. The two-track experiment below is done (see [Phase 3](#phase-3--two-track-memory-corrections-vs-lessons)), and so are the gate replication and placebo test ([Phase 4](#phase-4--results)). Candidates now:
+This experiment is one slice of a longer arc. Done so far:
 
-- **Weight editing (ROME/MEMIT)** on the same failures: write the 119 corrections into the weights and measure the same fixed/broke counts, plus paraphrase transfer and collateral damage on held-out. It's the direct comparison with gated retrieval, and it's the only option here that changes what the model knows.
-- **A fact-use test** (two-hop or inverse questions) for whether either method gives transfer beyond lookup.
-- **A gate stress test** on near-duplicate questions with different answers.
+- the two-track experiment below ([Phase 3](#phase-3--two-track-memory-corrections-vs-lessons));
+- the gate replication and placebo test ([Phase 4](#phase-4--results));
+- single-layer weight editing ([Phase 5](#phase-5--results));
+- the two-hop fact-use test ([Phase 6](#phase-6--results));
+- the chain prompt ([Phase 7](#phase-7--results));
+- the near-duplicate gate stress test ([Phase 8](#phase-8--results));
+- multi-layer editing, stopped at dev ([Phase 9](#phase-9--results-dev-sweep-only-neither-arm-reached-the-test)).
+
+Candidates now (none started; each needs a go-ahead):
+
+- **A gate that checks fit, not just similarity.** Phase 8's near-duplicates are retrieval's one demonstrated harm. Options: a cross-encoder or the model itself judging "does this stored correction answer this question?", or an answer-type check. Score on phase 8's 63 gated items (should block) and phase 4's paraphrases (should keep).
+- **A cleaner near-duplicate set.** Keep only items with cos ≥ 0.8 to their source, and check B by a second model, so the gate question rests on more than 63 items.
+- **Weight editing, if it's worth one more try:** edit at the subject's last token instead of "?", with a smaller clamp and λ above 10⁵. That would be a new pre-registered sweep. Phases 5 and 9 both point to a wording-keyed lookup with ungateable collateral, so this has the lowest expected value of the three.
 
 ### The immediate next experiment — two-track memory (correction + principle)
 
@@ -361,3 +789,33 @@ Phase 4:
 - `questions_trivia_v2.csv`, `questions_trivia_v2_holdout.csv`, `questions_trivia_v2_paraphrase.csv`: fresh 250 / 250 / 235 (seed 1)
 - `runs/gemma3-4b-phase4/`: fresh `corrections.csv` (119), `{train,paraphrase,holdout}_{off,corrections,gated}.csv`, `*_pairs.csv`
 - `runs/gemma3-4b-placebo/`: `holdout_placebo_{lorem,random}.csv` and pairs, against the phase 3 correction store
+
+Phase 5:
+
+- `weight_edit.py`: dequantize, covariance, deltas, the closed-form edit, the proxies (`dev`) and the one-shot test (`test`). Caches in `runs/gemma3-4b-edit/cache/` are gitignored, at 420 MB per covariance.
+- `select_edit.py`: the selection rule, applied to `runs/gemma3-4b-edit/dev_sweep.csv`. Its output is in `selection.txt`.
+- `analyze_phase5.py` → `runs/gemma3-4b-edit/analysis.md`
+- `runs/gemma3-4b-edit/`:
+  - `{train,paraphrase,holdout}_{off,edited,placebo}.csv` and `*_pairs.csv`;
+  - `placebo_targets.csv`;
+  - the logs `dev_sweep1.log`, `dev.log`, `dev_L12_16.log`, `dev_L16_1e5.log`, `test*.log`.
+
+Phase 6:
+
+- `build_twohop.py` → `questions_twohop.csv`, `questions_twohop_direct.csv` (114 items), `questions_twohop_rejected.csv` (5)
+- `run_phase6.py` (retrieval and weights arms, resumable); `analyze_phase6.py` → `runs/gemma3-4b-twohop/analysis.md`
+- `runs/gemma3-4b-twohop/` (retrieval arms, int8) and `runs/gemma3-4b-twohop-edit/` (weights arms, dequantized)
+
+Phases 7 and 8:
+
+- `run_phase78.py` (resumable); `analyze_phase78.py [7] [8]` → `runs/gemma3-4b-chain/analysis.md`, `runs/gemma3-4b-neardup/analysis.md`
+- `agent.py`: `CHAIN_INSTRUCTION`, `build_prompt(style="chain")`, `final_answer()`; `evaluate.py --style chain`, `--retrieve-by`
+- `runs/gemma3-4b-chain/`: `twohop_{off,gated,oracle}_chain.csv`; log `runs/gemma3-4b-phase78.log`
+- `build_neardup.py` → `questions_neardup.csv` (118), `questions_neardup_rejected.csv` (1)
+- `runs/gemma3-4b-neardup/`: `neardup_{off,corrections,gated}.csv` and pairs, `neardup_sims.csv` (per-item cosine, gate, copy); log `runs/gemma3-4b-phase8.log`
+
+Phase 9:
+
+- `memit.py` (`dev`, `select`, `test`; design in its docstring); `weight_edit.Editor(layers=...)`
+- `build_rewordings.py` → `rewordings_trivia.csv` (dev, 244) and `rewordings_trivia_v2.csv` (test, 229)
+- `runs/gemma3-4b-memit/dev_sweep.csv`; logs `runs/gemma3-4b-memit-dev.log`, `runs/memit_smoke{,2,3}.log`

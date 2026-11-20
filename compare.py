@@ -50,7 +50,8 @@ def compare(off_path, on_path, out=None, label=""):
         for _, r in rows.iterrows():
             print(f"  {r['question'][:70]}")
             print(f"    off: {str(r['answer_off'])[:50]!r}  on: {str(r['answer_on'])[:50]!r}"
-                  f"  expected: {str(r['expected_answer_on']).split('|')[0]}  lessons: {r['retrieved_lesson_ids_on']}"
+                  f"  expected: {str(r['expected_answer_on']).split('|')[0]}"
+                  + (f"  lessons: {r['retrieved_lesson_ids_on']}" if "retrieved_lesson_ids_on" in r else "")
                   + (f"  corrections: {r['retrieved_correction_ids_on']}" if "retrieved_correction_ids_on" in r else ""))
 
     if out:

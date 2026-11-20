@@ -1,0 +1,229 @@
+id,timestamp,question,answer,correct,expected_answer,retrieved_lesson_ids,retrieved_correction_ids,notes,category
+1,2026-11-19T23:42:19.188188+00:00,"In which Massachusetts town was the 19th century American poet who wrote over 1,000 poems published between 1890 and 1945 after her death born?","Entity: Emily
+Answer: Amherst",1,Amherst,,,string_match,twohop
+2,2026-11-19T23:42:26.256397+00:00,"What is the nationality of the creator of the fictional detective Jack Frost, played on TV by David Jason?","Entity: David Jason
+Answer: British",1,British,,,string_match,twohop
+3,2026-11-19T23:42:33.583469+00:00,"What is the capital of the country bordered by Latvia to the north, Ukraine to the south, and Poland to the west?","Entity: Lithuania
+Answer: Vilnius",0,Minsk,,,string_match,twohop
+4,2026-11-19T23:42:44.552806+00:00,In what city is the series about FBI agent Don Eppes and his mathematical genius brother Charlie set?,"Entity: Quincy
+Answer: Quincy, Massachusetts",0,Los Angeles|LA|L.A.,,,alias,twohop
+5,2026-11-19T23:42:59.922181+00:00,In what year was the device developed at the Bell Telephone Company under the direction of Dr William Shockley invented?,"Entity: Transistor
+Answer: 1947",1,1947,,,numeric,twohop
+6,2026-11-19T23:43:10.303140+00:00,Where was the actress who played 'Aunty Entity' in the film 'Mad Max Beyond the Thunderdome' born?,"Entity: Sigourney
+Answer: Canada",0,"Nutbush, Tennessee|Nutbush",,,alias,twohop
+7,2026-11-19T23:43:18.352511+00:00,In which country is the bay at the mouth of which the Aran Islands are located?,"Entity: Ireland
+Answer: Ireland",1,Ireland|Éire,,,alias,twohop
+8,2026-11-19T23:43:25.871887+00:00,In what city were Dear Abby and Ann Landers born?,"Entity: Pittsburgh
+Answer: Pennsylvania",0,"Sioux City|Sioux City, Iowa",,,alias,twohop
+9,2026-11-19T23:43:37.110283+00:00,In what year did the US president Anthony Hopkins played in a film whose title was simply his name resign from office?,"Entity: Lincoln
+Answer: 1865",0,1974,,,numeric,twohop
+10,2026-11-19T23:43:46.333479+00:00,In which French town was the French prime minister executed for treason in 1945 born?,"Entity: Charles de Gaulle
+Answer: Paris",0,Châteldon|Chateldon,,,alias,twohop
+11,2026-11-19T23:43:58.945104+00:00,In what year was the cooperative movement founded in the town in Greater Manchester where the TV series is set?,"Entity: Coronation Street
+Answer: 1960",0,1844,,,numeric,twohop
+12,2026-11-19T23:44:10.293909+00:00,Until what year was the place where the first World Beach Volleyball Championships arranged by the Fdracion International del Volleyball in 1987 was played the capital of Brazil?,"Entity: Brasilia
+Answer: 1987",0,1960,,,numeric,twohop
+13,2026-11-19T23:44:17.170115+00:00,What is the capital of the country where detectors at a nuclear plant first alerted the world to the Chernobyl disaster?,"Entity: Ukraine
+Answer: Kyiv",0,Stockholm,,,string_match,twohop
+14,2026-11-19T23:44:24.057722+00:00,"The Lumberjack World Championships, which include the sport in which your opponent tries to knock you off a floating spinning log, are held every year in which U.S. state?","Entity: Minnesota
+Answer: Minnesota",0,Wisconsin|WI,,,alias,twohop
+15,2026-11-19T23:44:32.723024+00:00,"In which cycling race does the overall leader wear a jersey of the colour of the property ""Coventry Street"" in the board game Monopoly?","Entity: Tour de France
+Answer: Yellow",0,Tour de France|Le Tour de France,,,alias,twohop
+16,2026-11-19T23:44:40.390260+00:00,In which city was the actor who played the title role in the TV western series Bronco born?,"Entity: John
+Answer: Los Angeles",0,New York City|New York|NYC,,,alias,twohop
+17,2026-11-19T23:44:47.231965+00:00,The city that was the capital of Pakistan between 1959 and 1967 while Islamabad was being built is located in which province?,"Entity: Karachi
+Answer: Sindh",0,Punjab,,,string_match,twohop
+18,2026-11-19T23:44:53.858379+00:00,In which country is the town or city where most of the Bowie knives were made?,"Entity: Switzerland
+Answer: Switzerland",0,England|United Kingdom,,,alias,twohop
+19,2026-11-19T23:45:00.632064+00:00,What is the nationality of the first presenter of Room 101 when it opened in 1994?,"Entity: Winston
+Answer: British",1,British|English,,,alias,twohop
+20,2026-11-19T23:45:09.977505+00:00,Who plays the character who buys the car from garage owner Mr Coggins and rebuilds it in the 1968 film Chitty Chitty Bang Bang?,"Entity: Dick Van Dyke
+Answer: Julie Andrews",0,Dick Van Dyke|Richard Van Dyke,,,alias,twohop
+21,2026-11-19T23:45:17.576568+00:00,The activity paired with 'house' among the ancient Old Norse sources of the word 'husband' has its earliest known origins in which region?,"Entity: Scandinavia
+Answer: Northern Europe",0,Fertile Crescent|Mesopotamia,,,alias,twohop
+22,2026-11-19T23:45:28.228220+00:00,In what year did the western airliner that was the broad equivalent of Russia's TU-144 plane retire from service?,"Entity: Boeing
+Answer: 2003",1,2003,,,numeric,twohop
+23,2026-11-19T23:45:35.498152+00:00,In which country was the model declared Model of the Millennium by Vogue editor Anna Wintour born?,"Entity: Kate
+Answer: France",0,Brazil|Brasil,,,alias,twohop
+24,2026-11-19T23:45:46.964755+00:00,Which actor portrayed John Lennon in the 2009 biopic directed by Sam Taylor-Wood about the early life of John Lennon?,"Entity: Jamie Bell
+Answer: Kenneth Branagh",0,Aaron Johnson|Aaron Taylor-Johnson,,,alias,twohop
+25,2026-11-19T23:45:58.668397+00:00,In which year was the French fashion designer who regularly co-hosted UK TV’s ‘Eurotrash’ born?,"Entity: Jean Paul
+Answer: 1943",0,1952,,,numeric,twohop
+26,2026-11-19T23:46:06.325239+00:00,The word that the A stands for in DEFRA is the last word in that department's name. DEFRA is part of the government of which country?,"Entity: Agriculture
+Answer: United Kingdom",1,United Kingdom|UK|United Kingdom of Great Britain and Northern Ireland,,,alias,twohop
+27,2026-11-19T23:46:13.459448+00:00,Where was the internationally renowned Amal Clooney born?,"Entity: Amal
+Answer: Beirut",1,Beirut|Bayrut|Beyrouth,,,alias,twohop
+28,2026-11-19T23:46:23.700378+00:00,Where on a fish is the small club used for killing landed fish typically used?,"Entity: Gilling
+Answer: On the tongue.",0,Head,,,string_match,twohop
+29,2026-11-19T23:46:31.124074+00:00,What is the nationality of the person to whom Bob Dylan was supposed to be singing It Ain’t Me Babe?,"Entity: Woody Guthrie
+Answer: American",1,American|USA|United States|U.S.,,,alias,twohop
+30,2026-11-19T23:46:40.679158+00:00,Who directed the 1969 film that concerns the dance marathon competitions during the Depression Era in America?,"Entity: Arthur Penn
+Answer: He did.",0,Sydney Pollack,,,string_match,twohop
+31,2026-11-19T23:46:47.882300+00:00,Patusnaya and mallasol are types of a food traditionally harvested from which sea?,"Entity: Shrimp
+Answer: Atlantic",0,Caspian Sea|the Caspian Sea,,,alias,twohop
+32,2026-11-19T23:46:54.712660+00:00,In which city was the company that manufactured the consumer electronics product sharing its name with the common name of the fruit Rubus Fructicosis headquartered?,"Entity: Apple
+Answer: Cupertino",0,"Waterloo, Ontario|Waterloo",,,alias,twohop
+33,2026-11-19T23:47:02.233552+00:00,"What is the nationality of the painter of 'Gypsy Girl' found in the Louvre, Paris?","Entity: Renoir
+Answer: French",0,Dutch,,,string_match,twohop
+34,2026-11-19T23:47:13.461607+00:00,In what year was the famous novel to which Men Against the Sea and Pitcairn's Island were two sequels first published?,"Entity: MobyDick
+Answer: 1851",0,1932,,,numeric,twohop
+35,2026-11-19T23:47:22.369364+00:00,"What is the capital of the country that shares a 530 km border with Saudi Arabia on the west, south, and southeast, a 450 km border with Oman on the southeast and northeast, and a smaller border with Qatar in the northwest?","Entity: Yemen
+Answer: Sana'a",0,Abu Dhabi,,,string_match,twohop
+36,2026-11-19T23:47:30.009289+00:00,Which famous fictional detective was created by the Scottish author who died in 1930 and had Ignatius as one of his christian names?,"Sherlock Holmes
+Answer: Sherlock Holmes",1,SHERLOCK HOLMES|Sherlock Holmes,,,alias,twohop
+37,2026-11-19T23:47:38.763558+00:00,In which city was the singer songwriter whose name is an anagram of O UGLY NINE born?,"Entity: Leonard
+Answer: New York City",0,Toronto,,,string_match,twohop
+38,2026-11-19T23:47:47.725156+00:00,A dish of pickled herring fillets wrapped around an onion or gherkin is traditionally associated with which country?,"Entity: Smalahove
+Answer: Norway",0,Germany|Deutschland,,,alias,twohop
+39,2026-11-19T23:47:57.032739+00:00,"According to the Old Testament, how old was the first person to have a hangover when the flood began?","Entity: Noah
+Answer: 310",0,600|600 years old|600 years,,,alias,twohop
+40,2026-11-19T23:48:07.810374+00:00,"In what year was the nine square mile area of West Yorkshire, between Wakefield, Morley and Rothwell, famous for growing a certain vegetable, granted Protected Designation of Origin status?","Entity: Spud
+Answer: 1995",0,2010,,,numeric,twohop
+41,2026-11-19T23:48:14.293325+00:00,What is the capital of the European country where UEFA was founded in 1954?,"Entity: Brussels
+Answer: Belgium",0,Bern|Berne,,,alias,twohop
+42,2026-11-19T23:48:25.958151+00:00,"Approximately how thick, in kilometers, is the part of the earth's structure that lies between the outer core and the crust?","Entity: Mantle
+Answer: 2,900",1,"2900|2,900|2900 km|2,900 km",,,alias,twohop
+43,2026-11-19T23:48:31.458190+00:00,Who wrote the book in which the object used as the ball in the game of croquet in 'Alice In Wonderland' appears?,"Entity: Lewis
+Answer: Carroll",1,Lewis Carroll|Charles Lutwidge Dodgson|Charles Dodgson|Carroll,,,alias,twohop
+44,2026-11-19T23:48:38.622659+00:00,In which U.S. state was the first name of the jazz trombonist Kid Ory born?,"Entity: Kid Ory
+Answer: Louisiana",1,Louisiana|LA,,,alias,twohop
+45,2026-11-19T23:49:09.080937+00:00,"A Brecon Buff is a variety of this creature. In the 2019 film Captain Marvel, a cat is given this creature's name. What alien species is that cat revealed to be?","Entity: Krypto
+Answer: Kryptonian",0,Flerken,,,string_match,twohop
+46,2026-11-20T01:48:57.609714+00:00,Who founded the company that produced the Ford automobile that came in any color you want as long as it was black?,"Entity: Henry Ford
+Answer: Henry Ford",1,Henry Ford,,,string_match,twohop
+47,2026-11-20T01:49:10.198177+00:00,"In which English town was the British paralympian swimmer who won 2 gold, a silver and a bronze in the 2012 Para Olympics born?","Entity: Steven
+Answer: Stoke-on-Trent",0,Walsall,,,string_match,twohop
+48,2026-11-20T01:49:20.296410+00:00,In what year was the website Julie Pankhurst made a fortune creating sold to ITV?,"Entity: Julie Pankhurst
+Answer: 2008",0,2005,,,numeric,twohop
+49,2026-11-20T01:49:28.452604+00:00,"Which president signed the Homestead Act, which allowed a settler to claim an area of land of 160 acres (half a mile square)?","Entity: Abraham
+Answer: Ulysses S. Grant",0,Abraham Lincoln|Abe Lincoln|Lincoln,,,alias,twohop
+50,2026-11-20T01:49:33.149107+00:00,In which U.S. state is the northernmost of the ten most populated cities located?,"Entity: Alaska
+Answer: Alaska",0,Michigan,,,string_match,twohop
+51,2026-11-20T01:49:40.586612+00:00,In what year was the person who designed the Queen's wedding dress born?,"Entity: Charles
+Answer: 1907",0,1901,,,numeric,twohop
+52,2026-11-20T01:49:48.826467+00:00,"Who was the wife of the last king of Troy, according to Greek mythology?","Entity: Helen
+Answer: She was abducted by Paris.",0,Hecuba|Hekabe|Hekuba,,,alias,twohop
+53,2026-11-20T01:49:57.899700+00:00,In what year was the legless World War II fighter pilot who was detained in German prisoner of war camps for 4 years born?,"Entity: Richard Bong
+Answer: 1909",0,1910,,,numeric,twohop
+54,2026-11-20T01:50:03.882041+00:00,"In ‘Follow That Camel’, the fourteenth Carry On film, Sid James was replaced by a US actor. In which borough of New York City was that actor born?","Entity: Peter
+Answer: Brooklyn",1,Brooklyn|Kings County,,,alias,twohop
+55,2026-11-20T01:50:09.600867+00:00,"Where was the composer of """"The L'Arlesienne Suite"""" born?","Entity: Claude
+Answer: France",0,Paris,,,string_match,twohop
+56,2026-11-20T01:50:19.930457+00:00,In which year of the decade of the 17th Century in which the new model army was created was the Peace of Westphalia signed?,"Entity: Westphalia
+Answer: 1648",1,1648,,,numeric,twohop
+57,2026-11-20T01:50:28.299191+00:00,Which British rock band scored a 1964 transatlantic number-one hit with the song named for the house in New Orleans that has been the ruin of many a poor boy?,"Entity: The Beatles
+Answer: They did.",0,The Animals,,,string_match,twohop
+58,2026-11-20T01:50:41.198998+00:00,Which film series used the National Trust property in Wiltshire once owned by William Henry Fox-Talbot the pioneer of photography as a filming location for Hogwarts?,"Entity: Harry Potter
+Answer: Harry Potter and the Philosopher's Stone",1,Harry Potter|Harry Potter series|Harry Potter films,,,alias,twohop
+59,2026-11-20T01:50:48.509633+00:00,In which city was the television personality known as the 'Idiot Abroad' born?,"Entity: David Frost
+Answer: London",0,Manchester,,,string_match,twohop
+60,2026-11-20T01:50:54.122513+00:00,Which country is the traditional puppet show featuring the dog in the Punch and Judy shows most closely associated with?,"Entity: Italy
+Answer: Italy",0,England|United Kingdom|UK|Great Britain|Britain,,,alias,twohop
+61,2026-11-20T01:51:00.079916+00:00,"Which American author is considered the creator of the literary genre devoted to the science Sir Arthur Conan Doyle's creation, Sherlock Holmes, practises?","Entity: Edgar
+Answer: Poe",0,Edgar Allan Poe|E. A. Poe,,,alias,twohop
+62,2026-11-20T01:51:06.452960+00:00,"The title given to the eldest son of a Russian Czar was borne by the only son of which Russian emperor, whose family was executed by the Bolsheviks in 1918?","Entity: Alexei
+Answer: Grand Duke",0,Nicholas II|Nikolai II|Nikolay II|Tsar Nicholas II|Czar Nicholas II|Nicholas II of Russia,,,alias,twohop
+63,2026-11-20T01:51:12.076067+00:00,What is the nationality of the footballer who shared his surname with a biblical character and scored the deciding goal in the 1967 FA Cup Final?,"Entity: Charlton
+Answer: English",1,English,,,string_match,twohop
+64,2026-11-20T01:51:17.577811+00:00,In which country is the car manufacturer that produces the Jimmy model headquartered?,"Entity: Volvo
+Answer: Sweden",0,Japan,,,string_match,twohop
+65,2026-11-20T01:51:23.196346+00:00,Which city was the headquarters of the national airline that announced it had gone bankrupt on November 7?,"Entity: American
+Answer: Philadelphia",0,Brussels|Bruxelles|Brussel,,,alias,twohop
+66,2026-11-20T01:51:33.451557+00:00,Into which river does the river on which the city of Norwich stands flow?,"Entity: Thames
+Answer: It flows into the North Sea.",0,Yare|River Yare,,,alias,twohop
+67,2026-11-20T01:51:38.919128+00:00,Which country has as its official language the language other than English that Bill Clinton is fairly fluent in?,"Entity: France
+Answer: France",0,Germany|Deutschland,,,alias,twohop
+68,2026-11-20T01:51:47.438481+00:00,In which city was the US comedian/actor credited with saying 'A man is only as old as the woman he feels' born?,"Entity: George Burns
+Answer: New York City",1,New York City|New York|NYC,,,alias,twohop
+69,2026-11-20T01:51:56.763235+00:00,"Who wrote the book featuring Matilda’s teacher, who adopted her at the end of the book?","Entity: Roald Dahl
+Answer: Roald Dahl",1,Roald Dahl,,,string_match,twohop
+70,2026-11-20T01:52:05.310557+00:00,Who wrote the novel that was adapted into the serialised TV drama whose title is a Lesbian slang term for oral sex?,"Entity: Neil Gaiman
+Answer: Zadie Smith",0,Sarah Waters,,,string_match,twohop
+71,2026-11-20T01:52:13.589698+00:00,Who originally played the computer in the sitcom Red Dwarf?,"Entity: Norman Lovett
+Answer: Craig Charles",0,Norman Lovett,,,string_match,twohop
+72,2026-11-20T01:52:18.826164+00:00,In which country are the mountains where the Loire river rises located?,"Entity: France
+Answer: France",1,France,,,string_match,twohop
+73,2026-11-20T01:52:25.061996+00:00,"Which ancient city on the Gulf of Tunis was traditionally founded by settlers from the ancient civilization centred in the north of ancient Canaan, with its heartland along the coastal regions of modern day Lebanon, Syria and Israel?","Entity: Carthage
+Answer: Phoenician",0,Carthage|Carthago,,,alias,twohop
+74,2026-11-20T01:52:34.071953+00:00,Who created the character that Professor Cuthbert Calculus is an associate of?,"Entity: Stan Lee
+Answer: Marvel Comics",0,Hergé|Georges Remi|Georges Prosper Remi,,,alias,twohop
+75,2026-11-20T01:52:43.266145+00:00,"The No. 617 Squadron of the Royal Air Force which operated with the motto """"After me, the flood"""" is known for its attacks on what type of installations during WWII? The Three Gorges example of these installations is located in which country?","Entity: Dams
+Answer: Hydroelectric dams",0,China|People's Republic of China,,,alias,twohop
+76,2026-11-20T01:52:49.961357+00:00,What is the surname of the chauffeur who works for the character whose surname is Lady Penelope's in the television series 'Thunderbirds'?,"Entity: Keaton
+Answer: Smith",0,Parker,,,string_match,twohop
+77,2026-11-20T01:52:56.307530+00:00,In which city is the venue that singer and musician Bono called ‘Rock and roll’s great cathedral’ located?,"Entity: Dublin
+Answer: Ireland",0,New York City|New York|NYC,,,alias,twohop
+78,2026-11-20T01:53:04.571728+00:00,On what scientific chart are both of the two metals that make up brass listed?,"Entity: Periodic Table
+Answer: Atomic Number",0,Periodic Table|Periodic Table of Elements|periodic table,,,alias,twohop
+79,2026-11-20T01:53:12.364516+00:00,Which English word for isolating people to stop disease spread derives from the Italian phrase meaning the length of the waiting period Venice imposed in 1403 on those wishing to enter the city to see if they would develop the plague?,"Entity: Quarantine
+Answer: Isolation",0,quarantine,,,string_match,twohop
+80,2026-11-20T01:53:19.711256+00:00,In which U.S. state is the city that shares its name with the American term for what the British call a 'sofa' located?,"Entity: Georgia
+Answer: Georgia",0,Iowa,,,string_match,twohop
+81,2026-11-20T01:53:27.060722+00:00,Which annual meteor shower takes its name from the constellation associated with the star sign of the date of the Battle of Waterloo?,"Entity: Perseid
+Answer: August",0,Geminids|Geminid|Geminids meteor shower,,,alias,twohop
+82,2026-11-20T01:53:32.660724+00:00,What is the capital of the country where the only Semitic language that is an official language of the EU is the national language?,"Entity: Israel
+Answer: Jerusalem",0,Valletta,,,string_match,twohop
+83,2026-11-20T01:53:38.353808+00:00,The shipping area known as Fitzroy until 2002 was named after a headland on the Atlantic coast of which country?,"Entity: Dublin
+Answer: Ireland",0,Spain,,,string_match,twohop
+84,2026-11-20T01:53:46.044542+00:00,What company makes the cereal that is kid-tested and mother-approved?,"Entity: Kellogg’s
+Answer: Cereal",0,"General Mills|General Mills, Inc.",,,alias,twohop
+85,2026-11-20T01:53:52.144045+00:00,"Which amendment to the United States Constitution protects freedom of the press for the profession of Jean-Paul Marat, noted for his involvement in the French Revolution at the end of the 18th century?","Entity: First
+Answer: First Amendment",1,First Amendment|1st Amendment|Amendment I,,,alias,twohop
+86,2026-11-20T01:53:58.001900+00:00,In which English city was the author of the 1995 best seller that argues our universe is part of a super universe born?,"Entity: Stephen
+Answer: London",0,Oxford,,,string_match,twohop
+87,2026-11-20T01:54:05.739982+00:00,"Which bartender is credited with creating the cocktail made from rum, curacao and lime juice?","Entity: Harry
+Answer: Daiquiri",0,Victor Bergeron|Trader Vic|Victor J. Bergeron,,,alias,twohop
+88,2026-11-20T01:54:15.774228+00:00,In what year was the Charles Dickens novel in which Codlin and Short are Punch and Judy men first published in book form?,"Entity: Dickens
+Answer: 1837",0,1841,,,numeric,twohop
+89,2026-11-20T01:54:22.053519+00:00,"In which English city was the group that had mid-'90s top ten hits with 'Sanstorm', 'Walkaway' and 'Flying' formed?","Entity: Manchester
+Answer: England",0,Liverpool,,,string_match,twohop
+90,2026-11-20T01:54:28.228199+00:00,What is the capital of the country where the language Henrik Ibsen wrote his plays in is the official language?,"Entity: Norway
+Answer: Oslo",0,Copenhagen|København,,,alias,twohop
+91,2026-11-20T01:54:35.897801+00:00,"In which U.S. state was the artist featured on Puff Daddy's ""Can't Hold Me Down"" born?","Entity: Prince
+Answer: Minnesota",0,Florida|FL,,,alias,twohop
+92,2026-11-20T01:54:49.192659+00:00,Which Greek sculptor is said to have created the one of the seven wonders of the ancient world thought to have straddled the harbour of a Greek island?,"Entity: Phidias
+Answer: The Statue of Zeus at Olympia",0,Chares of Lindos|Chares,,,alias,twohop
+93,2026-11-20T01:54:57.169292+00:00,In what U.S. city was the second basketball player to score over 80 points in an NBA game in 2006 born?,"Entity: Kobe
+Answer: Los Angeles",0,Philadelphia,,,string_match,twohop
+94,2026-11-20T01:55:05.127784+00:00,The hourglass-shaped women's garment made using whalebone became a defining fashion symbol during the reign of which British queen?,"Entity: Corset
+Answer: Victoria",1,Victoria|Queen Victoria,,,alias,twohop
+95,2026-11-20T01:55:13.114192+00:00,In which city was the Joan whose career revived in Whatever Happened to Baby Jane born?,"Entity: Jessica
+Answer: New York City",0,San Antonio,,,string_match,twohop
+96,2026-11-20T01:55:23.997338+00:00,"What is the scientific term for the common feature of komodo dragons, aphids, and whiptail lizards?","Entity: Symbiosis
+Answer: Endosymbiosis",0,Parthenogenesis|parthenogenesis,,,alias,twohop
+97,2026-11-20T01:55:30.746856+00:00,The traditional technical term for a road/paving granite block—incorrectly called a cobble or cobblestone—is alternatively called a 'Belgian block.' Which country does that alternative name refer to?,"Entity: Belgium
+Answer: Belgium",1,Belgium,,,string_match,twohop
+98,2026-11-20T01:55:37.092141+00:00,Which British prime minister was nicknamed the 'Milk Snatcher' for ending the free school milk program that used bottles of the size given out when free school milk was given out?,"Entity: Edward
+Answer: Heath",0,Margaret Thatcher|Margaret Hilda Thatcher|Baroness Thatcher,,,alias,twohop
+99,2026-11-20T01:55:45.050719+00:00,Which country was the author whose life is described by 'Give a year in the life of author H P Lovecraft' from?,"Entity: United States
+Answer: United States",1,United States|USA|U.S.,,,alias,twohop
+100,2026-11-20T01:55:50.660735+00:00,Who founded the retail chain whose mascot is the giraffe that Toys-r-us uses as its' mascot?,"Entity: Charles
+Answer: Melville",0,Charles Lazarus,,,string_match,twohop
+101,2026-11-20T01:55:56.831940+00:00,Which country recognizes the equipment-free sport that Ashok Das introduced to the British Army in 2005 as its national sport?,"Entity: Bhutan
+Answer: Bhutan",0,Bangladesh,,,string_match,twohop
+102,2026-11-20T01:56:03.968122+00:00,Which country did the rowers who received gold medals for the Women's coxless pair represent?,"Entity: Great Britain
+Answer: United Kingdom",1,Great Britain|United Kingdom|UK|Britain,,,alias,twohop
+103,2026-11-20T01:56:12.443616+00:00,"What is the name of the tune by William Croft for the hymn based on Psalm 90 by Isaac Watts, particularly associated with Remembrance Sunday?","Entity: Anthem
+Answer: ""For All Creation""",0,St. Anne|St Anne|Saint Anne,,,alias,twohop
+104,2026-11-20T01:56:17.532288+00:00,Which scientist's first law of motion is commonly known by the name of the physics term that refers to the largely prohibited selling method by which customers are said to have agreed to buy something unless they refuse unsolicited goods or services?,"Newton
+Answer: Inertia",0,Isaac Newton|Sir Isaac Newton|Newton,,,alias,twohop
+105,2026-11-20T01:56:23.717047+00:00,"In which country was the company that uses the advertising slogan ""Spend A Little, Live A Lot"" founded?","Entity: Nike
+Answer: United States",0,Germany|Deutschland,,,alias,twohop
+106,2026-11-20T01:56:30.816019+00:00,In which realm is the vast hall where the Norse gods live located?,"Entity: Asgard
+Answer: Nine Realms",0,Asgard|Ásgard,,,alias,twohop
+107,2026-11-20T01:56:36.675505+00:00,In which English county is the second largest bay in Britain located?,"Entity: Cheshire
+Answer: England",0,Lancashire,,,string_match,twohop
+108,2026-11-20T01:56:44.575600+00:00,Who created the person who taught Eliza Dolittle to be a lady?,"Entity: Shaw
+Answer: George Bernard Shaw",1,George Bernard Shaw|Bernard Shaw|G. B. Shaw,,,alias,twohop
+109,2026-11-20T01:56:50.166082+00:00,In which country was the old Waddington's game based on newspapers published?,"Entity: Australia
+Answer: Australia",0,United Kingdom|UK|Britain,,,alias,twohop
+110,2026-11-20T01:56:58.028286+00:00,Who stars as the vicar in the BBC2 comedy set around the church of St Saviours in the Marshes in Hackney?,"Entity: Matt Berry
+Answer: He does.",0,Tom Hollander|Thomas Hollander,,,alias,twohop
+111,2026-11-20T01:57:03.898925+00:00,In which English city was the early aviator who flew in a plane christened Jason born?,"Entity: Amelia
+Answer: Leicester",0,Kingston upon Hull|Hull,,,alias,twohop
+112,2026-11-20T01:57:09.426482+00:00,Where was the composer of the first ever concerto for tuba and orchestra born?,"Entity: Hugo
+Answer: Germany",0,"Down Ampney|Down Ampney, Gloucestershire",,,alias,twohop
+113,2026-11-20T01:57:15.316322+00:00,What is the most widely spoken language in the two countries that compete for the Lansdowne Cup in rugby union?,"Entity: Spanish
+Answer: Spanish",0,English|English language,,,alias,twohop
+114,2026-11-20T01:57:27.216400+00:00,In what year did the Arthur Miller play whose plot takes place entirely within the mind of a New York Jewish intellectual called Quentin premiere?,"Entity: Death of a Salesman
+Answer: 1949",0,1964,,,numeric,twohop

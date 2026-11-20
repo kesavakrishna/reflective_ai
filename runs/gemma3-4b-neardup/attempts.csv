@@ -1,0 +1,119 @@
+id,timestamp,question,answer,correct,expected_answer,retrieved_lesson_ids,retrieved_correction_ids,notes
+1,2026-11-20T09:44:30.776952+00:00,"Which 19th century English poet wrote over 1,000 poems which were published between 1890 and 1945, after her death?",Emily Dickinson,0,Christina Rossetti|Christina Georgina Rossetti,,1;36;113,alias
+2,2026-11-20T09:44:33.348824+00:00,"Who created the fictional detective Hercule Poirot, played on TV by David Suchet?",Agatha Christie,1,Agatha Christie,,,string_match
+3,2026-11-20T09:44:35.215338+00:00,"Which country is bordered by Poland to the north, Austria to the south, and Germany to the west?",Czechia,1,CZECH REPUBLIC|Czechia,,3;35;85,alias
+4,2026-11-20T09:44:38.347529+00:00,Name the tv series about FBI agent Fox Mulder and his partner Dana Scully,The X-Files,1,The X-Files|X-Files|The X Files,,,alias
+5,2026-11-20T09:44:40.237980+00:00,What was developed at the Bell Telephone Company under the direction of Dr. Claude Shannon?,Information theory,1,information theory,,5;20;4,string_match
+6,2026-11-20T09:44:42.189172+00:00,Who played 'Max Rockatansky' in the film 'Mad Max Beyond the Thunderdome'?,Mel Gibson,1,Mel Gibson,,6;20;9,string_match
+7,2026-11-20T09:44:44.623844+00:00,The city of San Francisco is located at the mouth of which bay?,San Francisco Bay,1,San Francisco Bay,,,string_match
+8,2026-11-20T09:44:46.522629+00:00,"What, if any, relationship was shared between Minneapolis and St. Paul?",Twin Cities,1,Twin Cities|Minneapolis–Saint Paul,,,alias
+9,2026-11-20T09:44:50.016969+00:00,Which US president did Daniel Day-Lewis play in a film whose title was simply his name?,Daniel Day-Lewis,0,Lincoln|Abraham Lincoln,,,alias
+10,2026-11-20T09:44:51.856666+00:00,Which Norwegian prime minister was executed for treason in 1945?,Carl Schmitt,0,Vidkun Quisling|Quisling,,10;54;93,alias
+11,2026-11-20T09:44:53.788981+00:00,In which town in Greater Manchester is the TV series Phoenix Nights set?,Stockport,0,BOLTON,,,string_match
+12,2026-11-20T09:44:56.798633+00:00,"In 1997, the Fdracion International del Volleyball arranged the first World Beach Volleyball Championships, which was played where?","Fort Lauderdale, Florida",0,"Los Angeles, California, USA|Los Angeles|Los Angeles, California|Los Angeles, USA|Los Angeles, United States",,12;118;107,alias
+13,2026-11-20T09:44:56.880764+00:00,The world was first aware of the Fukushima disaster after detectors were triggered at a nuclear plant in which country?,Japan,1,Japan,,13;78;17,string_match
+14,2026-11-20T09:44:58.901015+00:00,What is the name of the sport in which your opponent tries to knock you off a horse,Polo,0,Jousting,,,string_match
+15,2026-11-20T09:45:00.406631+00:00,"In the board game Monopoly, what is the colour of the property ""Oxford Street""?",RED,0,GREEN,,15;43;114,string_match
+16,2026-11-20T09:45:02.583781+00:00,Who played the title role in the TV western series Maverick,James Garner,1,James Garner|Jim Garner,,,alias
+17,2026-11-20T09:45:05.207763+00:00,Between 1959 and 1960 which city was the capital of Brazil (Brasilia was being built)?,Rio de Janeiro,1,RIO DE JANEIRO|Rio de Janeiro,,,alias
+18,2026-11-20T09:45:07.358614+00:00,In which town or city were most of the German knives made,Solingen,1,Solingen,,,string_match
+19,2026-11-20T09:45:09.315287+00:00,Who was the first presenter of Room 101 when it reopened in 2012?,Stephen Fry,0,Frank Skinner,,19;50;61,string_match
+20,2026-11-20T09:45:12.537298+00:00,In the 1968 film Chitty Chitty Bang Bang who plays the character who buys the car from garage owner Mr Coggins and rebuilds it?,Caractacus Potts,0,Dick Van Dyke|Richard Van Dyke,,20;66;6,alias
+21,2026-11-20T09:45:14.429220+00:00,The word hustings is derived from the ancient Old Norse meanings of 'house' and what activity?,Assembly,1,Assembly|Meeting,,21;111;83,alias
+22,2026-11-20T09:45:19.528631+00:00,Russia's TU-154 plane was the broad equivalent of which western airliner?,Boeing 737,0,Boeing 727|727,,22;67;64,alias
+23,2026-11-20T09:45:22.137840+00:00,Who was declared Designer of the Millennium by Vogue editor Anna Wintour?,Karl Lagerfeld,0,Coco Chanel|Gabrielle Chanel,,23;25;52,alias
+24,2026-11-20T09:45:23.545008+00:00,What is the title of the 2009 biopic film directed by Jean-Marc Vallée about the early life of Queen Victoria,Victoria,0,The Young Victoria|Young Victoria,,,alias
+25,2026-11-20T09:45:27.860077+00:00,Which French film director regularly co-hosted UK TV’s ‘Eurotrash’?,Jean-Paul GAULTIER,0,Antoine de Caunes,,25;61;85,string_match
+26,2026-11-20T09:45:29.370745+00:00,"In the acronym NATO, for what does the A stand?",Atlantic,1,Atlantic,,,string_match
+27,2026-11-20T09:45:32.171345+00:00,George Clooney is an internationally renowned?,Human rights lawyer,0,Actor,,27;61;70,string_match
+28,2026-11-20T09:45:34.792544+00:00,What is the small hook used for landing fish called,Lure hook,0,A gaff|gaff,,,alias
+29,2026-11-20T09:45:36.861891+00:00,To whom was Joan Baez supposed to be singing It Ain’t Me Babe,Bob Dylan,1,Bob Dylan|Robert Zimmerman,,,alias
+30,2026-11-20T09:45:40.708907+00:00,Which 1940 film concerns the Joad family during the Depression Era in America?,The Grapes of Wrath,1,THE GRAPES OF WRATH|The Grapes of Wrath,,,alias
+31,2026-11-20T09:45:42.148851+00:00,Cheddar and brie are types of what?,Cheese,1,Cheese,,,string_match
+32,2026-11-20T09:45:43.494595+00:00,What consumer electronics product shares its name with the common name of the fruit Malus domestica?,APPLE,1,APPLE|Apple,,32;87;66,alias
+33,2026-11-20T09:45:46.047207+00:00,"Who painted 'Mona Lisa' found in the Louvre, Paris?",Leonardo da Vinci,1,LEONARDO DA VINCI|Leonardo da Vinci|Leonardo,,33;84;27,alias
+34,2026-11-20T09:45:48.078841+00:00,Little Men and Jo's Boys were two sequels to what famous novel?,Little Women,1,Little Women,,,string_match
+35,2026-11-20T09:45:49.909586+00:00,"Which country shares a 658 km border with Saudi Arabia on the northwest, a 450 km border with the United Arab Emirates on the northeast, and a smaller border with Yemen in the southwest?",Jordan,0,Oman|Sultanate of Oman,,35;3;76,alias
+36,2026-11-20T09:45:53.031461+00:00,Which American author who died in 1901 had Ignatius as one of his christian names?,F. Scott Fitzgerald,0,IGNATIUS DONNELLY|Ignatius Donnelly,,36;1;77,alias
+37,2026-11-20T09:45:55.099133+00:00,NO LIMP USA is an anagram of which singer songwriter?,Neil Young,0,Paul Simon,,,string_match
+38,2026-11-20T09:45:57.896141+00:00,What is a dish of slices of beef wrapped around an onion or gerkhin called,Beef Wellington,0,Rouladen|Roulade,,,alias
+39,2026-11-20T09:45:59.954300+00:00,"According to the Old Testament, who was the first person to have a mark?",The hand,0,CAIN|Kain,,,alias
+40,2026-11-20T09:46:03.305531+00:00,"What name is given to the area of the North Atlantic Ocean, between Miami, Bermuda and Puerto Rico, famous for mysterious disappearances?",Devil's Triangle,0,THE BERMUDA TRIANGLE|BERMUDA TRIANGLE,,,alias
+41,2026-11-20T09:46:04.825226+00:00,The FIFA (Fédération Internationale de Football Association) was founded in which European country in 1904?,Belgium,0,France,,,string_match
+42,2026-11-20T09:46:07.620696+00:00,Which part of the earth's structure lies between the mantle and the inner core?,The outer core,1,The outer core|Outer core|outer core,,42;35;76,alias
+43,2026-11-20T09:46:09.521625+00:00,In 'Alice In Wonderland' what was used as the mallet in the game of croquet?,A hedgehog,0,The Flamingo|Flamingo,,43;114;15,alias
+44,2026-11-20T09:46:11.448155+00:00,What was the first name of the jazz trombonist J.J. Johnson?,James,1,James,,44;98;116,string_match
+45,2026-11-20T09:46:12.962574+00:00,A Merino is a variety of which type of creature,Sheep,1,Sheep,,,string_match
+46,2026-11-20T09:46:16.377177+00:00,What DeLorean automobile came in any color you want - as long as it was silver?,DMC DeLorean,0,DMC-12|DeLorean DMC-12,,46;66;81,alias
+47,2026-11-20T09:46:20.083383+00:00,"Which American paralympian swimmer won 2 gold, a silver and a bronze in the 2012 Para Olympics?",ELLIE SIMMONDS,0,JESSICA LONG|Jessica Long,,47;107;27,alias
+48,2026-11-20T09:46:21.505772+00:00,Mark Zuckerberg made a fortune creating which website?,Facebook,1,Facebook|Facebook.com,,,alias
+49,2026-11-20T09:46:24.306064+00:00,Which late comedienne wrote the 1989 best-selling book ‘It’s Always Something’?,Phil Donahue,0,Gilda Radner,,,string_match
+50,2026-11-20T09:46:25.716174+00:00,Of the three most populated cities of the USA which is furthest north?,Detroit,0,Chicago,,51;3;112,string_match
+51,2026-11-20T09:46:27.618335+00:00,Who designed Kate Middleton's wedding dress?,Sarah Burton,1,Sarah Burton,,52;99;48,string_match
+52,2026-11-20T09:46:29.538893+00:00,"Which ‘P’ was the last king of Macedon, according to ancient history?",Philip,0,Perseus|Perseus of Macedon,,,alias
+53,2026-11-20T09:46:31.552612+00:00,Who was the top-scoring Marine World War II fighter pilot who was detained in Japanese prisoner of war camps until 1945?,Ace Adams,0,"Gregory ""Pappy"" Boyington|Pappy Boyington|Gregory Boyington",,54;116;78,alias
+54,2026-11-20T09:46:35.655453+00:00,"In ‘Ocean's Eleven’, the 1960 film, Frank Sinatra was replaced by which US actor?",Sammy Davis Jr.,0,George Clooney,,,string_match
+55,2026-11-20T09:46:41.146724+00:00,"Who is the composer of """"The Nutcracker Suite""""?",Pyotr Ilyich Tchaikovsky,1,TCHAIKOVSKY|TCHAIKOVSKII|PYOTR ILYICH TCHAIKOVSKY|PETER ILYICH TCHAIKOVSKY,,,alias
+56,2026-11-20T09:46:45.303628+00:00,In which decade of the 17th Century was the Royal Society created?,1660s,1,60's|1660s|1660's|sixties,,,alias
+57,2026-11-20T09:46:47.922936+00:00,"What house in Washington, D.C. has been the ruin of many a poor boy?",The Decatur House,0,The White House|White House,,58;21;114,alias
+58,2026-11-20T09:46:49.292311+00:00,Which English town's Anglo Saxon name was Eoforwic pronounced Evorwick,York,1,York,,,string_match
+59,2026-11-20T09:46:52.564148+00:00,Which National Trust property in Wiltshire was once owned by Henry Hoare the banker?,Stourton Hall,0,Stourhead|Stourhead House|Stourhead Gardens,,60;48;40,alias
+60,2026-11-20T09:46:54.627077+00:00,Who on television is the 'Crocodile Hunter'?,Steve Irwin,1,STEVE IRWIN|Stephen Irwin,,,alias
+61,2026-11-20T09:46:56.697036+00:00,What is the name of the dog in the Mickey Mouse shows?,Pluto,1,PLUTO,,,string_match
+62,2026-11-20T09:46:58.018644+00:00,"What science does Sir Arthur Conan Doyle's creation, Dr. Watson, practise?",Medicine,1,Medicine,,63;104;5,string_match
+63,2026-11-20T09:47:00.579369+00:00,What title was given to the eldest son of a French King?,Heir apparent,0,Dauphin,,,string_match
+64,2026-11-20T09:47:03.146795+00:00,"Sharing his surname with a biblical character, which footballer scored the deciding goal in the 1926 FA Cup Final?",George Headley,0,DAVID JACK,,65;36;41,string_match
+65,2026-11-20T09:47:04.478641+00:00,Which car manufacturer produces the Mustang model?,Ford,1,FORD|Ford,,,alias
+66,2026-11-20T09:47:06.546617+00:00,Which national airline announced it had gone bankrupt on November 29,Lufthansa,0,American Airlines|American|AA,,67;22;116,alias
+67,2026-11-20T09:47:08.804102+00:00,On what river is the city of Paris,Seine,1,Seine|River Seine,,,alias
+68,2026-11-20T09:47:10.281687+00:00,Mitt Romney is fairly fluent in which language other than English?,Spanish,0,French,,,string_match
+69,2026-11-20T09:47:12.210627+00:00,Which US comedian/actor is credited with saying ‘I don’t get no respect’?,Bill Cosby,0,Rodney Dangerfield,,,string_match
+70,2026-11-20T09:47:14.815669+00:00,"What was the name of Oliver’s guardian, who adopted him at the end of the book?",Mr. Giles,0,MR. BROWNLOW|Mr Brownlow|Brownlow,,,alias
+71,2026-11-20T09:47:18.072644+00:00,Which serialised TV drama had a title that is a slang term for lesbian?,Tipping The Velvet,0,The L Word|L Word,,72;62;73,alias
+72,2026-11-20T09:47:22.867501+00:00,What was the name of the computer in the film 2001: A Space Odyssey?,HAL 9000,1,HAL 9000|HAL|HAL9000,,,alias
+73,2026-11-20T09:47:25.963510+00:00,"Which author has been nominated for the Booker Prize for the novels 'The Dressmaker', 'The Bottle Factory Outing' and 'An Awfully Big Adventure' but is yet to win the award?",Liane Moriarty,0,BERYL BAINBRIDGE|Beryl Bainbridge,,74;50;104,alias
+74,2026-11-20T09:47:28.488399+00:00,In which mountains does the Ganges river rise?,Himalayas,1,Himalayas|Himalaya,,,alias
+75,2026-11-20T09:47:30.992481+00:00,"What ancient civilization was centred in the south of ancient Canaan, with its heartland along the coastal regions of modern day Israel and Gaza?",Philistine,0,Philistia|Philistines,,76;97;111,alias
+76,2026-11-20T09:47:33.525472+00:00,'Doctor Watson' is an associate of which character?,Sherlock Holmes,1,SHERLOCK HOLMES|Sherlock Holmes,,,alias
+77,2026-11-20T09:47:36.282173+00:00,"The Special Air Service which operated with the motto """"Who Dares Wins"""" is known for its attacks on what type of installations during WWII?",Strategic enemy installations,0,Airfields|Airfield,,,alias
+78,2026-11-20T09:47:38.869544+00:00,"In the television series ‘Thunderbirds’, what is Lady Penelope’s chauffeur’s surname?",Creighton,0,Parker,,79;62;6,string_match
+79,2026-11-20T09:47:41.577408+00:00,Singer and musician Bono called which hall ‘Rock and roll’s great cathedral’?,Madison Square Garden,0,Royal Albert Hall|Albert Hall,,80;111;56,alias
+80,2026-11-20T09:47:44.100931+00:00,Bronze is an alloy of what 2 metals?,Copper and Zinc,0,Copper and Tin|Tin and Copper|copper and tin|tin and copper,,81;47;42,alias
+81,2026-11-20T09:47:46.679946+00:00,"In 1403, Venice imposed a waiting period for those wishing to enter the city, to see if they would develop the plague. What is this period of isolation called?",Quarantena,0,Quarantine|quarantine,,82;97;76,alias
+82,2026-11-20T09:47:48.548149+00:00,What do the Canadians call what we call a 'sofa'?,Love seat,0,CHESTERFIELD,,83;105;99,string_match
+83,2026-11-20T09:47:50.025212+00:00,What is the star sign of the date of the Battle of Hastings?,Leo,0,Libra,,84;78;116,string_match
+84,2026-11-20T09:47:51.318960+00:00,Which is the only Celtic language that is an official language of the EU?,Irish,1,Irish|Irish Gaelic|Gaeilge,,85;41;69,alias
+85,2026-11-20T09:47:52.557424+00:00,By what name was the city Mumbai known until 1995?,Bombay,1,Bombay,,,string_match
+86,2026-11-20T09:47:55.232118+00:00,What cereal is magically delicious?,Froot Loops,0,Lucky Charms,,,string_match
+87,2026-11-20T09:47:57.398503+00:00,"What profession was Maximilien Robespierre, noted for his involvement in the French Revolution at the end of the 18th century?",Lawyer,1,Lawyer,,,string_match
+88,2026-11-20T09:48:01.126029+00:00,Whose 1994 best seller argues that our universe is part of a super universe?,STEPHEN HAWKING,0,MICHIO KAKU|Michio Kaku,,89;109;42,alias
+89,2026-11-20T09:48:03.116038+00:00,"Which cocktail consists of tequila, curacao and lime juice?",Blue Lagoon,0,Margarita,,90;31;32,string_match
+90,2026-11-20T09:48:05.078995+00:00,Fagin and Bill Sikes are villains in which novel by Charles Dickens?,Oliver Twist,1,Oliver Twist,,,string_match
+91,2026-11-20T09:48:07.187164+00:00,"'Wonderwall', 'Don't Look Back in Anger' and 'Roll with It' were top ten hits for which group in the mid '90's?",Oasis,1,Oasis,,,string_match
+92,2026-11-20T09:48:08.740313+00:00,What language did the playwright Anton Chekhov write his plays in?,Russian,1,Russian,,,string_match
+93,2026-11-20T09:48:10.086733+00:00,Who is featured on Puff Daddy's Satisfy You?,Mario,0,R. Kelly|R Kelly|Robert Kelly,,94;27;61,alias
+94,2026-11-20T09:48:12.828765+00:00,What was late singer Michael Jackson’s first solo US number one hit single?,Billie Jean,0,Ben,,95;92;29,string_match
+95,2026-11-20T09:48:15.320697+00:00,"What Latin phrase, which translates as Seize the day, is taken to mean Seize the day?",Carpe diem,1,Carpe Diem|Carpe diem|carpe diem,,,alias
+96,2026-11-20T09:48:20.366777+00:00,Which of the seven wonders of the ancient world was thought to have stood in the harbour of Alexandria?,PHARAOH’S TOWER,0,Lighthouse of Alexandria|Pharos|Pharos of Alexandria|Lighthouse of Pharos,,97;76;111,alias
+97,2026-11-20T09:48:22.972610+00:00,"In 1962, who became the first basketball player to score over 80 points in an NBA game?",Wilt Chamberlain,1,Wilt Chamberlain|Wilton Norman Chamberlain,,98;44;12,alias
+98,2026-11-20T09:48:24.959622+00:00,What bell-shaped women's garment was made using whalebone?,Corset,0,Crinoline|hoop skirt|hoopskirt,,99;52;107,alias
+99,2026-11-20T09:48:26.290890+00:00,Which Bette's career revived in Whatever Happened to Baby Jane?,Davis,1,Davis|Bette Davis,,100;94;44,alias
+100,2026-11-20T09:48:28.188110+00:00,"What is a common feature of komodo dragons, snakes, and whiptail lizards?",Venom,0,Reptiles|Reptile,,101;45;105,alias
+101,2026-11-20T09:48:30.755122+00:00,"What is the common incorrect term for a road/paving granite block, alternatively called a Belgian block, and technically a sett?",Cobble,0,Cobblestone|cobblestones,,102;83;49,alias
+102,2026-11-20T09:48:33.894969+00:00,When free school milk was given out what size were the cartons?,Third of a pint,0,Half a pint|Half pint|1/2 pint|half-pint|Half of a pint,,103;87;99,alias
+103,2026-11-20T09:48:40.958773+00:00,Give a year in the life of author William Shakespeare?,1564-1616,1,1564-1616|1564–1616,,,alias
+104,2026-11-20T09:48:43.634251+00:00,What is the name of the mouse that Disney uses as its' mascot?,Mickey Mouse,1,Mickey|Mickey Mouse,,,alias
+105,2026-11-20T09:48:45.042197+00:00,Which equipment-free sport did Gichin Funakoshi introduce to Japan in 1922?,Tennis,0,KARATE|karate,,,alias
+106,2026-11-20T09:48:48.918827+00:00,"In Rowing, who received gold medals for the Men's coxless pair?",Stevenage and Lawrence Freeman,0,Eric Murray and Hamish Bond|Hamish Bond and Eric Murray,,107;47;118,alias
+107,2026-11-20T09:48:52.461370+00:00,"Which hymn, based on Psalm 98, by Isaac Watts to a tune by Lowell Mason, is particularly associated with Christmas?",Joy to the World,1,Joy to the World|Joy to the World! The Lord Is Come,,,alias
+108,2026-11-20T09:48:55.631936+00:00,What marketing term refers to the largely prohibited selling method by which customers are said to have agreed to buy something unless they refuse unsolicited goods or services?,Inertia,0,negative option|negative option marketing|negative option billing|negative option plan,,109;32;110,alias
+109,2026-11-20T09:48:57.558622+00:00,"Which company uses the advertising slogan ""Save Money, Live Better""?",ALDI,0,Walmart|Wal-Mart,,110;66;32,alias
+110,2026-11-20T09:48:59.514577+00:00,What is the name of the vast realm where the Norse gods live?,Valhalla,0,Asgard|Ásgarðr,,111;21;97,alias
+111,2026-11-20T09:49:00.957124+00:00,Which is the second largest city in Britain?,Birmingham,1,Birmingham,,112;51;40,string_match
+112,2026-11-20T09:49:02.932623+00:00,Who taught Helen Keller to be a lady ?,Anne Sullivan,1,Anne Sullivan|Annie Sullivan|Anne Sullivan Macy,,113;52;71,alias
+113,2026-11-20T09:49:04.288128+00:00,What was the name of the old Waddington’s game based on clues?,Anagram,0,Cluedo|Clue,,114;43;73,alias
+114,2026-11-20T09:49:06.276489+00:00,Which BBC2 comedy is set around the hotel in Torquay?,The Lakes,0,Fawlty Towers,,,string_match
+115,2026-11-20T09:49:09.073042+00:00,Which early aviator flew in a plane christened Spirit of St. Louis?,Charles Lindbergh,1,Charles Lindbergh|Charles A. Lindbergh|Charles Augustus Lindbergh|Lindbergh,,116;54;44,alias
+116,2026-11-20T09:49:11.653840+00:00,Who composed the first ever concerto for organ and orchestra?,Johann Sebastian Bach,0,Handel|George Frideric Handel|Georg Friedrich Händel,,117;56;44,alias
+117,2026-11-20T09:49:14.237063+00:00,The Calcutta Cup is competed for in rugby union by which two countries?,Scotland and England,0,England and Scotland,,118;47;75,string_match
+118,2026-11-20T09:49:15.559425+00:00,The plot of which Tennessee Williams play takes place entirely within the mind of a St. Louis narrator called 'Tom'?,Notebook,0,The Glass Menagerie|Glass Menagerie,,,alias
